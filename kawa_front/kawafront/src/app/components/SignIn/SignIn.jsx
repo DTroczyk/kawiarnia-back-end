@@ -56,11 +56,13 @@ function SignIn() {
           <DatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
-            className="signIn__input-datepicker"
           />
         </div>
+        <div className="signIn__field">
+        <button className="signIn__button" onClick={handleClick}>Zarejestruj</button>
+        </div>
       </div>
-      <button className="signIn__button" onClick={handleClick}>Zarejestruj</button>
+      
     </div>
   );
 }

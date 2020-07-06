@@ -25,20 +25,20 @@ export default function Login() {
       <div className="login__container">
         <div className="login__formulee">
           <div className="login__field">
-            <label className="login__label">Login</label>
+            <label className="login__label">LOGIN</label>
             <input className="login__input" type="text" />
           </div>
           <div className="login__field">
-            <label className="login__label">Hasło</label>
-            <input className="login__input" type="text" />
+            <label className="login__label">HASŁO</label>
+            <input className="login__input" type="password" />
           </div>
 
           <div className="login__field">
             <button name="login" className="login__button" onClick={handleClick}>
-              Zaloguj
+              ZALOGUJ
             </button>
             <button name="signin" className="login__button" onClick={handleClick}>
-              Dołącz
+              DOŁĄCZ
             </button>
           </div>
         </div>

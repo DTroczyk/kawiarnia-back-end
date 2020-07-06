@@ -12,39 +12,63 @@ $bgcolor2: rgb(83, 68, 59);
     justify-content: center;
     align-items: center;
     &__formulee {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
         width: 60%;
     }
     &__field {
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         width: 100%;
         padding: 1%;
+        //margin: 1%;
     }
     &__input {
-        width: 80%;
+        width: 70%;
         padding: 2%;
         border-radius: 25px;
         background-color: $bgcolor1;
+        &:focus {
+            background-color: lighten($bgcolor1, $amount: 10);
+            outline: none !important;
+        }
     }
-    &__input-datepicker {
-        width: 80% !important; 
-        padding: 2%;
-        border-radius: 25px;
-        background-color: $bgcolor1;
-    }
+
     &__button {
-        padding: 1%;
+        padding: 2%;
         border-radius: 25px;
         width: 30%;
         background-color: $bgcolor2;
         color: white;
+        transition: all 0.5s;
+        &:hover {
+            background-color: darken($bgcolor2, $amount: 5);
+            cursor: pointer;
+        }
     }
     &__label {
         color: white;
         padding: 2%;
+    }
+}
+
+.react-datepicker-wrapper {
+    width: 70%;
+    padding: 2%;
+    border-radius: 25px;
+    background-color: $bgcolor1;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.react-datepicker__input-container {
+    display: flex !important;
+    height: 100%;
+    padding: 1%;
+    justify-content: flex-start;
+    align-items: center;
+
+    &.input {
+        border: 7px;
+        outline: none;
+        background-color: $bgcolor1 !important;
     }
 }
