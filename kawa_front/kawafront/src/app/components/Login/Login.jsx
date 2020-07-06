@@ -22,7 +22,6 @@ export default function Login() {
   }
   return (
     <div className="login">
-      <div className="login__container">1</div>
       <div className="login__container">
         <div className="login__formulee">
           <div className="login__field">

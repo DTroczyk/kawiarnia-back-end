@@ -14,40 +14,53 @@ function SignIn() {
     const { name, value } = event.target;
     dispatch(userAction.changeInputValue({ name, value }));
   }
-  function handleClick(){
+  function handleClick() {
     dispatch(userAction.loginUser("123"))
     history.push('/panel')
   }
   return (
     <div className="signIn">
       <div className="signIn__formulee">
-        <input
-          name="username"
-          type="text"
-          className="signIn__input"
-          onChange={handleChange}
-          value={user.username}
-        />
-        <input
-          name="password"
-          type="text"
-          className="signIn__input"
-          onChange={handleChange}
-          value={user.password}
-        />
-        <input
-          name="email"
-          type="text"
-          className="signIn__input"
-          onChange={handleChange}
-          value={user.email}
-        />
-        <DatePicker
-          selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-        />
+        <div className="signIn__field">
+          <label className="signIn__label">Username</label>
+          <input
+            name="username"
+            type="text"
+            className="signIn__input"
+            onChange={handleChange}
+            value={user.username}
+          />
+        </div>
+        <div className="signIn__field">
+          <label className="signIn__label">Hasło</label>
+          <input
+            name="password"
+            type="text"
+            className="signIn__input"
+            onChange={handleChange}
+            value={user.password}
+          />
+        </div>
+        <div className="signIn__field">
+          <label className="signIn__label">E-mail</label>
+          <input
+            name="email"
+            type="text"
+            className="signIn__input"
+            onChange={handleChange}
+            value={user.email}
+          />
+        </div>
+        <div className="signIn__field">
+          <label className="signIn__label">Data urodzenia</label>
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            className="signIn__input-datepicker"
+          />
+        </div>
       </div>
-      <button onClick={handleClick}>+</button>
+      <button className="signIn__button" onClick={handleClick}>Zarejestruj</button>
     </div>
   );
 }

@@ -1,19 +1,50 @@
-.signIn{
+$bgurl: "https://livewallpaperhd.com/wp-content/uploads/2017/07/Coffee-Wallpapers-Full-HD.jpg";
+$bgcolor1: rgb(185, 154, 136);
+$bgcolor2: rgb(83, 68, 59);
+.signIn {
     display: flex;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url($bgurl);
+    background-position: center;
+    background-size: cover;
     flex-direction: column;
     min-height: 100vh;
     width: 100%;
     justify-content: center;
     align-items: center;
-    &__formulee{
+    &__formulee {
         display: flex;
+        justify-content: center;
+        align-items: center;
         flex-direction: column;
-        width: 50%;
-        
+        width: 60%;
     }
-    &__input{
-        padding:1%;
-        margin: 1%;
+    &__field {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 1%;
     }
-
+    &__input {
+        width: 80%;
+        padding: 2%;
+        border-radius: 25px;
+        background-color: $bgcolor1;
+    }
+    &__input-datepicker {
+        width: 80% !important; 
+        padding: 2%;
+        border-radius: 25px;
+        background-color: $bgcolor1;
+    }
+    &__button {
+        padding: 1%;
+        border-radius: 25px;
+        width: 30%;
+        background-color: $bgcolor2;
+        color: white;
+    }
+    &__label {
+        color: white;
+        padding: 2%;
+    }
 }

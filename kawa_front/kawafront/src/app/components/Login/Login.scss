@@ -1,4 +1,7 @@
 $bgurl: "https://livewallpaperhd.com/wp-content/uploads/2017/07/Coffee-Wallpapers-Full-HD.jpg";
+$bgcolor1: rgb(185, 154, 136);
+$bgcolor2: rgb(83, 68, 59);
+
 .login {
   display: flex;
   min-height: 100vh;
@@ -7,35 +10,43 @@ $bgurl: "https://livewallpaperhd.com/wp-content/uploads/2017/07/Coffee-Wallpaper
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 50%;
-    background-color: silver;
-    &:nth-child(1) {
-      background: url($bgurl);
-      background-position: center;
-      background-size: cover;
-    }
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url($bgurl);
+    background-position: center;
+    background-size: cover;
   }
   &__formulee {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80%;
+    width: 60%;
   }
   &__field {
     display: flex;
-    width: 80%;
+    justify-content: space-between;
+    width: 100%;
     padding: 1%;
+    &:nth-child(3) {
+      justify-content: center;
+    }
   }
   &__label {
     padding: 2%;
+    color: white;
+    text-shadow: black;
   }
   &__input {
-    width: 100%;
+    width: 90%;
     padding: 2%;
     border-radius: 25px;
+    background-color: $bgcolor1;
   }
   &__button {
+    align-content: center;
     padding: 2%;
+    width: 30%;
     border-radius: 25px;
+    background-color: $bgcolor2;
+    color: white;
   }
 }
