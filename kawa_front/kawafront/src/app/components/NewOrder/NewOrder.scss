@@ -12,5 +12,11 @@
         &:hover{
             opacity: 1;
         }
+
+    }
+    &__preferences{
+        padding:10%;
+        background-color: yellow;
+        height: 100vh;
     }
 }

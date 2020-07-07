@@ -1,0 +1,41 @@
+.coffeeCup {
+  width: 30vh;
+  height: 40vh;
+  border: 2vh solid black;
+  border-top: none;
+  border-bottom-left-radius: 4vh;
+  border-bottom-right-radius: 4vh;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: flex-end;
+  padding: 0.5%;
+  &__ear {
+    width: 10vh;
+    height: 20vh;
+    border: 2vh solid black;
+    border-left: none;
+    border-top-right-radius: 6vh;
+    border-bottom-right-radius: 6vh;
+  }
+  &__fill {
+    width: 100%;
+    background-color: #fff;
+    height: 3vh;
+    border: 1px solid black;
+    margin-top: 2%;
+    &--coffee{
+      background-color: brown;
+    }
+    &--milk{
+      background-color: white;
+    }
+    &--chocolate{
+      background-color: black;
+    }
+  }
+}
+.wrapper {
+  display: flex;
+  align-items: center;
+}
