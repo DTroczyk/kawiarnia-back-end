@@ -27,7 +27,6 @@ namespace Api
             Configuration = builder.Build();
 
             _connectionString = Configuration["ConnectionStrings:MsSqlConnection"];
-            ApplicationDbContext.SetConnectionString(_connectionString);
 
             Configuration = configuration;
         }
@@ -40,10 +39,6 @@ namespace Api
             services.AddControllers();
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_connectionString));
-
-            //services.AddSingleton(_connectionString);
-            //services.AddScoped<DbContext, ApplicationDbContext>();
-            //services.AddScoped<DbContextOptions<ApplicationDbContext>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

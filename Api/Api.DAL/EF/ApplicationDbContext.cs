@@ -8,27 +8,22 @@ namespace Api.DAL.EF
 {
     public class ApplicationDbContext : DbContext
     {
-        private static string _connectionString;
+        private readonly string _connectionString = "Data Source=s30home.ddns.net\\BASTION-1603\\UCZELNIA,12345; Initial Catalog=Kawiarnia; User Id=Coffe; Password=coffe";
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Coffe> Coffes { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+            : base(options)
         {
-
         }
 
-        public static void SetConnectionString(string connectionString)
+        public ApplicationDbContext(string connectionString)
         {
             _connectionString = connectionString;
         }
-
-        //public ApplicationDbContext(string connectionString)
-        //{
-        //    _connectionString = connectionString;
-        //}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

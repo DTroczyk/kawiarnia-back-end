@@ -9,7 +9,4 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Debug\netcoreapp3.1\Api.D
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Debug\netcoreapp3.1\Api.DAL.csproj.CopyComplete
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Debug\netcoreapp3.1\Api.DAL.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Debug\netcoreapp3.1\Api.DAL.pdb
-C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\bin\Debug\netcoreapp3.1\Api.DAL.runtimeconfig.json
-C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\bin\Debug\netcoreapp3.1\Api.DAL.runtimeconfig.dev.json
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Debug\netcoreapp3.1\Api.DAL.csproj.CoreCompileInputs.cache
-C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Debug\netcoreapp3.1\Api.DAL.genruntimeconfig.cache
