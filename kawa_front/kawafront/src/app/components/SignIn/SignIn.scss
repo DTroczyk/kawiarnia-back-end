@@ -1,6 +1,9 @@
 $bgurl: "https://livewallpaperhd.com/wp-content/uploads/2017/07/Coffee-Wallpapers-Full-HD.jpg";
-$bgcolor1: rgb(185, 154, 136);
-$bgcolor2: rgb(83, 68, 59);
+$bgcolor1: #F0B175;
+$bgcolor2: #3D2D1E;
+$bgcolor3: #A37850;
+$bgcolor4: #634931;
+$bgcolor5: #3D2D1E;
 .signIn {
     display: flex;
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url($bgurl);

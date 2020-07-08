@@ -6,8 +6,21 @@ import { PDFViewer } from "@react-pdf/renderer";
 import PDF from "../PDFDocument/PDFDocument";
 const moccaBg = {
   background:
-    "url(https://img.wallpapersafari.com/desktop/1920/1080/45/90/dCS7mf.jpg)",
+    "url(https://img.wallpapersafari.com/desktop/1920/1080/45/90/dCS7mf.jpg) center"
 };
+const latteBg = {
+  background:
+    "url(https://images.unsplash.com/photo-1563090308-5a7889e40542?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2134&q=80) center",
+};
+const americanoBg = {
+  background:
+    "url(https://images.unsplash.com/photo-1521302080334-4bebac2763a6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80) center"
+};
+const flatwhiteBg = {
+  background:
+    "url(https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80      ) center"
+};
+
 
 function NewOrder() {
   const [text, setText] = useState("");
@@ -44,7 +57,7 @@ function NewOrder() {
         <div
           name="latte"
           onClick={handleClick}
-          style={moccaBg}
+          style={latteBg}
           className="newOrder__coffee"
         >
           Latte
@@ -60,7 +73,7 @@ function NewOrder() {
         <div
           name="americana"
           onClick={handleClick}
-          style={moccaBg}
+          style={americanoBg}
           className="newOrder__coffee"
         >
           Americana
@@ -68,7 +81,7 @@ function NewOrder() {
         <div
           name="flatWhite"
           onClick={handleClick}
-          style={moccaBg}
+          style={flatwhiteBg}
           className="newOrder__coffee"
         >
           Flat White
