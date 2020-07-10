@@ -15,11 +15,17 @@ function CoffeeCup() {
       case "addEspresso":
         dispatch(orderActions.addEspresso());
         break;
+      case "addWater":
+        dispatch(orderActions.addWater());
+        break;
       case "deleteMilk":
         dispatch(orderActions.deleteMilk());
         break;
       case "deleteEspresso":
         dispatch(orderActions.deleteEspresso());
+        break;
+      case "deleteWater":
+        dispatch(orderActions.deleteWater());
         break;
       case "goForeward":
         const map = document.querySelector(".newOrder__map");
@@ -36,6 +42,13 @@ function CoffeeCup() {
   return (
     <div className="wrapper">
       <div className="coffeeCup">
+        {Array.apply(null, {
+          length: orderProperties.waterCount,
+        }).map((e, i) => (
+          <FadeIn delay="100">
+            <div key={i} className="coffeeCup__fill--water"></div>
+          </FadeIn>
+        ))}
         {Array.apply(null, {
           length: orderProperties.milkCount,
         }).map((e, i) => (
@@ -71,6 +84,17 @@ function CoffeeCup() {
           </button>
           {orderProperties.espressoCount ? (
             <button onClick={handleClick} name="deleteEspresso">
+              -
+            </button>
+          ) : null}
+        </div>
+        <div className="coffeeCup__field">
+          <p>Woda</p>
+          <button onClick={handleClick} name="addWater">
+            +
+          </button>
+          {orderProperties.waterCount ? (
+            <button onClick={handleClick} name="deleteWater">
               -
             </button>
           ) : null}

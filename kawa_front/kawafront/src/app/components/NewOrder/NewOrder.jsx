@@ -21,7 +21,7 @@ const americanoBg = {
 };
 const flatwhiteBg = {
   background:
-    "url(https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80      ) center",
+    "url(https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80) center",
 };
 
 function NewOrder() {
@@ -36,6 +36,7 @@ function NewOrder() {
         behavior: "smooth",
         inline: "nearest",
       });
+    console.log(event.target);
     let nameOfElement = event.target.attributes[0].value;
     switch (nameOfElement) {
       case "mocca":
@@ -70,6 +71,16 @@ function NewOrder() {
           orderActions.setPresetOfCoffee({
             espressoCount: 5,
             milkCount: 0,
+            isContainChocolate: false,
+          })
+        );
+        break;
+      case "espresso":
+        dispatch(
+          orderActions.setPresetOfCoffee({
+            espressoCount: 2,
+            milkCount: 0,
+            waterCount: 4,
             isContainChocolate: false,
           })
         );
@@ -113,6 +124,38 @@ function NewOrder() {
         >
           <div className="newOrder__coffeeName">Flat white</div>
         </div>
+        <div
+          name="latte"
+          onClick={handleClick}
+          style={latteBg}
+          className="newOrder__coffee"
+        >
+          <div className="newOrder__coffeeName">Latte</div>
+        </div>
+        <div
+          name="espresso"
+          onClick={handleClick}
+          style={moccaBg}
+          className="newOrder__coffee"
+        >
+          <div className="newOrder__coffeeName">Espresso</div>
+        </div>
+        <div
+          name="americana"
+          onClick={handleClick}
+          style={americanoBg}
+          className="newOrder__coffee"
+        >
+          <div className="newOrder__coffeeName">Americana</div>
+        </div>
+        <div
+          name="flatWhite"
+          onClick={handleClick}
+          style={flatwhiteBg}
+          className="newOrder__coffee"
+        >
+          <div className="newOrder__coffeeName">Flat white</div>
+        </div>
       </div>
       <div className="newOrder__preferences">
         <CoffeeCup />
@@ -128,6 +171,7 @@ function NewOrder() {
       </div>
       <Payment />
     </Fragment>
+
   );
 }
 export default NewOrder;

@@ -10,11 +10,15 @@ const setPresetOfCoffee = (payload) => ({
   payload,
 });
 const setLatLng=(payload)=>({type:types.SET_LAT_LNG,payload})
+const addWater = () => ({ type: types.ADD_WATER })
+const deleteWater = () => ({ type: types.DELETE_WATER })
 export default {
   addEspresso,
   addMilk,
+  addWater,
   deleteEspresso,
   deleteMilk,
+  deleteWater,
   toggleChocolate,
   setPresetOfCoffee,
   setLatLng
