@@ -1,12 +1,19 @@
+$bgurl: "https://livewallpaperhd.com/wp-content/uploads/2017/07/Coffee-Wallpapers-Full-HD.jpg";
+$bgcolor1: #F0B175;
+$bgcolor2: #3D2D1E;
+$bgcolor3: #A37850;
+$bgcolor4: #634931;
+$bgcolor5: #3D2D1E;
+
 .newOrder{
     display: flex;
+
     &__coffee{
         width: 25%;
         background-color: red;
-        border: 1px solid white;
+        border: 1px solid #3D2D1E;
         height: 100vh;
-        background-position: center;
-        background-size: cover;
+        //background-size: contain !important;
         opacity: 0.7;
         transition: .5s ease-in-out;
         &:hover{
@@ -16,7 +23,7 @@
     }
     &__preferences{
         padding:10%;
-        background-color: yellow;
+        background-color: #F0B175;
         height: 100vh;
     }
 }
