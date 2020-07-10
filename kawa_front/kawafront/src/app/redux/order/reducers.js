@@ -3,10 +3,14 @@ const INITIAL_STATE = {
   espressoCount: 0,
   milkCount: 0,
   isContainChocolate: false,
+  latLng: null,
 };
 
 const orderReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case types.SET_LAT_LNG: {
+      return { ...state, latLng: action.payload };
+    }
     case types.ADD_ESPRESSO: {
       return { ...state, espressoCount: state.espressoCount + 1 };
     }

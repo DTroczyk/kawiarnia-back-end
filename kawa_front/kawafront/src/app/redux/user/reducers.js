@@ -5,6 +5,9 @@ const INITIAL_STATE = {
     username: "anc",
     password: "ss",
     email: "aaa",
+    fullName:"Jan Nowak",
+    telephone:123321123,
+    
   },
 };
 

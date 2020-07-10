@@ -1,14 +1,15 @@
 import React, { Fragment, useState } from "react";
-import {useDispatch }from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import "./NewOrder.scss";
 import CoffeeCup from "../CoffeeCup/CoffeeCup";
 import Map from "../Map/Map";
 import { PDFViewer } from "@react-pdf/renderer";
 import PDF from "../PDFDocument/PDFDocument";
-import orderActions from '../../redux/order/actions'
+import orderActions from "../../redux/order/actions";
+import Payment from '../Payment/Payment'
 const moccaBg = {
   background:
-    "url(https://img.wallpapersafari.com/desktop/1920/1080/45/90/dCS7mf.jpg) center"
+    "url(https://img.wallpapersafari.com/desktop/1920/1080/45/90/dCS7mf.jpg) center",
 };
 const latteBg = {
   background:
@@ -16,17 +17,16 @@ const latteBg = {
 };
 const americanoBg = {
   background:
-    "url(https://images.unsplash.com/photo-1521302080334-4bebac2763a6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80) center"
+    "url(https://images.unsplash.com/photo-1521302080334-4bebac2763a6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80) center",
 };
 const flatwhiteBg = {
   background:
-    "url(https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80      ) center"
+    "url(https://images.unsplash.com/photo-1459755486867-b55449bb39ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80      ) center",
 };
 
-
 function NewOrder() {
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch();
+  const user = useSelector((store) => store.user);
 
   function handleClick(event) {
     Array.from(document.getElementsByClassName("newOrder__preferences"))
@@ -39,32 +39,40 @@ function NewOrder() {
     let nameOfElement = event.target.attributes[0].value;
     switch (nameOfElement) {
       case "mocca":
-        dispatch(orderActions.setPresetOfCoffee({
-          espressoCount: 4,
-          milkCount: 6,
-          isContainChocolate: true,
-        }))
+        dispatch(
+          orderActions.setPresetOfCoffee({
+            espressoCount: 4,
+            milkCount: 6,
+            isContainChocolate: true,
+          })
+        );
         break;
       case "flatWhite":
-        dispatch(orderActions.setPresetOfCoffee({
-          espressoCount: 5,
-          milkCount: 5,
-          isContainChocolate: false,
-        }))
+        dispatch(
+          orderActions.setPresetOfCoffee({
+            espressoCount: 5,
+            milkCount: 5,
+            isContainChocolate: false,
+          })
+        );
         break;
       case "latte":
-        dispatch(orderActions.setPresetOfCoffee({
-          espressoCount: 2,
-          milkCount: 6,
-          isContainChocolate: false,
-        }))
+        dispatch(
+          orderActions.setPresetOfCoffee({
+            espressoCount: 2,
+            milkCount: 6,
+            isContainChocolate: false,
+          })
+        );
         break;
       case "americana":
-        dispatch(orderActions.setPresetOfCoffee({
-          espressoCount: 5,
-          milkCount: 0,
-          isContainChocolate: false,
-        }))
+        dispatch(
+          orderActions.setPresetOfCoffee({
+            espressoCount: 5,
+            milkCount: 0,
+            isContainChocolate: false,
+          })
+        );
         break;
       default:
         break;
@@ -109,14 +117,19 @@ function NewOrder() {
       <div className="newOrder__preferences">
         <CoffeeCup />
       </div>
-      <div className="newOrder__preferences">
+      <div className="newOrder__map">
         <Map />
+      
       </div>
-      <div className="newOrder__preferences">
-        <PDFViewer width="1000" height="600">
-          <PDF />
+      <div className="newOrder__payment">
+        
+      </div>
+      <div className="newOrder__pdf">
+        <PDFViewer width="100%" height="50%">
+          <PDF fullName={user.data.fullName} />
         </PDFViewer>
       </div>
+      <Payment/>
     </Fragment>
   );
 }

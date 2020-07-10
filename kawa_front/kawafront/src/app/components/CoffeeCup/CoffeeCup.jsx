@@ -21,6 +21,14 @@ function CoffeeCup() {
       case "deleteEspresso":
         dispatch(orderActions.deleteEspresso());
         break;
+      case "goForeward":
+        const map = document.querySelector(".newOrder__map");
+        map.scrollIntoView({
+          block: "start",
+          behavior: "smooth",
+          inline: "nearest",
+        });
+        break;
       default:
         break;
     }
@@ -75,6 +83,9 @@ function CoffeeCup() {
             onChange={() => dispatch(orderActions.toggleChocolate())}
           />
         </div>
+        <button name="goForeward" onClick={handleClick}>
+          &#129047;
+        </button>
       </div>
     </div>
   );
