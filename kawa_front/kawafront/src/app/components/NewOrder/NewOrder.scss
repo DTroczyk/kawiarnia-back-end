@@ -1,41 +1,46 @@
 $bgurl: "https://livewallpaperhd.com/wp-content/uploads/2017/07/Coffee-Wallpapers-Full-HD.jpg";
-$bgcolor1: #F0B175;
-$bgcolor2: #3D2D1E;
-$bgcolor3: #A37850;
+$bgcolor1: #f0b175;
+$bgcolor2: #3d2d1e;
+$bgcolor3: #a37850;
 $bgcolor4: #634931;
-$bgcolor5: #3D2D1E;
+$bgcolor5: #3d2d1e;
 
-.newOrder{
-    display: flex;
+.newOrder {
+  display: flex;
 
-    &__coffee{
-        width: 25%;
-        background-color: red;
-        border: 1px solid #3D2D1E;
-        height: 100vh;
-        //background-size: contain !important;
-        opacity: 0.7;
-        transition: .5s ease-in-out;
-        &:hover{
-            opacity: 1;
-        }
-
+  &__coffee {
+    width: 25%;
+    background-color: red;
+    border: 1px solid #a0a0a0;
+    height: 100vh;
+    //background-size: contain !important;
+    opacity: 0.8;
+    transition: 0.5s ease-in-out;
+    color: rgba(white, 0.3);
+    filter: grayscale(100%);
+    &:hover {
+      filter: grayscale(0%);
+      opacity: 1;
+      color: rgba(#000, 0.7);
     }
-    &__preferences{
-        padding:10%;
-        background-color: #F0B175;
-        height: 100vh;
-    }
-    &__map{
-        
-        padding:0%;
-        background-color: #F0B175;
-        height: 100vh;
-    }
-    &__pdf{
-        padding:0%;
-        background-color: #F0B175;
-        height: 100vh;
-        
-    }
+  }
+  &__coffeeName {
+    transform: rotate(90deg) translateX(30%);
+    font-size: 15vh;
+  }
+  &__preferences {
+    padding: 10%;
+    background-color: #f0b175;
+    height: 100vh;
+  }
+  &__map {
+    padding: 0%;
+    background-color: #f0b175;
+    height: 100vh;
+  }
+  &__pdf {
+    padding: 0%;
+    background-color: #f0b175;
+    height: 100vh;
+  }
 }

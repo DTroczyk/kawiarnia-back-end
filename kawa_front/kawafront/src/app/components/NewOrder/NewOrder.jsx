@@ -6,7 +6,7 @@ import Map from "../Map/Map";
 import { PDFViewer } from "@react-pdf/renderer";
 import PDF from "../PDFDocument/PDFDocument";
 import orderActions from "../../redux/order/actions";
-import Payment from '../Payment/Payment'
+import Payment from "../Payment/Payment";
 const moccaBg = {
   background:
     "url(https://img.wallpapersafari.com/desktop/1920/1080/45/90/dCS7mf.jpg) center",
@@ -87,7 +87,7 @@ function NewOrder() {
           style={latteBg}
           className="newOrder__coffee"
         >
-          Latte
+          <div className="newOrder__coffeeName">Latte</div>
         </div>
         <div
           name="mocca"
@@ -95,7 +95,7 @@ function NewOrder() {
           style={moccaBg}
           className="newOrder__coffee"
         >
-          Mocca
+          <div className="newOrder__coffeeName">Mocca</div>
         </div>
         <div
           name="americana"
@@ -103,7 +103,7 @@ function NewOrder() {
           style={americanoBg}
           className="newOrder__coffee"
         >
-          Americana
+          <div className="newOrder__coffeeName">Americana</div>
         </div>
         <div
           name="flatWhite"
@@ -111,7 +111,7 @@ function NewOrder() {
           style={flatwhiteBg}
           className="newOrder__coffee"
         >
-          Flat White
+          <div className="newOrder__coffeeName">Flat white</div>
         </div>
       </div>
       <div className="newOrder__preferences">
@@ -119,17 +119,14 @@ function NewOrder() {
       </div>
       <div className="newOrder__map">
         <Map />
-      
       </div>
-      <div className="newOrder__payment">
-        
-      </div>
+      <div className="newOrder__payment"></div>
       <div className="newOrder__pdf">
         <PDFViewer width="100%" height="50%">
           <PDF fullName={user.data.fullName} />
         </PDFViewer>
       </div>
-      <Payment/>
+      <Payment />
     </Fragment>
   );
 }
