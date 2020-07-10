@@ -1,9 +1,11 @@
 import React, { Fragment, useState } from "react";
+import {useDispatch }from 'react-redux'
 import "./NewOrder.scss";
 import CoffeeCup from "../CoffeeCup/CoffeeCup";
 import Map from "../Map/Map";
 import { PDFViewer } from "@react-pdf/renderer";
 import PDF from "../PDFDocument/PDFDocument";
+import orderActions from '../../redux/order/actions'
 const moccaBg = {
   background:
     "url(https://img.wallpapersafari.com/desktop/1920/1080/45/90/dCS7mf.jpg) center"
@@ -23,7 +25,8 @@ const flatwhiteBg = {
 
 
 function NewOrder() {
-  const [text, setText] = useState("");
+  const dispatch = useDispatch()
+  
 
   function handleClick(event) {
     Array.from(document.getElementsByClassName("newOrder__preferences"))
@@ -36,16 +39,32 @@ function NewOrder() {
     let nameOfElement = event.target.attributes[0].value;
     switch (nameOfElement) {
       case "mocca":
-        setText(nameOfElement);
+        dispatch(orderActions.setPresetOfCoffee({
+          espressoCount: 4,
+          milkCount: 6,
+          isContainChocolate: true,
+        }))
         break;
       case "flatWhite":
-        setText(nameOfElement);
+        dispatch(orderActions.setPresetOfCoffee({
+          espressoCount: 5,
+          milkCount: 5,
+          isContainChocolate: false,
+        }))
         break;
       case "latte":
-        setText(nameOfElement);
+        dispatch(orderActions.setPresetOfCoffee({
+          espressoCount: 2,
+          milkCount: 6,
+          isContainChocolate: false,
+        }))
         break;
       case "americana":
-        setText(nameOfElement);
+        dispatch(orderActions.setPresetOfCoffee({
+          espressoCount: 5,
+          milkCount: 0,
+          isContainChocolate: false,
+        }))
         break;
       default:
         break;

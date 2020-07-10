@@ -1,28 +1,81 @@
 import React from "react";
 import "./CoffeeCup.scss";
+import { useSelector, useDispatch } from "react-redux";
+import orderActions from "../../redux/order/actions";
+import FadeIn from "react-fade-in";
 function CoffeeCup() {
+  const orderProperties = useSelector((store) => store.order);
+  const dispatch = useDispatch();
+  function handleClick(e) {
+    const { name } = e.target;
+    switch (name) {
+      case "addMilk":
+        dispatch(orderActions.addMilk());
+        break;
+      case "addEspresso":
+        dispatch(orderActions.addEspresso());
+        break;
+      case "deleteMilk":
+        dispatch(orderActions.deleteMilk());
+        break;
+      case "deleteEspresso":
+        dispatch(orderActions.deleteEspresso());
+        break;
+      default:
+        break;
+    }
+  }
   return (
     <div className="wrapper">
       <div className="coffeeCup">
-            <div className="coffeeCup__fill--coffee">1</div>
-            <div className="coffeeCup__fill">2</div>
-            <div className="coffeeCup__fill">3</div>
-            <div className="coffeeCup__fill">3</div>
-            <div className="coffeeCup__fill">3</div>
-            <div className="coffeeCup__fill">3</div>
-            <div className="coffeeCup__fill">3</div>
-            <div className="coffeeCup__fill">3</div>
-            <div className="coffeeCup__fill">3</div>
-            <div className="coffeeCup__fill">3</div>
-
-
-
+        {Array.apply(null, {
+          length: orderProperties.milkCount,
+        }).map((e, i) => (
+          <FadeIn delay="100">
+            <div key={i} className="coffeeCup__fill--milk"></div>
+          </FadeIn>
+        ))}
+        {Array.apply(null, {
+          length: orderProperties.espressoCount,
+        }).map((e, i) => (
+          <FadeIn delay="100">
+            <div key={i} className="coffeeCup__fill--coffee"></div>
+          </FadeIn>
+        ))}
       </div>
       <div className="coffeeCup__ear"></div>
-     { /* Nie podpięte trzeba przedyskutować trzymanie stanu i ich wygląd*/}
-      <button>Dodaj Mleka</button>
-      <button>Dodaj Kawy</button>
-      <button>Dodaj Czekolady</button>
+      <div className="coffeeCup__properties">
+        <div className="coffeeCup__field">
+          <p>Mleko</p>
+          <button onClick={handleClick} name="addMilk">
+            +
+          </button>
+          {orderProperties.milkCount ? (
+            <button onClick={handleClick} name="deleteMilk">
+              -
+            </button>
+          ) : null}
+        </div>
+        <div className="coffeeCup__field">
+          <p>Espresso</p>
+          <button onClick={handleClick} name="addEspresso">
+            +
+          </button>
+          {orderProperties.espressoCount ? (
+            <button onClick={handleClick} name="deleteEspresso">
+              -
+            </button>
+          ) : null}
+        </div>
+        <div className="coffeeCup__field">
+          <p>Czekolada</p>
+          <input
+            type="checkbox"
+            checked={orderProperties.isContainChocolate}
+            onChange={() => dispatch(orderActions.toggleChocolate())}
+          />
+        </div>
+      </div>
     </div>
   );
 }
