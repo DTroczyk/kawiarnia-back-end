@@ -1,15 +1,18 @@
 import React, { Fragment } from "react";
 import "./History.scss";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import historyActions from "../../redux/history/actions";
+import Details from "../Details/Details";
+import FadeIn from "react-fade-in";
 function History() {
-  const historyData = useSelector(state=>state.history[0])
-  
+  const historyItems = useSelector((state) => state.history.historyItems);
+  const dispatch = useDispatch();
   function handleClick(idx) {
-    console.log(idx);
+    dispatch(historyActions.toggleOrderDetailsVisible(idx));
   }
   return (
     <div className="history">
-      {historyData.map((order, idx) => {
+      {historyItems.map((order, idx) => {
         const { date, name, count, price, status, isCollapsed } = order;
         return (
           <Fragment key={idx}>
@@ -20,7 +23,11 @@ function History() {
               <div className="history__block">{price}</div>
               <div className="history__block">{status}</div>
             </div>
-            {isCollapsed && <p>ELO</p>}
+            {isCollapsed && (
+              <FadeIn>
+                <Details idx={idx} />
+              </FadeIn>
+            )}
           </Fragment>
         );
       })}
