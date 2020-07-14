@@ -4947,19 +4947,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DTroc\\.nuget\\packages\\": {}
+    "C:\\Users\\user\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.DAL\\Api.DAL.csproj",
+      "projectUniqueName": "C:\\Users\\user\\Desktop\\kawiarnia\\Api\\Api.DAL\\Api.DAL.csproj",
       "projectName": "Api.DAL",
-      "projectPath": "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.DAL\\Api.DAL.csproj",
-      "packagesPath": "C:\\Users\\DTroc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.DAL\\obj\\",
+      "projectPath": "C:\\Users\\user\\Desktop\\kawiarnia\\Api\\Api.DAL\\Api.DAL.csproj",
+      "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\user\\Desktop\\kawiarnia\\Api\\Api.DAL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\DTroc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4972,8 +4972,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj": {
-              "projectPath": "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj"
+            "C:\\Users\\user\\Desktop\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj": {
+              "projectPath": "C:\\Users\\user\\Desktop\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj"
             }
           }
         }

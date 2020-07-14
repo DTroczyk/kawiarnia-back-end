@@ -5,9 +5,14 @@ const INITIAL_STATE = {
     username: "anc",
     password: "ss",
     email: "aaa",
-    fullName:"Jan Nowak",
-    telephone:123321123,
-    
+    firstName: "Jan",
+    lastName: "Kowalski",
+    dateOfBirth: "1997-05-16",
+    road: "Wolności",
+    houseNumber: "50b",
+    zipcode: "42-286",
+    place: "Koszęcin",
+    telephone: 123321123,
   },
 };
 
@@ -36,6 +41,46 @@ const userReducer = (state = INITIAL_STATE, action) => {
         case "password": {
           const newData = Object.assign({}, state.data);
           newData.password = value;
+          return { ...state, data: newData };
+        }
+        case "telephone": {
+          const newData = Object.assign({}, state.data);
+          newData.telephone = value;
+          return { ...state, data: newData };
+        }
+        case "firstName": {
+          const newData = Object.assign({}, state.data);
+          newData.firstName = value;
+          return { ...state, data: newData };
+        }
+        case "lastName": {
+          const newData = Object.assign({}, state.data);
+          newData.lastName = value;
+          return { ...state, data: newData };
+        }
+        case "houseNumber": {
+          const newData = Object.assign({}, state.data);
+          newData.houseNumber = value;
+          return { ...state, data: newData };
+        }
+        case "dateOfBirth": {
+          const newData = Object.assign({}, state.data);
+          newData.dateOfBirth = value;
+          return { ...state, data: newData };
+        }
+        case "road": {
+          const newData = Object.assign({}, state.data);
+          newData.road = value;
+          return { ...state, data: newData };
+        }
+        case "zipcode": {
+          const newData = Object.assign({}, state.data);
+          newData.zipcode = value;
+          return { ...state, data: newData };
+        }
+        case "place": {
+          const newData = Object.assign({}, state.data);
+          newData.place = value;
           return { ...state, data: newData };
         }
         default:

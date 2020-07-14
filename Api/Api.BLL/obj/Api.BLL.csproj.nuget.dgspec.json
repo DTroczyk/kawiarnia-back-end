@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj": {}
+    "C:\\Users\\user\\Desktop\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj": {
+    "C:\\Users\\user\\Desktop\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Desktop\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj",
         "projectName": "Api.BLL",
-        "projectPath": "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj",
-        "packagesPath": "C:\\Users\\DTroc\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.BLL\\obj\\",
+        "projectPath": "C:\\Users\\user\\Desktop\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Desktop\\kawiarnia\\Api\\Api.BLL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DTroc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
