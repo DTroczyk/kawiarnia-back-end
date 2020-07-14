@@ -1,5 +1,6 @@
 import types from "./types";
 const INITIAL_STATE = {
+  coffeeName:"",
   waterCount: 0,
   espressoCount: 0,
   milkCount: 0,
@@ -28,8 +29,8 @@ const orderReducer = (state = INITIAL_STATE, action) => {
       return { ...state, espressoCount: state.espressoCount - 1 };
     }
     case types.SET_PRESET_OF_COFFEE: {
-      const { espressoCount, milkCount, isContainChocolate, waterCount } = action.payload;
-      return { ...state, espressoCount, milkCount, isContainChocolate, waterCount };
+      const { espressoCount, milkCount, isContainChocolate, waterCount,coffeeName } = action.payload;
+      return { ...state, espressoCount, milkCount, isContainChocolate, waterCount,coffeeName };
     }
     case types.ADD_WATER: {
       return {...state, waterCount: state.waterCount + 1};

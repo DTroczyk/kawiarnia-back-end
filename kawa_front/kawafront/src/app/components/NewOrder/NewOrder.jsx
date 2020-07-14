@@ -42,6 +42,7 @@ function NewOrder() {
       case "mocca":
         dispatch(
           orderActions.setPresetOfCoffee({
+            coffeeName: nameOfElement,
             espressoCount: 4,
             milkCount: 6,
             isContainChocolate: true,
@@ -51,6 +52,8 @@ function NewOrder() {
       case "flatWhite":
         dispatch(
           orderActions.setPresetOfCoffee({
+            coffeeName: nameOfElement,
+
             espressoCount: 5,
             milkCount: 5,
             isContainChocolate: false,
@@ -60,6 +63,8 @@ function NewOrder() {
       case "latte":
         dispatch(
           orderActions.setPresetOfCoffee({
+            coffeeName: nameOfElement,
+
             espressoCount: 2,
             milkCount: 6,
             isContainChocolate: false,
@@ -69,6 +74,8 @@ function NewOrder() {
       case "americana":
         dispatch(
           orderActions.setPresetOfCoffee({
+            coffeeName: nameOfElement,
+
             espressoCount: 5,
             milkCount: 0,
             isContainChocolate: false,
@@ -78,6 +85,8 @@ function NewOrder() {
       case "espresso":
         dispatch(
           orderActions.setPresetOfCoffee({
+            coffeeName: nameOfElement,
+
             espressoCount: 2,
             milkCount: 0,
             waterCount: 4,
@@ -169,9 +178,9 @@ function NewOrder() {
           <PDF fullName={user.data.fullName} />
         </PDFViewer>
       </div>
+
       <Payment />
     </Fragment>
-
   );
 }
 export default NewOrder;
