@@ -1,0 +1,64 @@
+.bucket {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 100vh;
+  padding: 3%;
+  background: url("https://free4kwallpapers.com/uploads/originals/2019/06/12/simple-life---coffee-wallpaper.jpg");
+  background-attachment: fixed;
+  background-position: center;
+    &__info{
+        display: flex;
+        justify-content:center;
+        padding: 5%;
+        background-color: rgba($color: white, $alpha: 0.3);
+        width: 60%;
+    }
+  &__field {
+    display: flex;
+    width: 60%;
+    padding: 1%;
+    margin: 1%;
+    opacity: 0.9;
+    color: rgba(white, 0.6);
+    transition: 0.5s ease-in-out;
+    font-size: 7.5vh;
+    border-radius: 5px;
+    filter: grayscale(100%);
+    &:hover {
+      filter: grayscale(0%);
+      opacity: 1;
+      color: rgba(#000, 0.7);
+    }
+  }
+  &__text{
+    font-size: 3vh;
+  }
+  &__name {
+    width: 90%;
+  }
+  &__button {
+    margin: 1%;
+    color: rgba(white, 0.9);
+    font-size: 1.5vh;
+ 
+    min-width: 20%;
+    border: none;
+    background: none;
+    transition: 0.5s ease-in-out;
+    background-color: rgba($color: black, $alpha: 0.4);
+    border-radius: 5px;
+    &:hover {
+      color: black;
+      background-color: rgba($color: white, $alpha: 0.4);
+    }
+  }
+  &__block {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+
+    width: 80%;
+    border-radius: 30px;
+  }
+}

@@ -1,6 +1,43 @@
 import types from "./types";
 const INITIAL_STATE = {
-  bucketItems: [],
+  bucketItems: [
+    {
+      date: "18-05-2020 19:31",
+      coffeeName: "latte",
+      count: 3,
+      price: 20.3,
+      status: "opłacono",
+      paymentMethod: "blik",
+      isCollapsed: false,
+    },
+    {
+      date: "18-05-2020 19:31",
+      coffeeName: "americana",
+      count: 3,
+      price: 20.3,
+      status: "opłacono",
+      paymentMethod: "blik",
+      isCollapsed: false,
+    },
+    {
+      date: "18-05-2020 19:31",
+      coffeeName: "flat white",
+      count: 3,
+      price: 20.3,
+      status: "opłacono",
+      paymentMethod: "blik",
+      isCollapsed: false,
+    },
+    {
+      date: "18-05-2020 19:31",
+      coffeeName: "latte",
+      count: 3,
+      price: 23,
+      status: "opłacono",
+      paymentMethod: "blik",
+      isCollapsed: false,
+    },
+  ],
 };
 
 const bucketReducer = (state = INITIAL_STATE, action) => {
