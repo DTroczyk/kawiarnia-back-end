@@ -16,5 +16,13 @@ namespace Api.BLL.Entity
         [ForeignKey("Order")]
         public int OrderId { get; set; }
         public Order Order { get; set; }
+        public double Price { get; set; }
+
+        // Coffe details
+
+        public int MilkCount { get; set; }
+        public int EspressoCount { get; set; }
+        public int WaterCount { get; set; }
+        public bool IsContainChocolate { get; set; }
     }
 }

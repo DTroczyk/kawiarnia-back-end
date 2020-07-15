@@ -16,7 +16,20 @@ namespace Api.BLL.Entity
         public int ClientId { get; set; }
         public User Client { get; set; } 
         public IList<OrderItem> Items { get; set; }
+
         [NotMapped]
-        public double Price => Items == null || Items.Count == 0 ? 0.0 : Items.Sum(i => i.Coffe.Price);
+        public double Price => Items == null || Items.Count == 0 ? 0.0 : Items.Sum(i => i.Price);
+
+        // Address
+
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string PostalCode { get; set; }
+        public string HouseNumber { get; set; }
+
+        // Payment
+
+        public PaymentMethod PaymentMethod { get; set; }
+        public bool PaymentCompleted { get; set; }
     }
 }

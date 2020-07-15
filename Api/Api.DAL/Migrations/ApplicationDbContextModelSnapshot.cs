@@ -34,9 +34,6 @@ namespace Api.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
                     b.HasKey("Id");
 
                     b.ToTable("Coffes");
@@ -49,11 +46,29 @@ namespace Api.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
+                    b.Property<string>("HouseNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("PaymentCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -72,7 +87,22 @@ namespace Api.DAL.Migrations
                     b.Property<int>("CoffeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("EspressoCount")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsContainChocolate")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MilkCount")
+                        .HasColumnType("int");
+
                     b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("WaterCount")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -91,6 +121,9 @@ namespace Api.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
@@ -98,12 +131,30 @@ namespace Api.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HouseNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .IsRequired()

@@ -39,7 +39,7 @@ namespace Api.Controllers
                 return NotFound();
             }
 
-            return user;
+            return Ok(user);
         }
 
         // PUT: Users/5
