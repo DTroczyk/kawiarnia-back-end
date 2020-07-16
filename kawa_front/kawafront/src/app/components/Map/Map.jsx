@@ -3,20 +3,16 @@ import { Map as LeafletMap, Marker, Popup, TileLayer } from "react-leaflet";
 import { useSelector, useDispatch } from "react-redux";
 import "./Map.scss";
 import orderActions from "../../redux/order/actions";
+import ScrollButton from "../ScrollButton/ScrollButton";
+import { Wrapper, Input, Container } from "./components";
 export default function Map() {
   const dispatch = useDispatch();
-  const [adress, setAdress] = useState("");
+
   const latLng = useSelector((state) => state.order.latLng);
   return (
-    <Fragment>
-      <span> Zaznacz miejsce dostawy lub wpisz adres </span>
-      <input
-        type="text"
-        onChange={(e) => setAdress(e.target.value)}
-        placeholder="Adres..."
-      />
-
-      <div className="leaflet-container">
+    <Wrapper>
+      <Input />
+      <Container>
         <LeafletMap
           center={[50.625481, 18.836307]}
           zoom={18}
@@ -35,15 +31,8 @@ export default function Map() {
             </Marker>
           ) : null}
         </LeafletMap>
-      </div>
-      <button onClick={()=>{
-        const pdf = document.querySelector('.newOrder__pdf')
-        pdf.scrollIntoView({
-          behavior:"smooth",
-          block:"start",
-          inline:"end"
-        })
-      }}>&#129047;</button>
-    </Fragment>
+      </Container>
+      <ScrollButton goTo="payment" />
+    </Wrapper>
   );
 }

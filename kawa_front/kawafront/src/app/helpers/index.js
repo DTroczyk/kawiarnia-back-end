@@ -1,2 +1,3 @@
 import getCoffeeBackground from "./getCoffeeBackground";
-export { getCoffeeBackground };
+import elementScrollIntoView from "./elementScrollIntoView";
+export { getCoffeeBackground, elementScrollIntoView };

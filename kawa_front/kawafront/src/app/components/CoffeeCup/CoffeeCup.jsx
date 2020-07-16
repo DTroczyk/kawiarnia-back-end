@@ -1,114 +1,74 @@
 import React from "react";
 import "./CoffeeCup.scss";
-import { useSelector, useDispatch } from "react-redux";
-import orderActions from "../../redux/order/actions";
+import { useSelector } from "react-redux";
 import FadeIn from "react-fade-in";
+import ScrollButton from "../ScrollButton/ScrollButton";
+import {
+  Block,
+  Button,
+  Ear,
+  Field,
+  Fill,
+  Properties,
+  Input,
+  Text,
+  Wrapper,
+} from "./components";
 function CoffeeCup() {
   const orderProperties = useSelector((store) => store.order);
-  const dispatch = useDispatch();
-  function handleClick(e) {
-    const { name } = e.target;
-    switch (name) {
-      case "addMilk":
-        dispatch(orderActions.addMilk());
-        break;
-      case "addEspresso":
-        dispatch(orderActions.addEspresso());
-        break;
-      case "addWater":
-        dispatch(orderActions.addWater());
-        break;
-      case "deleteMilk":
-        dispatch(orderActions.deleteMilk());
-        break;
-      case "deleteEspresso":
-        dispatch(orderActions.deleteEspresso());
-        break;
-      case "deleteWater":
-        dispatch(orderActions.deleteWater());
-        break;
-      case "goForeward":
-        const map = document.getElementsByClassName("newOrder__section");
-        console.log(map)
-
-        break;
-      default:
-        break;
-    }
-  }
   return (
-    <div className="wrapper">
-      <div className="coffeeCup">
+    <Wrapper>
+      <Block>
         {Array.apply(null, {
           length: orderProperties.waterCount,
         }).map((e, i) => (
-          <FadeIn delay="100">
-            <div key={i} className="coffeeCup__fill--water"></div>
+          <FadeIn key={i} delay="100">
+            <Fill type="water" />
           </FadeIn>
         ))}
         {Array.apply(null, {
           length: orderProperties.milkCount,
         }).map((e, i) => (
-          <FadeIn delay="100">
-            <div key={i} className="coffeeCup__fill--milk"></div>
+          <FadeIn key={i} delay="100">
+            <Fill type="milk" />
           </FadeIn>
         ))}
         {Array.apply(null, {
           length: orderProperties.espressoCount,
         }).map((e, i) => (
-          <FadeIn delay="100">
-            <div key={i} className="coffeeCup__fill--coffee"></div>
+          <FadeIn key={i} delay="100">
+            <Fill type="coffee" />
           </FadeIn>
         ))}
-      </div>
-      <div className="coffeeCup__ear"></div>
-      <div className="coffeeCup__properties">
-        <div className="coffeeCup__field">
-          <p>Mleko</p>
-          <button onClick={handleClick} name="addMilk">
-            +
-          </button>
+      </Block>
+      <Ear />
+      <Properties>
+        <Field>
+          <Text>Mleko</Text>
+          {orderProperties.espressoCount + orderProperties.milkCount < 10 ? (
+            <Button name="addMilk">+</Button>
+          ) : null}
+
           {orderProperties.milkCount ? (
-            <button onClick={handleClick} name="deleteMilk">
-              -
-            </button>
+            <Button name="deleteMilk">-</Button>
           ) : null}
-        </div>
-        <div className="coffeeCup__field">
-          <p>Espresso</p>
-          <button onClick={handleClick} name="addEspresso">
-            +
-          </button>
+        </Field>
+        <Field>
+          <Text>Espresso</Text>
+          {orderProperties.espressoCount + orderProperties.milkCount < 10 ? (
+            <Button name="addEspresso">+</Button>
+          ) : null}
           {orderProperties.espressoCount ? (
-            <button onClick={handleClick} name="deleteEspresso">
-              -
-            </button>
+            <Button name="deleteEspresso">-</Button>
           ) : null}
-        </div>
-        <div className="coffeeCup__field">
-          <p>Woda</p>
-          <button onClick={handleClick} name="addWater">
-            +
-          </button>
-          {orderProperties.waterCount ? (
-            <button onClick={handleClick} name="deleteWater">
-              -
-            </button>
-          ) : null}
-        </div>
-        <div className="coffeeCup__field">
-          <p>Czekolada</p>
-          <input
-            type="checkbox"
-            checked={orderProperties.isContainChocolate}
-            onChange={() => dispatch(orderActions.toggleChocolate())}
-          />
-        </div>
-        <button name="goForeward" onClick={handleClick}>
-          &#129047;
-        </button>
-      </div>
-    </div>
+        </Field>
+        <Field>
+          <Text>Czekolada</Text>
+          <Input />
+        </Field>
+        <ScrollButton goTo="map" />
+      </Properties>
+    </Wrapper>
   );
 }
 export default CoffeeCup;
