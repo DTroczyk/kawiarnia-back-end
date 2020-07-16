@@ -39,7 +39,7 @@ namespace Api.Controllers
                 return NotFound();
             }
 
-            return coffe;
+            return Ok(coffe);
         }
 
         // PUT: Coffes/5
@@ -99,7 +99,7 @@ namespace Api.Controllers
             _context.Coffes.Remove(coffe);
             await _context.SaveChangesAsync();
 
-            return coffe;
+            return Ok(coffe);
         }
 
         private bool CoffeExists(int id)

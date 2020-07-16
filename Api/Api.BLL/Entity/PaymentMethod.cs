@@ -8,8 +8,7 @@ namespace Api.BLL.Entity
     {
         Undefined = 0,
         Visa = 1,
-        BLIK = 2,
+        Blik = 2,
         CashOnDelivery = 3
-
     }
 }
