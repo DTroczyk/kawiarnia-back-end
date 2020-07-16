@@ -17,9 +17,6 @@ namespace Api.BLL.Entity
         public User Client { get; set; } 
         public IList<OrderItem> Items { get; set; }
 
-        [NotMapped]
-        public double Price => Items == null || Items.Count == 0 ? 0.0 : Items.Sum(i => i.Price);
-
         // Address
 
         public string City { get; set; }

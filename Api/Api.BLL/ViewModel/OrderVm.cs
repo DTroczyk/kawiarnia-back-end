@@ -10,7 +10,7 @@ namespace Api.BLL.ViewModel
         public int espressoCount { get; set; }
         public int milkCount { get; set; }
         public bool isContainChocolate { get; set; }
-        public float[] latLng { get; set; }
+        //public float[] latLng { get; set; }
         public double price { get; set; }
     }
 }
