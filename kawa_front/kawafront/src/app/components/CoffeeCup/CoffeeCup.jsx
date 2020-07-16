@@ -28,12 +28,9 @@ function CoffeeCup() {
         dispatch(orderActions.deleteWater());
         break;
       case "goForeward":
-        const map = document.querySelector(".newOrder__map");
-        map.scrollIntoView({
-          block: "start",
-          behavior: "smooth",
-          inline: "nearest",
-        });
+        const map = document.getElementsByClassName("newOrder__section");
+        console.log(map)
+
         break;
       default:
         break;

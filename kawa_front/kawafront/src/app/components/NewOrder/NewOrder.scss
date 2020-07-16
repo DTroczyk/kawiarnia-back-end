@@ -29,11 +29,7 @@ $bgcolor5: #3d2d1e;
     transform: rotate(90deg) translateX(30%);
     font-size: 7.5vh;
   }
-  &__preferences {
-    padding: 10%;
-    background-color: #f0b175;
-    height: 100vh;
-  }
+
   &__map {
     padding: 0%;
     background-color: #f0b175;
@@ -42,6 +38,11 @@ $bgcolor5: #3d2d1e;
   &__pdf {
     padding: 0%;
     background-color: #f0b175;
+    height: 100vh;
+  }
+  &__section {
+    padding: 10%;
+    background-color: white;
     height: 100vh;
   }
 }

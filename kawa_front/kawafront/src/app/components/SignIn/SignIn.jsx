@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import userAction from "../../redux/user/actions";
-import { useHistory } from "react-router-dom";
 import {
   Button,
   Field,
@@ -18,9 +17,6 @@ import {
 function SignIn() {
   const user = useSelector((state) => state.user.data);
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  function handleChange(event) {}
 
   return (
     <Wrapper>
