@@ -1,23 +1,23 @@
-$bgurl: "https://livewallpaperhd.com/wp-content/uploads/2017/07/Coffee-Wallpapers-Full-HD.jpg";
-$bgcolor1: #F0B175;
-$bgcolor2: #3D2D1E;
-$bgcolor3: #A37850;
+$bgurl: "https://i.ibb.co/16VyTJF/background-both-sides-thin.png";
+$bgcolor1: #f0b175;
+$bgcolor2: #3d2d1e;
+$bgcolor3: #a37850;
 $bgcolor4: #634931;
-$bgcolor5: #3D2D1E;
+$bgcolor5: #3d2d1e;
 .signIn {
     display: flex;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url($bgurl);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url($bgurl);
     background-position: center;
-    background-size: cover;
+    background-size: 100vw;
     flex-direction: column;
     min-height: 100vh;
     width: 100%;
     justify-content: center;
     align-items: center;
     &__formulee {
-        width: 60%;
+        width: 40%;
     }
-    &__field {
+    /*&__field {
         display: flex;
         justify-content: flex-end;
         width: 100%;
@@ -33,45 +33,116 @@ $bgcolor5: #3D2D1E;
             background-color: lighten($bgcolor1, $amount: 10);
             outline: none !important;
         }
-    }
+    }*/
 
     &__button {
+        font-family: Roboto;
+        font-weight: 700;
+        align-content: center;
         padding: 2%;
-        border-radius: 25px;
-        width: 30%;
-        background-color: $bgcolor2;
-        color: white;
-        transition: all 0.5s;
+        width: 100%;
+        border-radius: 10px;
+        border-color: #999;
+        background-color: white;
+        transition: background-color 0.3s;
         &:hover {
-            background-color: darken($bgcolor2, $amount: 5);
+            border-color: cornflowerblue;
+            background-color: darken($color: white, $amount: 4);
             cursor: pointer;
         }
-    }
-    &__label {
-        color: white;
-        padding: 2%;
-    }
-}
+      }
 
-.react-datepicker-wrapper {
-    width: 70%;
-    padding: 2%;
-    border-radius: 25px;
-    background-color: $bgcolor1;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-}
-.react-datepicker__input-container {
-    display: flex !important;
-    height: 100%;
-    padding: 1%;
-    justify-content: flex-start;
-    align-items: center;
-
-    &.input {
-        border: 7px;
-        outline: none;
-        background-color: $bgcolor1 !important;
+    //material design input
+    &__field {
+        position: relative;
+        margin-bottom: 45px;
+        width: 100%;
     }
+
+    & input {
+        font-size: 18px;
+        padding: 10px 10px 10px 5px;
+        display: block;
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #757575;
+        &:focus {
+            outline: none;
+            //background-color: darken($color: white, $amount: 3);
+        }
+    }
+
+    & input:focus ~ label,
+    & input:valid ~ label {
+        top: -20px;
+        font-size: 14px;
+        color: cornflowerblue;
+    }
+
+    & label {
+        color: #999;
+        font-size: 18px;
+        font-weight: normal;
+        position: absolute;
+        pointer-events: none;
+        left: 5px;
+        top: 10px;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+
+    /* BOTTOM BARS ================================= */
+    &__input {
+        &-bar {
+            position: relative;
+            display: block;
+            width: 100%;
+        }
+
+        &-bar:before,
+        &-bar:after {
+            content: "";
+            height: 2px;
+            width: 0;
+            bottom: 1px;
+            position: absolute;
+            background: #5264ae;
+            transition: 0.2s ease all;
+            -moz-transition: 0.2s ease all;
+            -webkit-transition: 0.2s ease all;
+        }
+        &-bar:before {
+            left: 50%;
+        }
+        &-bar:after {
+            right: 50%;
+        }
+
+        /* active state */
+        input:focus ~ &-bar:before,
+        input:focus ~ &-bar:after {
+            width: 50%;
+        }
+
+        /* HIGHLIGHTER ================================== */
+        &-highlight {
+            position: absolute;
+            height: 60%;
+            width: 100%;
+            top: 25%;
+            left: 0;
+            pointer-events: none;
+            opacity: 0.1;
+        }
+
+        /* active state */
+        input:focus ~ &-highlight {
+            -webkit-animation: inputHighlighter 0.3s ease;
+            -moz-animation: inputHighlighter 0.3s ease;
+            animation: inputHighlighter 0.3s ease;
+        }
+    }
+
+    // koniec a'la material-design input
 }

@@ -1,26 +1,36 @@
-$bgurl: "https://livewallpaperhd.com/wp-content/uploads/2017/07/Coffee-Wallpapers-Full-HD.jpg";
-$bgcolor1: #F0B175;
-$bgcolor2: #3D2D1E;
-$bgcolor3: #A37850;
+$bgurl: "https://i.ibb.co/16VyTJF/background-both-sides-thin.png";
+$bgcolor1: #f0b175;
+$bgcolor2: #3d2d1e;
+$bgcolor3: #a37850;
 $bgcolor4: #634931;
-$bgcolor5: #3D2D1E;
-.menu{
+$bgcolor5: #3d2d1e;
+.menu {
     display: flex;
     justify-content: center;
-    align-items:center;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url($bgurl);
-    background-color:silver;
+    align-items: center;
+    flex-direction: column;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url($bgurl);
+    background-color: white;
+    background-position: center;
+    background-size: 100vw;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     min-height: 100vh;
     width: 100%;
-    &__block{
+    &__block {
+        font-family: Roboto;
+        font-weight: 700;
         display: flex;
-        flex-wrap: wrap;
-        border:1px solid black;
-        padding:5%;
-        margin: 2%;
-        border-radius: 2vh;
-        background-color: $bgcolor1;
-        &:hover{
+        justify-content: center;
+        padding: 2%;
+        width: 50%;
+        border: 1px solid #999;
+        border-radius: 10px;
+        background-color: white;
+        transition: background-color 0.3s;
+        &:hover {
+            border-color: cornflowerblue;
+            background-color: darken($color: white, $amount: 4);
             cursor: pointer;
         }
     }

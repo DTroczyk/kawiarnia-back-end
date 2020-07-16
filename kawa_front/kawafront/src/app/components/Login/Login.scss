@@ -1,4 +1,4 @@
-$bgurl: "https://livewallpaperhd.com/wp-content/uploads/2017/07/Coffee-Wallpapers-Full-HD.jpg";
+$bgurl: "https://i.ibb.co/16VyTJF/background-both-sides-thin.png";
 $bgcolor1: #F0B175;
 $bgcolor2: #3D2D1E;
 $bgcolor3: #A37850;
@@ -15,14 +15,18 @@ $bgcolor5: #3D2D1E;
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url($bgurl);
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url($bgurl);
     background-position: center;
-    background-size: cover;
+    background-size: 100vw;
   }
   &__formulee {
-    width: 60%;
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
-  &__field {
+  /*&__field {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -34,6 +38,7 @@ $bgcolor5: #3D2D1E;
     justify-content: center;
     color: white;
     text-shadow: 0px 0px 5px black;
+    margin-right: 2%;
   }
   &__input {
     width: 80%;
@@ -44,18 +49,147 @@ $bgcolor5: #3D2D1E;
       background-color: lighten($bgcolor1, $amount: 10);
       outline: none;
     }
+  }*/
+
+  //a'la material design
+  &__field {
+    position: relative;
+    margin-bottom: 45px;
+    width: 100%;
   }
+
+  & input {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #757575;
+    &:focus {
+      outline: none;
+      //background-color: darken($color: white, $amount: 3);
+    }
+  }
+
+  & input:focus ~ label,
+  & input:valid ~ label
+  {
+    top: -20px;
+    font-size: 14px;
+    color: cornflowerblue;
+  }
+
+  & label {
+    color: #999;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+  }
+
+  
+  /* BOTTOM BARS ================================= */
+  &__input {
+    &-bar {
+      position: relative;
+      display: block;
+      width: 100%;
+    }
+
+    &-bar:before,
+    &-bar:after {
+      content: "";
+      height: 2px;
+      width: 0;
+      bottom: 1px;
+      position: absolute;
+      background: cornflowerblue;
+      transition: 0.2s ease all;
+      -moz-transition: 0.2s ease all;
+      -webkit-transition: 0.2s ease all;
+    }
+    &-bar:before {
+      left: 50%;
+    }
+    &-bar:after {
+      right: 50%;
+    }
+
+    /* active state */
+    input:focus ~ &-bar:before,
+    input:focus ~ &-bar:after {
+      width: 50%;
+    }
+
+    /* HIGHLIGHTER ================================== */
+    &-highlight {
+      position: absolute;
+      height: 60%;
+      width: 100%;
+      top: 25%;
+      left: 0;
+      pointer-events: none;
+      opacity: 0.1;
+    }
+
+    /* active state */
+    input:focus ~ &-highlight {
+      -webkit-animation: inputHighlighter 0.3s ease;
+      -moz-animation: inputHighlighter 0.3s ease;
+      animation: inputHighlighter 0.3s ease;
+    }
+  }
+
+  /* ANIMATIONS ================ */
+  @-webkit-keyframes inputHighlighter {
+    from {
+      background: cornflowerblue;
+    }
+    to {
+      
+      background: transparent;
+    }
+  }
+  @-moz-keyframes inputHighlighter {
+    from {
+      background: cornflowerblue;
+    }
+    to {
+      
+      background: transparent;
+    }
+  }
+  @keyframes inputHighlighter {
+    from {
+      background: cornflowerblue;
+    }
+    to {
+      
+      background: transparent;
+    }
+  }
+
+  // koniec a'la material-design
+  
   &__button {
+    font-family: Roboto;
+    font-weight: 700;
     align-content: center;
     padding: 2%;
-    width: 30%;
-    border-radius: 25px;
-    background-color: $bgcolor2;
-    color: white;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #999;
+    background-color: white;
     transition: background-color 0.3s;
-    &:hover{
-      background-color: darken($bgcolor2, $amount: 5);
-      cursor: pointer;
+    &:hover {
+        border-color: cornflowerblue;
+        background-color: darken($color: white, $amount: 4);
+        cursor: pointer;
     }
   }
 }

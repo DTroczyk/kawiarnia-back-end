@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   milkCount: 0,
   isContainChocolate: false,
   latLng: null,
+  price: 50,
 };
 
 const orderReducer = (state = INITIAL_STATE, action) => {

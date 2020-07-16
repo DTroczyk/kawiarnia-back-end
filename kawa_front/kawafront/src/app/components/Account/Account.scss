@@ -1,21 +1,135 @@
 .account {
   display: flex;
   min-height: 100vh;
-  flex-direction: column;
+  width: 100%;
   justify-content: center;
   align-items: center;
-  padding:1%;
-  &__input {
-    padding: 1%;
-    margin: 1%;
-    border-radius: 5px;
-    background-color: white;
+  padding: 1%;
+  background-image: url(https://i.ibb.co/16VyTJF/background-both-sides-thin.png);
+  background-position: center;
+  background-size: 100vw;
+  background-attachment: fixed;
+  & h1 {
+    margin-top: 5%;
   }
-  &__field {
-    width: 100%;
+  &__container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 5vh;
+    width: 40%;
+    font-family: Roboto;
+    background-color: rgba($color: white, $alpha: 0.8);
+    padding: 1%;
   }
+  //material design input
+  &__field {
+    position: relative;
+    margin-bottom: 45px;
+    width: 100%;
+}
+
+& input {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #757575;
+    &:focus {
+        outline: none;
+        //background-color: darken($color: white, $amount: 3);
+    }
+}
+
+& input:focus ~ label,
+& input:valid ~ label {
+    top: -20px;
+    font-size: 14px;
+    color: cornflowerblue;
+}
+
+& label {
+    color: #999;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+/* BOTTOM BARS ================================= */
+&__input {
+    &-bar {
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+
+    &-bar:before,
+    &-bar:after {
+        content: "";
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        background: #5264ae;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+    &-bar:before {
+        left: 50%;
+    }
+    &-bar:after {
+        right: 50%;
+    }
+
+    /* active state */
+    input:focus ~ &-bar:before,
+    input:focus ~ &-bar:after {
+        width: 50%;
+    }
+
+    /* HIGHLIGHTER ================================== */
+    &-highlight {
+        position: absolute;
+        height: 60%;
+        width: 100%;
+        top: 25%;
+        left: 0;
+        pointer-events: none;
+        opacity: 0.1;
+    }
+
+    /* active state */
+    input:focus ~ &-highlight {
+        -webkit-animation: inputHighlighter 0.3s ease;
+        -moz-animation: inputHighlighter 0.3s ease;
+        animation: inputHighlighter 0.3s ease;
+    }
+}
+
+// koniec a'la material-design input
+
+&__button {
+  font-family: Roboto;
+  font-weight: 700;
+  align-content: center;
+  padding: 2%;
+  width: 100%;
+  border-radius: 10px;
+  border-color: #999;
+  background-color: white;
+  transition: background-color 0.3s;
+  &:hover {
+      border-color: cornflowerblue;
+      background-color: darken($color: white, $amount: 4);
+      cursor: pointer;
+  }
+}
 }

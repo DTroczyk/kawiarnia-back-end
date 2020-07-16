@@ -22,34 +22,45 @@ function SignIn() {
     <div className="signIn">
       <div className="signIn__formulee">
         <div className="signIn__field">
-          <label className="signIn__label">Username</label>
           <input
             name="username"
             type="text"
             className="signIn__input"
             onChange={handleChange}
             value={user.username}
+            required
           />
+          <span className="signIn__input-highlight"></span>
+          <span className="signIn__input-bar"></span>
+          <label className="signIn__label">USERNAME</label>
         </div>
         <div className="signIn__field">
-          <label className="signIn__label">Hasło</label>
+          
           <input
             name="password"
             type="text"
             className="signIn__input"
             onChange={handleChange}
             value={user.password}
+            required
           />
+          <span className="signIn__input-highlight"></span>
+          <span className="signIn__input-bar"></span>
+          <label className="signIn__label">HASŁO</label>
         </div>
         <div className="signIn__field">
-          <label className="signIn__label">E-mail</label>
+          
           <input
             name="email"
             type="text"
             className="signIn__input"
             onChange={handleChange}
             value={user.email}
+            required
           />
+          <span className="signIn__input-highlight"></span>
+          <span className="signIn__input-bar"></span>
+          <label className="signIn__label">E-MAIL</label>
         </div>
         <div className="signIn__field">
           <label className="signIn__label">Data urodzenia</label>
@@ -59,10 +70,10 @@ function SignIn() {
           />
         </div>
         <div className="signIn__field">
-        <button className="signIn__button" onClick={handleClick}>Zarejestruj</button>
+          <button className="signIn__button" onClick={handleClick}>Zarejestruj</button>
         </div>
       </div>
-      
+
     </div>
   );
 }

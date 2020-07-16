@@ -23,25 +23,31 @@ export default function Login() {
   return (
     <div className="login">
       <div className="login__container">
-        <div className="login__formulee">
+        <form className="login__formulee">
           <div className="login__field">
+            <input className="login__input" type="text" required />
+            <span className="login__input-highlight"></span>
+            <span className="login__input-bar"></span>
             <label className="login__label">LOGIN</label>
-            <input className="login__input" type="text" />
           </div>
           <div className="login__field">
-            <label className="login__label">HASŁO</label>
-            <input className="login__input" type="password" />
+            <input className="login__input" type="password" required />
+            <span className="login__input-highlight"></span>
+            <span className="login__input-bar"></span>
+            <label>HASŁO</label>
           </div>
 
           <div className="login__field">
             <button name="login" className="login__button" onClick={handleClick}>
               ZALOGUJ
             </button>
+          </div>
+          <div className="login__field">
             <button name="signin" className="login__button" onClick={handleClick}>
               DOŁĄCZ
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
