@@ -1,10 +1,5 @@
-$bgurl: "https://i.ibb.co/16VyTJF/background-both-sides-thin.png";
-$bgcolor1: #F0B175;
-$bgcolor2: #3D2D1E;
-$bgcolor3: #A37850;
-$bgcolor4: #634931;
-$bgcolor5: #3D2D1E;
-
+$bgurl: "https://i.ibb.co/hKTYq0m/background-both-sides.png";
+$color1: cornflowerblue;
 
 .login {
   display: flex;
@@ -15,9 +10,10 @@ $bgcolor5: #3D2D1E;
     justify-content: center;
     flex-direction: column;
     width: 100%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url($bgurl);
+    background: url($bgurl);
+    background-attachment: fixed;
     background-position: center;
-    background-size: 100vw;
+    background-size: cover;
   }
   &__formulee {
     width: 40%;
@@ -25,31 +21,29 @@ $bgcolor5: #3D2D1E;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    background-color: rgba($color: white, $alpha: 0.6);
+    //backdrop-filter: blur(5px) brightness(120%);
+    padding: 5% 5% 5% 5%;
+    border: 1px solid #999;
+    border-radius: 15px;
   }
-  /*&__field {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  &__button {
+    font-family: Roboto;
+    font-weight: 700;
+    align-content: center;
+    padding: 3%;
     width: 100%;
-    margin: 1%;
-  }
-  &__label {
-    padding: 1%;
-    justify-content: center;
-    color: white;
-    text-shadow: 0px 0px 5px black;
-    margin-right: 2%;
-  }
-  &__input {
-    width: 80%;
-    padding: 2%;
-    border-radius: 25px;
-    background-color: $bgcolor1;
-    &:focus{
-      background-color: lighten($bgcolor1, $amount: 10);
-      outline: none;
+    margin-bottom: -45px;
+    border-radius: 10px;
+    border: 1px solid #999;
+    background-color: white;
+    transition: background-color 0.3s;
+    &:hover {
+      border-color: cornflowerblue;
+      background-color: darken($color: white, $amount: 4);
+      cursor: pointer;
     }
-  }*/
+  }
 
   //a'la material design
   &__field {
@@ -58,28 +52,28 @@ $bgcolor5: #3D2D1E;
     width: 100%;
   }
 
-  & input {
+  &__input {
     font-size: 18px;
     padding: 10px 10px 10px 5px;
     display: block;
     width: 100%;
     border: none;
     border-bottom: 1px solid #757575;
+    background-color: rgba($color: #000000, $alpha: 0);
     &:focus {
       outline: none;
       //background-color: darken($color: white, $amount: 3);
     }
   }
 
-  & input:focus ~ label,
-  & input:valid ~ label
-  {
+  &__input:focus ~ label,
+  &__input:valid ~ label {
     top: -20px;
     font-size: 14px;
     color: cornflowerblue;
   }
 
-  & label {
+  &__label {
     color: #999;
     font-size: 18px;
     font-weight: normal;
@@ -92,17 +86,16 @@ $bgcolor5: #3D2D1E;
     -webkit-transition: 0.2s ease all;
   }
 
-  
   /* BOTTOM BARS ================================= */
   &__input {
-    &-bar {
+    &--bar {
       position: relative;
       display: block;
       width: 100%;
     }
 
-    &-bar:before,
-    &-bar:after {
+    &--bar:before,
+    &--bar:after {
       content: "";
       height: 2px;
       width: 0;
@@ -113,21 +106,21 @@ $bgcolor5: #3D2D1E;
       -moz-transition: 0.2s ease all;
       -webkit-transition: 0.2s ease all;
     }
-    &-bar:before {
+    &--bar:before {
       left: 50%;
     }
-    &-bar:after {
+    &--bar:after {
       right: 50%;
     }
 
     /* active state */
-    input:focus ~ &-bar:before,
-    input:focus ~ &-bar:after {
+    &:focus ~ &--bar:before,
+    &:focus ~ &--bar:after {
       width: 50%;
     }
 
     /* HIGHLIGHTER ================================== */
-    &-highlight {
+    &--highlight {
       position: absolute;
       height: 60%;
       width: 100%;
@@ -138,58 +131,38 @@ $bgcolor5: #3D2D1E;
     }
 
     /* active state */
-    input:focus ~ &-highlight {
+    &:focus ~ &--highlight {
       -webkit-animation: inputHighlighter 0.3s ease;
       -moz-animation: inputHighlighter 0.3s ease;
       animation: inputHighlighter 0.3s ease;
     }
   }
 
-  /* ANIMATIONS ================ */
-  @-webkit-keyframes inputHighlighter {
-    from {
-      background: cornflowerblue;
-    }
-    to {
-      
-      background: transparent;
-    }
-  }
-  @-moz-keyframes inputHighlighter {
-    from {
-      background: cornflowerblue;
-    }
-    to {
-      
-      background: transparent;
-    }
-  }
-  @keyframes inputHighlighter {
-    from {
-      background: cornflowerblue;
-    }
-    to {
-      
-      background: transparent;
-    }
-  }
-
   // koniec a'la material-design
-  
-  &__button {
-    font-family: Roboto;
-    font-weight: 700;
-    align-content: center;
-    padding: 2%;
-    width: 100%;
-    border-radius: 10px;
-    border: 1px solid #999;
-    background-color: white;
-    transition: background-color 0.3s;
-    &:hover {
-        border-color: cornflowerblue;
-        background-color: darken($color: white, $amount: 4);
-        cursor: pointer;
-    }
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+  from {
+    background: cornflowerblue;
+  }
+  to {
+    background: transparent;
+  }
+}
+@-moz-keyframes inputHighlighter {
+  from {
+    background: cornflowerblue;
+  }
+  to {
+    background: transparent;
+  }
+}
+@keyframes inputHighlighter {
+  from {
+    background: cornflowerblue;
+  }
+  to {
+    background: transparent;
   }
 }

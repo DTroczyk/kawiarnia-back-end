@@ -19,7 +19,7 @@ function NewOrder() {
         <Coffee name="mocca" />
         <Coffee name="americana" />
         <Coffee name="flatWhite" />
-        <Coffee name="flatWhite" />
+        <Coffee name="espresso" />
         <Coffee name="flatWhite" />
         <Coffee name="flatWhite" />
         <Coffee name="flatWhite" />

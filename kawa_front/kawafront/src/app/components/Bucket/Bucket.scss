@@ -1,17 +1,21 @@
+$bgurl: "https://i.ibb.co/hKTYq0m/background-both-sides.png";
 .bucket {
   display: flex;
   justify-content: flex-end;
   min-height: 100vh;
   padding: 3%;
-  background: url("https://free4kwallpapers.com/uploads/originals/2019/06/12/simple-life---coffee-wallpaper.jpg");
+  background: url($bgurl);
   background-attachment: fixed;
   background-position: center;
+  background-size: cover;
     &__info{
         display: flex;
         justify-content:center;
         padding: 5%;
-        background-color: rgba($color: white, $alpha: 0.3);
+        //backdrop-filter: blur(8px);
+        background-color: rgba($color: white, $alpha: 0.5);
         width: 60%;
+        border-radius: 10px;
     }
   &__field {
     display: flex;

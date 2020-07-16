@@ -5,6 +5,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from 'react-router-dom'
 import userActions from "../../redux/user/actions";
+import {
+  Field,
+  Span,
+  Label
+} from "./components";
+
 function Account() {
   const user = useSelector((state) => state.user.data);
   const {
@@ -71,7 +77,7 @@ function Account() {
     <div className="account">
       <div className="account__container">
         <h1>Konto</h1>
-        <div className="account__field">
+        <Field>
           <input
             id="username"
             type="text"
@@ -80,11 +86,11 @@ function Account() {
             onChange={handleChange}
             required
           />
-          <span className="account__input-highlight"></span>
-          <span className="account__input-bar"></span>
-          <label htmlFor="username">Login</label>
-        </div>
-        <div className="account__field">
+          <Span type="highlight" />
+          <Span type="bar" />
+          <Label>LOGIN</Label>
+        </Field>
+        <Field>
           <input
             id="password"
             type="password"
@@ -93,11 +99,11 @@ function Account() {
             onChange={handleChange}
             required
           />
-          <span className="account__input-highlight"></span>
-          <span className="account__input-bar"></span>
-          <label htmlFor="password">Hasło</label>
-        </div>
-        <div className="account__field">
+          <Span type="highlight" />
+          <Span type="bar" />
+          <Label>HASŁO</Label>
+        </Field>
+        <Field>
           <input
             id="email"
             type="text"
@@ -106,11 +112,11 @@ function Account() {
             onChange={handleChange}
             required
           />
-          <span className="account__input-highlight"></span>
-          <span className="account__input-bar"></span>
-          <label htmlFor="email">email</label>
-        </div>
-        <div className="account__field">
+          <Span type="highlight" />
+          <Span type="bar" />
+          <Label>E-MAIL</Label>
+        </Field>
+        <Field>
           <input
             id="telephone"
             type="text"
@@ -119,12 +125,12 @@ function Account() {
             onChange={handleChange}
             required
           />
-          <span className="account__input-highlight"></span>
-          <span className="account__input-bar"></span>
-          <label htmlFor="telephone">Nr telefonu</label>
-        </div>
+          <Span type="highlight" />
+          <Span type="bar" />
+          <Label>NR TELEFONU</Label>
+        </Field>
         <h1>Dane osobowe</h1>
-        <div className="account__field">
+        <Field>
           <input
             id="adress"
             type="text"
@@ -133,11 +139,11 @@ function Account() {
             onChange={handleChange}
             required
           />
-          <span className="account__input-highlight"></span>
-          <span className="account__input-bar"></span>
-          <label htmlFor="adress">Imię</label>
-        </div>
-        <div className="account__field">
+          <Span type="highlight" />
+          <Span type="bar" />
+          <Label>IMIĘ</Label>
+        </Field>
+        <Field>
           <input
             id="name"
             type="text"
@@ -146,23 +152,24 @@ function Account() {
             onChange={handleChange}
             required
           />
-          <span className="account__input-highlight"></span>
-          <span className="account__input-bar"></span>
-          <label htmlFor="name">Nazwisko</label>
-        </div>
-        <div className="account__field">
-          <label htmlFor="">Data urodzenia </label>
-          <div>
-            <DatePicker
-              selected={new Date(dateOfBirth)}
-              onChange={(date) => {
-                handleChange({ target: { id: "dateOfBirth", value: date } });
-              }}
-            />
-          </div>
-        </div>
+          <Span type="highlight" />
+          <Span type="bar" />
+          <Label>NAZWISKO</Label>
+        </Field>
+        <Field>
+          <DatePicker
+            className="signIn__input"
+            selected={new Date(dateOfBirth)}
+            onChange={(date) => {
+              handleChange({ target: { id: "dateOfBirth", value: date } });
+            }}
+          />
+          <Span type="highlight" />
+          <Span type="bar" />
+          <Label>DATA URODZENIA</Label>
+        </Field>
         <h1>Adres</h1>
-        <div className="account__field">
+        <Field>
           <input
             id="houseNumber"
             type="text"
@@ -171,11 +178,11 @@ function Account() {
             onChange={handleChange}
             required
           />
-          <span className="account__input-highlight"></span>
-          <span className="account__input-bar"></span>
-          <label htmlFor="houseNumber">Numer domu/lokalu</label>
-        </div>
-        <div className="account__field">
+          <Span type="highlight" />
+          <Span type="bar" />
+          <Label>NUMER DOMU/LOKALU</Label>
+        </Field>
+        <Field>
           <input
             id="road"
             type="text"
@@ -184,10 +191,10 @@ function Account() {
             onChange={handleChange}
             required
           />
-          <label htmlFor="road">Ulica</label>
-        </div>
+          <Label>ULICA</Label>
+        </Field>
 
-        <div className="account__field">
+        <Field>
           <input
             id="zipcode"
             type="text"
@@ -196,11 +203,11 @@ function Account() {
             onChange={handleChange}
             required
           />
-          <span className="account__input-highlight"></span>
-          <span className="account__input-bar"></span>
-          <label htmlFor="zipcode">Kod pocztowy</label>
-        </div>
-        <div className="account__field">
+          <Span type="highlight" />
+          <Span type="bar" />
+          <Label>KOD POCZTOWY</Label>
+        </Field>
+        <Field>
           <input
             id="place"
             type="text"
@@ -209,10 +216,10 @@ function Account() {
             onChange={handleChange}
             required
           />
-          <span className="account__input-highlight"></span>
-          <span className="account__input-bar"></span>
-          <label htmlFor="place">Miejscowość</label>
-        </div>
+          <Span type="highlight" />
+          <Span type="bar" />
+          <Label>MIEJSCOWOŚĆ</Label>
+        </Field>
         <button className="account__button" onClick={handleClick}>Zapisz</button>
       </div>
     </div>

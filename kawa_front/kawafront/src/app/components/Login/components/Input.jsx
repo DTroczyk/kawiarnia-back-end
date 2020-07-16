@@ -29,6 +29,7 @@ const Input = ({ name, type = "text" }) => {
       className="login__input"
       onChange={handleChange}
       value={getValue()}
+      required
     />
   );
 };

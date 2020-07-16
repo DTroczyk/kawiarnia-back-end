@@ -42,6 +42,7 @@ function SignIn() {
         <Field>
           <Label>Data urodzenia</Label>
           <DatePicker
+            className="signIn__input"
             selected={new Date(user.dateOfBirth)}
             onChange={(date) =>
               dispatch(
