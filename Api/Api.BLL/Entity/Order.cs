@@ -13,7 +13,7 @@ namespace Api.BLL.Entity
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
         [ForeignKey("Client")]
-        public int ClientId { get; set; }
+        public string ClientId { get; set; }
         public User Client { get; set; } 
         public IList<OrderItem> Items { get; set; }
 
@@ -26,6 +26,7 @@ namespace Api.BLL.Entity
         public string Street { get; set; }
         public string PostalCode { get; set; }
         public string HouseNumber { get; set; }
+        //public float[] LatLng { get; set; }
 
         // Payment
 

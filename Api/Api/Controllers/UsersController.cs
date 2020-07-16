@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Api.BLL.Entity;
 using Api.DAL.EF;
+using Api.BLL.ViewModel;
+using AutoMapper;
 
 namespace Api.Controllers
 {
@@ -23,32 +25,37 @@ namespace Api.Controllers
 
         // GET: Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserVm>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var userEntities = await _context.Users.ToListAsync();
+
+            IEnumerable<UserVm> userVms = Mapper.Map<IEnumerable<UserVm>>(userEntities);
+            return Ok(userVms);
         }
 
         // GET: Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        [HttpGet("{userName}")]
+        public async Task<ActionResult<UserVm>> GetUser(string userName)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(userName);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            return Ok(user);
+            UserVm userVm = Mapper.Map<UserVm>(user);
+
+            return Ok(userVm);
         }
 
         // PUT: Users/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        [HttpPut("{userName}")]
+        public async Task<IActionResult> PutUser(string userName, User user)
         {
-            if (id != user.Id)
+            if (userName != user.UserName)
             {
                 return BadRequest();
             }
@@ -61,7 +68,7 @@ namespace Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!UserExists(userName))
                 {
                     return NotFound();
                 }
@@ -83,14 +90,14 @@ namespace Api.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetUser", new { id = user.UserName }, user);
         }
 
         // DELETE: Users/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(int id)
+        [HttpDelete("{userName}")]
+        public async Task<ActionResult<User>> DeleteUser(string userName)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(userName);
             if (user == null)
             {
                 return NotFound();
@@ -102,9 +109,9 @@ namespace Api.Controllers
             return user;
         }
 
-        private bool UserExists(int id)
+        private bool UserExists(string userName)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return _context.Users.Any(e => e.UserName == userName);
         }
     }
 }

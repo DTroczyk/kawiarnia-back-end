@@ -26,6 +26,26 @@ namespace Api.Configuration
                     .ForMember(dest => dest.zipcode, x => x.MapFrom(src => src.PostalCode))
                     .ForMember(dest => dest.place, x => x.MapFrom(src => src.City))
                     .ForMember(dest => dest.telephone, x => x.MapFrom(src => src.PhoneNumber));
+                mapper.CreateMap<OrderItem, OrderVm>()
+                    .ForMember(dest => dest.coffeeName, x => x.MapFrom(src => src.Coffe.Name))
+                    .ForMember(dest => dest.espressoCount, x => x.MapFrom(src => src.EspressoCount))
+                    .ForMember(dest => dest.milkCount, x => x.MapFrom(src => src.MilkCount))
+                    .ForMember(dest => dest.isContainChocolate, x => x.MapFrom(src => src.IsContainChocolate))
+                    //.ForMember(dest => dest.latLng, new float[] = { 0.0, 0.0 })
+                    .ForMember(dest => dest.price, x => x.MapFrom(src => src.Price));
+                mapper.CreateMap<OrderItem, HistoryVm>()
+                    .ForMember(dest => dest.date, x => x.MapFrom(src => src.Order.OrderDate))
+                    .ForMember(dest => dest.coffeName, x => x.MapFrom(src => src.Coffe.Name))
+                    .ForMember(dest => dest.price, x => x.MapFrom(src => src.Price))
+                    //.ForMember(dest => dest.status, null)
+                    .ForMember(dest => dest.paymentMethod, x => x.MapFrom(src => src.Order.PaymentMethod));
+                mapper.CreateMap<OrderItem, BucketVm>()
+                    .ForMember(dest => dest.date, x => x.MapFrom(src => src.Order.OrderDate))
+                    .ForMember(dest => dest.coffeName, x => x.MapFrom(src => src.Coffe.Name))
+                    .ForMember(dest => dest.price, x => x.MapFrom(src => src.Price))
+                    //.ForMember(dest => dest.status, null)
+                    .ForMember(dest => dest.paymentMethod, x => x.MapFrom(src => src.Order.PaymentMethod));
+
             });
 
             return configurationExpression;

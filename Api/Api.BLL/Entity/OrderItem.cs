@@ -22,7 +22,6 @@ namespace Api.BLL.Entity
 
         public int MilkCount { get; set; }
         public int EspressoCount { get; set; }
-        public int WaterCount { get; set; }
         public bool IsContainChocolate { get; set; }
     }
 }

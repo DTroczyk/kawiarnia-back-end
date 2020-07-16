@@ -155,3 +155,6 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\System.Id
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Debug\netcoreapp3.1\Api.csproj.CoreCompileInputs.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Debug\netcoreapp3.1\Api.MvcApplicationPartsAssemblyInfo.cache
