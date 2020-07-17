@@ -12,5 +12,6 @@ namespace Api.BLL.ViewModel
         public bool isContainChocolate { get; set; }
         //public float[] latLng { get; set; }
         public double price { get; set; }
+        public int id { get; set; }
     }
 }

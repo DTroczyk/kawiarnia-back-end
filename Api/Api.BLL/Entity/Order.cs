@@ -28,6 +28,6 @@ namespace Api.BLL.Entity
         // Payment
 
         public PaymentMethod PaymentMethod { get; set; }
-        public bool PaymentCompleted { get; set; }
+        public bool IsPaymentCompleted { get; set; }
     }
 }

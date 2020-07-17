@@ -7,55 +7,61 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Api.BLL.Entity;
 using Api.DAL.EF;
-using Microsoft.AspNetCore.Authorization;
+using Api.BLL.ViewModel;
+using AutoMapper;
 
 namespace Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CoffesController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public CoffesController(ApplicationDbContext context)
+        public OrdersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Coffes
+        // GET: Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Coffe>>> GetCoffes()
+        public async Task<ActionResult<IEnumerable<OrderVm>>> GetOrders()
         {
-            return await _context.Coffes.ToListAsync();
+            var orderItemsEntities = await _context.OrderItems.ToListAsync();
+
+            IEnumerable<OrderVm> orderVms = Mapper.Map<IEnumerable<OrderVm>>(orderItemsEntities);
+
+            return Ok(orderVms);
         }
 
-        // GET: Coffes/5
+        // GET: Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Coffe>> GetCoffe(int id)
+        public async Task<ActionResult<OrderVm>> GetOrderItem(int id)
         {
-            var coffe = await _context.Coffes.FindAsync(id);
+            var orderItem = await _context.OrderItems.FindAsync(id);
 
-            if (coffe == null)
+            if (orderItem == null)
             {
                 return NotFound();
             }
 
-            return Ok(coffe);
+            OrderVm orderVm = Mapper.Map<OrderVm>(orderItem);
+
+            return Ok(orderVm);
         }
 
-        // PUT: Coffes/5
+        // PUT: api/Orders/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCoffe(int id, Coffe coffe)
+        public async Task<IActionResult> PutOrderItem(int id, OrderItem orderItem)
         {
-            if (id != coffe.Id)
+            if (id != orderItem.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(coffe).State = EntityState.Modified;
+            _context.Entry(orderItem).State = EntityState.Modified;
 
             try
             {
@@ -63,7 +69,7 @@ namespace Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CoffeExists(id))
+                if (!OrderItemExists(id))
                 {
                     return NotFound();
                 }
@@ -76,39 +82,37 @@ namespace Api.Controllers
             return NoContent();
         }
 
-        // POST: Coffes
+        // POST: api/Orders
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [Authorize]
         [HttpPost]
-        public async Task<ActionResult<Coffe>> PostCoffe(Coffe coffe)
+        public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderItem)
         {
-            _context.Coffes.Add(coffe);
+            _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCoffe", new { id = coffe.Id }, coffe);
+            return CreatedAtAction("GetOrderItem", new { id = orderItem.Id }, orderItem);
         }
 
-        // DELETE: Coffes/5
-        [Authorize]
+        // DELETE: api/Orders/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Coffe>> DeleteCoffe(int id)
+        public async Task<ActionResult<OrderItem>> DeleteOrderItem(int id)
         {
-            var coffe = await _context.Coffes.FindAsync(id);
-            if (coffe == null)
+            var orderItem = await _context.OrderItems.FindAsync(id);
+            if (orderItem == null)
             {
                 return NotFound();
             }
 
-            _context.Coffes.Remove(coffe);
+            _context.OrderItems.Remove(orderItem);
             await _context.SaveChangesAsync();
 
-            return Ok(coffe);
+            return orderItem;
         }
 
-        private bool CoffeExists(int id)
+        private bool OrderItemExists(int id)
         {
-            return _context.Coffes.Any(e => e.Id == id);
+            return _context.OrderItems.Any(e => e.Id == id);
         }
     }
 }

@@ -9,9 +9,12 @@ using Api.BLL.Entity;
 using Api.DAL.EF;
 using Api.BLL.ViewModel;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -23,13 +26,41 @@ namespace Api.Controllers
             _context = context;
         }
 
+        private bool Autorization()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IList<Claim> claims = identity.Claims.ToList();
+
+            if (claims[0].Value.ToUpper() == "DTROCZYK")
+            {
+                return true;;
+            }
+
+            return false;
+        }
+
+        // GET: Users/User
+        [HttpGet("user")]
+        public String GetUser()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IList<Claim> claims = identity.Claims.ToList();
+
+            return claims[0].Value;
+        }
+
         // GET: Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserVm>>> GetUsers()
         {
-            var userEntities = await _context.Users.ToListAsync();
+            if (!Autorization())
+            {
+                return Unauthorized();
+            }
 
+            var userEntities = await _context.Users.ToListAsync();
             IEnumerable<UserVm> userVms = Mapper.Map<IEnumerable<UserVm>>(userEntities);
+
             return Ok(userVms);
         }
 
@@ -37,6 +68,11 @@ namespace Api.Controllers
         [HttpGet("{userName}")]
         public async Task<ActionResult<UserVm>> GetUser(string userName)
         {
+            if (!Autorization())
+            {
+                return Unauthorized();
+            }
+
             var user = await _context.Users.FindAsync(userName);
 
             if (user == null)
@@ -55,6 +91,11 @@ namespace Api.Controllers
         [HttpPut("{userName}")]
         public async Task<IActionResult> PutUser(string userName, User user)
         {
+            if (!Autorization())
+            {
+                return Unauthorized();
+            }
+
             if (userName != user.UserName)
             {
                 return BadRequest();
@@ -87,6 +128,11 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            if (!Autorization())
+            {
+                return Unauthorized();
+            }
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
@@ -97,6 +143,11 @@ namespace Api.Controllers
         [HttpDelete("{userName}")]
         public async Task<ActionResult<User>> DeleteUser(string userName)
         {
+            if (!Autorization())
+            {
+                return Unauthorized();
+            }
+
             var user = await _context.Users.FindAsync(userName);
             if (user == null)
             {

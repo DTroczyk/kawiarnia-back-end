@@ -32,24 +32,37 @@ namespace Api.Configuration
                     .ForMember(dest => dest.milkCount, x => x.MapFrom(src => src.MilkCount))
                     .ForMember(dest => dest.isContainChocolate, x => x.MapFrom(src => src.IsContainChocolate))
                     //.ForMember(dest => dest.latLng, new float[] = { 0.0, 0.0 })
-                    .ForMember(dest => dest.price, x => x.MapFrom(src => src.Price));
+                    .ForMember(dest => dest.price, x => x.MapFrom(src => src.Price))
+                    .ForMember(dest => dest.id, x => x.MapFrom(src => src.Id));
                 mapper.CreateMap<Order, HistoryVm>()
                     .ForMember(dest => dest.date, x => x.MapFrom(src => src.OrderDate))
-                    .ForMember(dest => dest.price, x => x.MapFrom(src => src.Items.Sum(y => y.Price)))
-                    //.ForMember(dest => dest.status, null)
+                    .ForMember(dest => dest.price, x => x.MapFrom(src => Math.Round(src.Items.Sum(y => y.Price),2)))
+                    .ForMember(dest => dest.status, x => x.MapFrom(src => src.IsPaymentCompleted))
                     .ForMember(dest => dest.paymentMethod, x => x.MapFrom(src => src.PaymentMethod))
-                    .ForMember(dest => dest.items, x => x.MapFrom(src => src.Items));
+                    .ForMember(dest => dest.items, x => x.MapFrom(src => src.Items))
+                    .ForMember(dest => dest.id, x => x.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.username, x => x.MapFrom(src => src.ClientId));
                 mapper.CreateMap<Order, BucketVm>()
                     .ForMember(dest => dest.date, x => x.MapFrom(src => src.OrderDate))
-                    .ForMember(dest => dest.price, x => x.MapFrom(src => src.Items.Sum(y => y.Price)))
-                    //.ForMember(dest => dest.status, null)
+                    .ForMember(dest => dest.price, x => x.MapFrom(src => Math.Round(src.Items.Sum(y => y.Price), 2)))
+                    .ForMember(dest => dest.status, x => x.MapFrom(src => src.IsPaymentCompleted))
                     .ForMember(dest => dest.paymentMethod, x => x.MapFrom(src => src.PaymentMethod))
-                    .ForMember(dest => dest.items, x => x.MapFrom(src => src.Items));
+                    .ForMember(dest => dest.items, x => x.MapFrom(src => src.Items))
+                    .ForMember(dest => dest.id, x => x.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.username, x => x.MapFrom(src => src.ClientId));
 
                 mapper.CreateMap<HistoryVm, Order>()
                     .ForMember(dest => dest.OrderDate, x => x.MapFrom(src => src.date))
                     .ForMember(dest => dest.PaymentMethod, x => x.MapFrom(src => src.paymentMethod))
-                    .ForMember(dest => dest.Items, x => x.MapFrom(src => src.items));
+                    .ForMember(dest => dest.Items, x => x.MapFrom(src => src.items))
+                    .ForMember(dest => dest.ClientId, x => x.MapFrom(src => src.username))
+                    .ForMember(dest => dest.Id, x => x.MapFrom(src => src.id));
+                mapper.CreateMap<BucketVm, Order>()
+                    .ForMember(dest => dest.OrderDate, x => x.MapFrom(src => src.date))
+                    .ForMember(dest => dest.PaymentMethod, x => x.MapFrom(src => src.paymentMethod))
+                    .ForMember(dest => dest.Items, x => x.MapFrom(src => src.items))
+                    .ForMember(dest => dest.ClientId, x => x.MapFrom(src => src.username))
+                    .ForMember(dest => dest.Id, x => x.MapFrom(src => src.id));
 
             });
 

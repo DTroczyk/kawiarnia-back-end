@@ -56,7 +56,7 @@ namespace Api.Controllers
             {
                 return null;
             }
-            if(login.UserName == user.UserName && login.PasswordHash == user.PasswordHash)
+            if(login.UserName.ToUpper() == user.UserName.ToUpper() && login.PasswordHash == user.PasswordHash)
             {
                 return user;
             }

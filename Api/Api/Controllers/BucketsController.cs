@@ -30,7 +30,7 @@ namespace Api.Controllers
             var bucketEntities = await _context.Orders
                 .Include(o => o.Items)
                     .ThenInclude(c => c.Coffe)
-                .Where(o => o.PaymentCompleted == false)
+                .Where(o => o.IsPaymentCompleted == false)
                 .ToListAsync();
 
             IEnumerable<BucketVm> bucketVms = Mapper.Map<IEnumerable<BucketVm>>(bucketEntities);
@@ -45,7 +45,7 @@ namespace Api.Controllers
             var bucketEntities = await _context.Orders
                 .Include(o => o.Items)
                     .ThenInclude(c => c.Coffe)
-                .Where(o => o.PaymentCompleted == false)
+                .Where(o => o.IsPaymentCompleted == false)
                 .Where(o => o.ClientId == userName)
                 .ToListAsync();
 
@@ -61,7 +61,7 @@ namespace Api.Controllers
             var bucketEntity = await _context.Orders
                 .Include(o => o.Items)
                     .ThenInclude(c => c.Coffe)
-                .Where(o => o.PaymentCompleted == false)
+                .Where(o => o.IsPaymentCompleted == false)
                 .Where(o => o.ClientId == userName)
                 .Where(o => o.OrderDate == date)
                 .FirstOrDefaultAsync();
@@ -114,7 +114,7 @@ namespace Api.Controllers
         {
             Order order = Mapper.Map<Order>(bucket);
 
-            order.PaymentCompleted = false;
+            order.IsPaymentCompleted = false;
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
