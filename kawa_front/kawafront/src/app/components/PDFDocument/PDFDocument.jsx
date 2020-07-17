@@ -21,7 +21,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
 });
-
+function getTotalPrice(itemsArr) {
+  let price = 0;
+  itemsArr.map((item) => (price += item.price));
+  return price;
+}
 // Create Document Component
 function PDFDocument({ user, items }) {
   return (
@@ -38,8 +42,8 @@ function PDFDocument({ user, items }) {
           <Text>Zamówienie:</Text>
           {items.map((item) => (
             <>
-              <Text>{item.coffeeName}</Text>
               <Text>
+                {item.coffeeName}:
                 {new Intl.NumberFormat(window.navigator.language, {
                   style: "currency",
                   currency: "PLN",
@@ -47,6 +51,13 @@ function PDFDocument({ user, items }) {
               </Text>
             </>
           ))}
+          <Text>
+            Suma:
+            {new Intl.NumberFormat(window.navigator.language, {
+              style: "currency",
+              currency: "PLN",
+            }).format(getTotalPrice(items))}
+          </Text>
         </View>
       </Page>
     </Document>

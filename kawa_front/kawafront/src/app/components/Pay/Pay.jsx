@@ -1,9 +1,12 @@
 import React from "react";
+import "./Pay.scss";
 import { Wrapper } from "./components";
 import PDFDocument from "../PDFDocument/PDFDocument";
 import { PDFViewer } from "@react-pdf/renderer";
-import "./Pay.scss";
+import Map from "../Map/Map";
 import { useSelector } from "react-redux";
+import Payment from "../Payment/Payment";
+
 function Pay() {
   const user = useSelector((state) => state.user.data);
   const items = useSelector((state) =>
@@ -11,9 +14,11 @@ function Pay() {
   );
   return (
     <Wrapper>
-      <PDFViewer width="100%" height="100%">
+      <PDFViewer width="100%" height={500}>
         <PDFDocument user={user} items={items} />
       </PDFViewer>
+      <Map />
+      <Payment isAddToBucketVisible={false} />
     </Wrapper>
   );
 }
