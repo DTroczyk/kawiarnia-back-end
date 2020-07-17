@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { Fragment } from "react";
 import {
   Page,
   Text,
@@ -24,18 +23,34 @@ const styles = StyleSheet.create({
 });
 
 // Create Document Component
-function PDFDocumment({ fullName }) {
+function PDFDocument({ user, items }) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Image src="https://image.freepik.com/free-vector/logo-template-coffee-business-design_23-2148512021.jpg"></Image>
-          <Text>Zamawiający: {fullName}</Text>
-          <Text>Zamawiający: {fullName}</Text>
+          <Text>Super Kawiarnia XYZ</Text>
+          <Text>
+            Zamawiający: {user.username} {user.firstName} {user.lastName}
+          </Text>
+          <Text>{user.email}</Text>
+        </View>
+        <View style={styles.section}>
+          <Text>Zamówienie:</Text>
+          {items.map((item) => (
+            <>
+              <Text>{item.coffeeName}</Text>
+              <Text>
+                {new Intl.NumberFormat(window.navigator.language, {
+                  style: "currency",
+                  currency: "PLN",
+                }).format(item.price)}
+              </Text>
+            </>
+          ))}
         </View>
       </Page>
     </Document>
   );
 }
 
-export default PDFDocumment;
+export default PDFDocument;

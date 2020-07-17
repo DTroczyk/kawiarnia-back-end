@@ -2,9 +2,9 @@ import types from "./types";
 const INITIAL_STATE = {
   token: null,
   data: {
-    username: "anc",
+    username: "username1234",
     password: "ss",
-    email: "aaa",
+    email: "username1234@email.com",
     firstName: "Jan",
     lastName: "Kowalski",
     dateOfBirth: "1997-05-16",
