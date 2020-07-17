@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import userActions from "../../redux/user/actions";
-import { Field, Span, Label, Container, Text, Input } from "./components";
-import { Wrapper, Button } from "../Bucket/components";
+import { Field, Span, Label, Container, Text, Input,Wrapper,Button } from "./components";
+
 
 function Account() {
   const user = useSelector((state) => state.user.data);
