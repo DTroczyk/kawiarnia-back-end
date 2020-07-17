@@ -1,50 +1,16 @@
 import types from "./types";
 const INITIAL_STATE = {
-  bucketItems: [
-    {
-      date: "18-05-2020 19:31",
-      coffeeName: "latte",
-      count: 3,
-      price: 20.3,
-      status: "opłacono",
-      paymentMethod: "blik",
-      isCollapsed: false,
-    },
-    {
-      date: "18-05-2020 19:31",
-      coffeeName: "americana",
-      count: 3,
-      price: 20.3,
-      status: "opłacono",
-      paymentMethod: "blik",
-      isCollapsed: false,
-    },
-    {
-      date: "18-05-2020 19:31",
-      coffeeName: "flat white",
-      count: 3,
-      price: 20.3,
-      status: "opłacono",
-      paymentMethod: "blik",
-      isCollapsed: false,
-    },
-    {
-      date: "18-05-2020 19:31",
-      coffeeName: "latte",
-      count: 3,
-      price: 23,
-      status: "opłacono",
-      paymentMethod: "blik",
-      isCollapsed: false,
-    },
-  ],
+  bucketItems: [],
+  itemToDelete: null,
 };
 
 const bucketReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.ADD_ITEM_TO_BUCKET: {
       console.log(action.payload);
+      action.payload.isSelectedToPay = false;
       const newData = Array.from(state.bucketItems);
+
       newData.push(action.payload);
       return { ...state, bucketItems: newData };
     }
@@ -52,6 +18,15 @@ const bucketReducer = (state = INITIAL_STATE, action) => {
       const newData = Array.from(state.bucketItems);
       newData.splice(action.payload, 1);
 
+      return { ...state, bucketItems: newData };
+    }
+    case types.SET_ELEMENT_TO_DELETE: {
+      return { ...state, itemToDelete: state.bucketItems[action.payload] };
+    }
+    case types.TOGGLE_ELEMENT_TO_PAY: {
+      const newData = Array.from(state.bucketItems);
+      newData[action.payload].isSelectedToPay = !newData[action.payload]
+        .isSelectedToPay;
       return { ...state, bucketItems: newData };
     }
     default:

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import "./Bucket.scss";
 import { useSelector } from "react-redux";
 
@@ -11,7 +11,14 @@ function getTotalValue(itemsArr) {
   itemsArr.map((item) => (acc += item.price));
   return Math.round(acc * Math.pow(10, 2)) / Math.pow(10, 2);
 }
-
+function getCountOfSelectedItemToPay(itemsArr) {
+  let acc = 0;
+  itemsArr.map((item) => {
+    acc += item.isSelectedToPay ? 1 : 0;
+    return;
+  });
+  return acc;
+}
 function Bucket() {
   const bucketItems = useSelector((state) => state.bucket.bucketItems);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -21,22 +28,31 @@ function Bucket() {
       <Info>
         <Text>Wartość Twojego koszyka: {getTotalValue(bucketItems)}zł</Text>
         <Text>{selectedItem?.coffeeName}</Text>
+        {getCountOfSelectedItemToPay(bucketItems) > 0 ? (
+          <Button name="pay">Opłać zaznaczone produkty</Button>
+        ) : null}
       </Info>
       <Block>
         {bucketItems.length
           ? bucketItems.map((item, idx) => (
               <Field
                 key={idx}
+                idx={idx}
                 coffeeName={item.coffeeName}
-                className="bucket__field"
+                className={
+                  item.isSelectedToPay
+                    ? "bucket__field selected"
+                    : "bucket__field"
+                }
               >
                 <Text type="name">{item.coffeeName}</Text>
-                <Button idx={idx} name="pay">
-                  Opłać zamówienie
-                </Button>
-                <Button idx={idx} name="delete">
-                  &#128465;
-                </Button>
+                {!item.isSelectedToPay ? (
+                  <Fragment>
+                    <Button idx={idx} name="delete">
+                      &#128465;
+                    </Button>
+                  </Fragment>
+                ) : null}
               </Field>
             ))
           : "Brak zamowień"}

@@ -1,13 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import bucketActions from '../../../redux/bucket/actions'
+import bucketActions from "../../../redux/bucket/actions";
 import { ToastContainer, toast } from "react-toastify";
-const Button = ({idx, children, name }) => {
-  const dispatch= useDispatch()
-  
+import { useHistory } from "react-router-dom";
+const Button = ({ idx, children, name }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   function handleClick() {
     switch (name) {
       case "pay":
+        history.push('/panel/pay')
         break;
       case "delete":
         toast.warn("Usunięto z koszyka", {
@@ -19,7 +21,8 @@ const Button = ({idx, children, name }) => {
           draggable: true,
           progress: undefined,
         });
-        dispatch(bucketActions.deleteItemFromBucket(idx));
+        dispatch(bucketActions.setElementToDelete(idx));
+        history.push("/panel/deleteItemFromBucket");
         break;
       default:
         break;

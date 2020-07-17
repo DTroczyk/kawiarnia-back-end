@@ -1,8 +1,20 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { getCoffeeBackground } from "../../../helpers";
-const Field = ({ children, coffeeName }) => (
-  <div style={getCoffeeBackground(coffeeName)} className="bucket__field">
-    {children}
-  </div>
-);
+import bucketActions from "../../../redux/bucket/actions";
+const Field = ({ className,idx, children, coffeeName }) => {
+  const dispatch = useDispatch();
+  function handleClick() {
+    dispatch(bucketActions.toggleElementToPay(idx));
+  }
+  return (
+    <div
+      onClick={handleClick}
+      style={getCoffeeBackground(coffeeName)}
+      className={className}
+    >
+      {children}
+    </div>
+  );
+};
 export default Field;

@@ -66,3 +66,7 @@ $bgurl: "https://i.ibb.co/hKTYq0m/background-both-sides.png";
     border-radius: 30px;
   }
 }
+.selected{
+  border: 3px solid gold;
+  filter: grayscale(0%);
+}

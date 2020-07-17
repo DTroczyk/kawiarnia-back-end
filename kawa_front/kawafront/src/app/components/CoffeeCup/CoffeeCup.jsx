@@ -16,7 +16,7 @@ import {
 } from "./components";
 function CoffeeCup() {
   const orderProperties = useSelector((store) => store.order);
- 
+
   return (
     <Wrapper>
       <Block>
@@ -68,10 +68,13 @@ function CoffeeCup() {
           <Input />
         </Field>
         <Field>
-          <Text>{`Wartość Twojej kawy: ${new Intl.NumberFormat(window.navigator.language, {
-            style: "currency",
-            currency: "PLN",
-          }).format(orderProperties.price)}`}</Text>
+          <Text>{`Wartość Twojej kawy: ${new Intl.NumberFormat(
+            window.navigator.language,
+            {
+              style: "currency",
+              currency: "PLN",
+            }
+          ).format(orderProperties.price)}`}</Text>
         </Field>
         <ScrollButton goTo="map" />
       </Properties>

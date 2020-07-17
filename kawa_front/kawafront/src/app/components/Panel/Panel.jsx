@@ -6,6 +6,8 @@ import NewOrder from "../NewOrder/NewOrder";
 import Bucket from "../Bucket/Bucket";
 import Account from "../Account/Account";
 import History from "../History/History";
+import DeleteItemFromBucket from "../DeleteItemFromBucket/DeleteItemFromBucket";
+import Pay from "../Pay/Pay";
 function Panel() {
   return (
     <div className="panel">
@@ -25,6 +27,12 @@ function Panel() {
           </Route>
           <Route path="/panel/history">
             <History />
+          </Route>
+          <Route path="/panel/deleteItemFromBucket">
+            <DeleteItemFromBucket />
+          </Route>
+          <Route path="/panel/pay">
+            <Pay />
           </Route>
         </Switch>
       </Router>
