@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./Bucket.scss";
-import { useDispatch, useSelector } from "react-redux";
-import bucketActions from "../../redux/bucket/actions";
-import { ToastContainer, toast } from "react-toastify";
+import { useSelector } from "react-redux";
+
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { Block, Button, Field, Info, Text, Wrapper } from "./components";
@@ -14,11 +14,8 @@ function getTotalValue(itemsArr) {
 
 function Bucket() {
   const bucketItems = useSelector((state) => state.bucket.bucketItems);
-  const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState(null);
-  function handleDelete(idx) {
-   
-  }
+
   return (
     <Wrapper>
       <Info>
@@ -34,8 +31,12 @@ function Bucket() {
                 className="bucket__field"
               >
                 <Text type="name">{item.coffeeName}</Text>
-                <Button idx={idx} name="pay">Opłać zamówienie</Button>
-                <Button idx={idx} name="delete">&#128465;</Button>
+                <Button idx={idx} name="pay">
+                  Opłać zamówienie
+                </Button>
+                <Button idx={idx} name="delete">
+                  &#128465;
+                </Button>
               </Field>
             ))
           : "Brak zamowień"}

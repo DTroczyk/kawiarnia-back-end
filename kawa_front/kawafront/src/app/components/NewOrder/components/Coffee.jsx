@@ -17,9 +17,10 @@ const Coffee = ({ name }) => {
         dispatch(
           orderActions.setPresetOfCoffee({
             coffeeName: name,
-            espressoCount: 4,
-            milkCount: 6,
+            espressoCount: 3,
+            milkCount: 5,
             isContainChocolate: true,
+            price: 9.5,
           })
         );
         break;
@@ -27,9 +28,9 @@ const Coffee = ({ name }) => {
         dispatch(
           orderActions.setPresetOfCoffee({
             coffeeName: name,
-
-            espressoCount: 5,
-            milkCount: 5,
+            price: 7.5,
+            espressoCount: 3,
+            milkCount: 3,
             isContainChocolate: false,
           })
         );
@@ -38,8 +39,9 @@ const Coffee = ({ name }) => {
         dispatch(
           orderActions.setPresetOfCoffee({
             coffeeName: name,
+            price: 7,
             espressoCount: 2,
-            milkCount: 6,
+            milkCount: 4,
             isContainChocolate: false,
           })
         );
@@ -49,6 +51,7 @@ const Coffee = ({ name }) => {
           orderActions.setPresetOfCoffee({
             coffeeName: name,
             espressoCount: 5,
+            price: 7.5,
             milkCount: 0,
             isContainChocolate: false,
           })
@@ -59,8 +62,8 @@ const Coffee = ({ name }) => {
           orderActions.setPresetOfCoffee({
             coffeeName: name,
             espressoCount: 2,
+            price: 3,
             milkCount: 0,
-            waterCount: 4,
             isContainChocolate: false,
           })
         );

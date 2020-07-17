@@ -84,7 +84,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
           return { ...state, data: newData };
         }
         default:
-          break;
+          return {...state} ;
       }
     }
     default: {

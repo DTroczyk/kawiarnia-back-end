@@ -32,7 +32,7 @@ export default function Map() {
           ) : null}
         </LeafletMap>
       </Container>
-      <ScrollButton goTo="payment" />
+      {latLng ? <ScrollButton goTo="payment" /> : null}
     </Wrapper>
   );
 }
