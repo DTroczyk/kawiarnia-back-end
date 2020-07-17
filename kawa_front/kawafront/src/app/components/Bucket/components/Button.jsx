@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import bucketActions from "../../../redux/bucket/actions";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 const Button = ({ idx, children, name }) => {
   const dispatch = useDispatch();

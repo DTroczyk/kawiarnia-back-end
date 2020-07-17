@@ -7,5 +7,6 @@ function elementScrollIntoView(name) {
       block: "start",
       inline: "end",
     });
+   return element 
 }
 export default elementScrollIntoView;

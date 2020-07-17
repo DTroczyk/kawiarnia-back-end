@@ -1,2 +1,2 @@
 const kURL = "adresApi";
-export default kURL;
+export { kURL };

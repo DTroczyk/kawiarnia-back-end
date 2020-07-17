@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import "./History.scss";
-import { useSelector, useDispatch } from "react-redux";
-import historyActions from "../../redux/history/actions";
+import { useSelector } from "react-redux";
 import Details from "../Details/Details";
 import FadeIn from "react-fade-in";
 import { Block, Wrapper, Field } from "./components";

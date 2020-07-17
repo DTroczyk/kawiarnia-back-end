@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./SignIn.scss";
 import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";

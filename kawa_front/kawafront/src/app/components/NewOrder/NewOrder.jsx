@@ -1,17 +1,13 @@
-import React, { Fragment, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { Fragment } from "react";
+
 import "./NewOrder.scss";
 import CoffeeCup from "../CoffeeCup/CoffeeCup";
 import Map from "../Map/Map";
-import { PDFViewer } from "@react-pdf/renderer";
-import PDF from "../PDFDocument/PDFDocument";
-import orderActions from "../../redux/order/actions";
+
 import Payment from "../Payment/Payment";
 import { Coffee, Wrapper, Section } from "./components";
 
 function NewOrder() {
-  
-
   return (
     <Fragment>
       <Wrapper>

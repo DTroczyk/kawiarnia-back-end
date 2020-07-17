@@ -1,12 +1,12 @@
-import React, { Fragment } from "react";
+import React from "react";
 import {
   Page,
   Text,
   View,
-  Image,
+
   Document,
   StyleSheet,
-  PDFViewer,
+  
 } from "@react-pdf/renderer";
 
 // Create styles

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment } from "react";
 import "./Bucket.scss";
 import { useSelector } from "react-redux";
 
@@ -15,19 +15,18 @@ function getCountOfSelectedItemToPay(itemsArr) {
   let acc = 0;
   itemsArr.map((item) => {
     acc += item.isSelectedToPay ? 1 : 0;
-    return;
+    return null;
   });
   return acc;
 }
 function Bucket() {
   const bucketItems = useSelector((state) => state.bucket.bucketItems);
-  const [selectedItem, setSelectedItem] = useState(null);
 
   return (
     <Wrapper>
       <Info>
         <Text>Wartość Twojego koszyka: {getTotalValue(bucketItems)}zł</Text>
-        <Text>{selectedItem?.coffeeName}</Text>
+
         {getCountOfSelectedItemToPay(bucketItems) > 0 ? (
           <Button name="pay">Opłać zaznaczone produkty</Button>
         ) : null}

@@ -16,9 +16,14 @@ const toggleElementToPay = (payload) => ({
   type: types.TOGGLE_ELEMENT_TO_PAY,
   payload,
 });
+const saveFetchedBucket = (payload) => ({
+  type: types.SAVE_FETCHED_BUCKET,
+  payload,
+});
 export default {
   addItemToBucket,
   deleteItemFromBucket,
   setElementToDelete,
   toggleElementToPay,
+  saveFetchedBucket,
 };

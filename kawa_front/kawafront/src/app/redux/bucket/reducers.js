@@ -29,6 +29,9 @@ const bucketReducer = (state = INITIAL_STATE, action) => {
         .isSelectedToPay;
       return { ...state, bucketItems: newData };
     }
+    case types.SAVE_FETCHED_BUCKET: {
+      return { ...state, bucketItems: action.payload };
+    }
     default:
       return { ...state };
   }
