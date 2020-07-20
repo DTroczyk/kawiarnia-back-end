@@ -25,7 +25,7 @@ const Block = ({ children, type }) => {
         }, 2000);
         return;
       case "payNow":
-        toast.info("Opłać zamówienie aby zostało zrealizowane!", {
+        toast.info("Przygotuj się do finalizacji zamówienia!", {
           position: "top-left",
           autoClose: 5000,
           hideProgressBar: true,
