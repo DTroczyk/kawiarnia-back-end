@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import "./History.scss";
 import { useSelector } from "react-redux";
+import CountUp from "react-countup";
 import Details from "../Details/Details";
 import FadeIn from "react-fade-in";
 import { Block, Wrapper, Field } from "./components";
@@ -9,6 +10,10 @@ function History() {
 
   return (
     <Wrapper>
+      <Block>
+        Wypitych kaw 
+        <CountUp end={historyItems.length} />
+      </Block>
       {historyItems.map((order, idx) => {
         const { date, name, count, price, status, isCollapsed } = order;
         return (

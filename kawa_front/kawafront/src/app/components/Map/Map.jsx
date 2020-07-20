@@ -5,16 +5,18 @@ import "./Map.scss";
 import orderActions from "../../redux/order/actions";
 import ScrollButton from "../ScrollButton/ScrollButton";
 import { Wrapper, Input, Container } from "./components";
+import useGeolocation from "../../hooks/useGeolocation";
 export default function Map() {
   const dispatch = useDispatch();
-
+  const location = useGeolocation();
   const latLng = useSelector((state) => state.order.latLng);
+
   return (
     <Wrapper>
       <Input />
       <Container>
         <LeafletMap
-          center={[50.625481, 18.836307]}
+          center={latLng?latLng:[50.286263,19.104078]}
           zoom={18}
           onClick={(event) =>
             dispatch(

@@ -8,7 +8,7 @@ const bucketReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.ADD_ITEM_TO_BUCKET: {
       console.log(action.payload);
-      action.payload.isSelectedToPay = false;
+      action.payload.isSelectedToPay = action.payload.isSelectedToPay || false;
       const newData = Array.from(state.bucketItems);
 
       newData.push(action.payload);

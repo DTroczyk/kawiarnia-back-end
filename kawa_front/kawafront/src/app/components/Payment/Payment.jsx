@@ -3,16 +3,29 @@ import "./Payment.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Block, Wrapper, P, Span } from "./components";
-const Payment = ({ isAddToBucketVisible = true }) => (
+import { Fragment } from "react";
+const Payment = ({
+  isAddToBucketVisible = true,
+  shouldRenderPaymentMethods = false,
+}) => (
   <Wrapper>
-    <Block>
-      <Span>Blik</Span>
-      <P>11.30z</P>
-    </Block>
-    <Block>
-      <Span>Płatność przy odbiorze</Span>
-      <P>11.30</P>
-    </Block>
+    {shouldRenderPaymentMethods ? (
+      <Fragment>
+        <Block>
+          <Span>Blik</Span>
+          <P>11.30z</P>
+        </Block>
+        <Block>
+          <Span>Płatność przy odbiorze</Span>
+          <P>11.30</P>
+        </Block>
+      </Fragment>
+    ) : (
+      <Block type='payNow'>
+        <Span>Zapłać teraz!</Span>
+      </Block>
+    )}
+
     {isAddToBucketVisible ? (
       <Block type="addToBucket">
         <Span>Albo</Span>

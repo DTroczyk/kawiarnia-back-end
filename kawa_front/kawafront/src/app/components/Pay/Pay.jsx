@@ -6,6 +6,7 @@ import { PDFViewer } from "@react-pdf/renderer";
 import Map from "../Map/Map";
 import { useSelector } from "react-redux";
 import Payment from "../Payment/Payment";
+import Delivery from "../Delivery/Delivery";
 
 function Pay() {
   const user = useSelector((state) => state.user.data);
@@ -17,8 +18,8 @@ function Pay() {
       <PDFViewer width="100%" height={500}>
         <PDFDocument user={user} items={items} />
       </PDFViewer>
-      <Map />
-      <Payment isAddToBucketVisible={false} />
+      <Delivery />
+      <Payment shouldRenderPaymentMethods={true} isAddToBucketVisible={false} />
     </Wrapper>
   );
 }
