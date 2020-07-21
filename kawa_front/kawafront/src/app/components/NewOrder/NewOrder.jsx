@@ -1,13 +1,14 @@
 import React, { Fragment } from "react";
-
+import { useSelector } from "react-redux";
 import "./NewOrder.scss";
 import CoffeeCup from "../CoffeeCup/CoffeeCup";
 import Map from "../Map/Map";
 
 import Payment from "../Payment/Payment";
 import { Coffee, Wrapper, Section } from "./components";
-import Delivery from "../Delivery/Delivery";
+
 function NewOrder() {
+  const price = useSelector((state) => state.order.price);
   return (
     <Fragment>
       <Wrapper>
@@ -23,9 +24,11 @@ function NewOrder() {
       <Section>
         <CoffeeCup />
       </Section>
-      <Section>
-        <Payment />
-      </Section>
+      {price > 0 ? (
+        <Section>
+          <Payment />
+        </Section>
+      ) : null}
     </Fragment>
   );
 }

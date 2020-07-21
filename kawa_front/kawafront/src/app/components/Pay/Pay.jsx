@@ -7,7 +7,11 @@ import Map from "../Map/Map";
 import { useSelector } from "react-redux";
 import Payment from "../Payment/Payment";
 import Delivery from "../Delivery/Delivery";
-
+function getTotalPrice(itemsArr) {
+  let price = 0;
+  itemsArr.map((item) => (price += item.price));
+  return price;
+}
 function Pay() {
   const user = useSelector((state) => state.user.data);
   const items = useSelector((state) =>
@@ -19,7 +23,12 @@ function Pay() {
         <PDFDocument user={user} items={items} />
       </PDFViewer>
       <Delivery />
-      <Payment shouldRenderPaymentMethods={true} isAddToBucketVisible={false} />
+      <Payment
+        price={getTotalPrice(items)}
+        shouldRenderPaymentMethods={true}
+        isAddToBucketVisible={false}
+        orderedProducts={items}
+      />
     </Wrapper>
   );
 }

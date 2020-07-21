@@ -1,2 +1,2 @@
-const kURL = "adresApi";
+const kURL = "https://kawiarnia.azurewebsites.net";
 export { kURL };

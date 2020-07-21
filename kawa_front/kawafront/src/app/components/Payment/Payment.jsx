@@ -7,21 +7,33 @@ import { Fragment } from "react";
 const Payment = ({
   isAddToBucketVisible = true,
   shouldRenderPaymentMethods = false,
+  price,
+  orderedProducts,
 }) => (
   <Wrapper>
     {shouldRenderPaymentMethods ? (
       <Fragment>
-        <Block>
-          <Span>Blik</Span>
-          <P>11.30z</P>
+        <Block orderedProducts={orderedProducts} type="przelewy24">
+          <Span>Przelewy24</Span>
+          <P>
+            {new Intl.NumberFormat(window.navigator.language, {
+              style: "currency",
+              currency: "PLN",
+            }).format(price)}
+          </P>
         </Block>
         <Block>
           <Span>Płatność przy odbiorze</Span>
-          <P>11.30</P>
+          <P>
+            {new Intl.NumberFormat(window.navigator.language, {
+              style: "currency",
+              currency: "PLN",
+            }).format(price)}
+          </P>
         </Block>
       </Fragment>
     ) : (
-      <Block type='payNow'>
+      <Block type="payNow">
         <Span>Zapłać teraz!</Span>
       </Block>
     )}

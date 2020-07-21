@@ -1,4 +1,4 @@
-import React from "react";
+import React,{Fragment} from "react";
 import {
   Page,
   Text,
@@ -40,8 +40,8 @@ function PDFDocument({ user, items }) {
         </View>
         <View style={styles.section}>
           <Text>Zamówienie:</Text>
-          {items.map((item) => (
-            <>
+          {items.map((item,idx) => (
+            <Fragment key={idx}>
               <Text>
                 {item.coffeeName}:
                 {new Intl.NumberFormat(window.navigator.language, {
@@ -49,7 +49,7 @@ function PDFDocument({ user, items }) {
                   currency: "PLN",
                 }).format(item.price)}
               </Text>
-            </>
+            </Fragment>
           ))}
           <Text>
             Suma:
