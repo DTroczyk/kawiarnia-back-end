@@ -1,30 +1,37 @@
-$bgurl: "https://i.ibb.co/16VyTJF/background-both-sides-thin.png";
-$bgcolor1: #f0b175;
-$bgcolor2: #3d2d1e;
-$bgcolor3: #a37850;
-$bgcolor4: #634931;
-$bgcolor5: #3d2d1e;
+$bgurl: "https://i.ibb.co/hKTYq0m/background-both-sides.png";
+
 .signIn {
     display: flex;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url($bgurl);
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url($bgurl);
     background-position: center;
-    background-size: 100vw;
+    background-attachment: fixed;
+    background-size: cover;
     flex-direction: column;
     min-height: 100vh;
     width: 100%;
     justify-content: center;
     align-items: center;
     &__formulee {
-        width: 40%;
+      width: 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: rgba($color: white, $alpha: 0.8);
+      //backdrop-filter: blur(5px) brightness(120%);
+      padding: 5% 5% 2% 5%;
+      border: 1px solid #999;
+      border-radius: 15px;
     }
     &__button {
         font-family: Roboto;
         font-weight: 700;
+        font-size: 2vh;
         align-content: center;
         padding: 2%;
         width: 100%;
         border-radius: 10px;
-        border-color: #999;
+        border: 1px #999 solid;
         background-color: white;
         transition: background-color 0.3s;
         &:hover {
@@ -48,6 +55,7 @@ $bgcolor5: #3d2d1e;
     width: 100%;
     border: none;
     border-bottom: 1px solid #757575;
+    background-color: rgba($color: #000000, $alpha: 0);
     &:focus {
       outline: none;
       //background-color: darken($color: white, $amount: 3);
@@ -125,6 +133,17 @@ $bgcolor5: #3d2d1e;
       -webkit-animation: inputHighlighter 0.3s ease;
       -moz-animation: inputHighlighter 0.3s ease;
       animation: inputHighlighter 0.3s ease;
+    }
+  }
+  
+}
+
+@media only screen and (max-width: 900px) {
+  .signIn {
+    &__formulee { 
+      width: 100%;
+      height: 100vh;
+      border: none;
     }
   }
 }

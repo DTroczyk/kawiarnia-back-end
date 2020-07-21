@@ -1,4 +1,4 @@
-$bgurl: "https://i.ibb.co/16VyTJF/background-both-sides-thin.png";
+$bgurl: "https://i.ibb.co/hKTYq0m/background-both-sides.png";
 
 
 .newOrder {
@@ -39,8 +39,15 @@ $bgurl: "https://i.ibb.co/16VyTJF/background-both-sides-thin.png";
     height: 100vh;
   }
   &__section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 10%;
     background-color: white;
     height: 100vh;
+    background: url($bgurl);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
   }
 }

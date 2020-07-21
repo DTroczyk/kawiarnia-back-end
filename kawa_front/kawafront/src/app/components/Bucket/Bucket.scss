@@ -15,6 +15,7 @@ $bgurl: "https://i.ibb.co/hKTYq0m/background-both-sides.png";
         //backdrop-filter: blur(8px);
         background-color: rgba($color: white, $alpha: 0.5);
         width: 60%;
+        border: 1px solid #757575;
         border-radius: 10px;
     }
   &__field {
@@ -44,7 +45,6 @@ $bgurl: "https://i.ibb.co/hKTYq0m/background-both-sides.png";
     margin: 1%;
     color: rgba(white, 0.9);
     font-size: 1.5vh;
- 
     min-width: 20%;
     border: none;
     background: none;

@@ -15,7 +15,7 @@ function Pay() {
   );
   return (
     <Wrapper>
-      <PDFViewer width="100%" height={500}>
+      <PDFViewer width="60%" height={500}>
         <PDFDocument user={user} items={items} />
       </PDFViewer>
       <Delivery />

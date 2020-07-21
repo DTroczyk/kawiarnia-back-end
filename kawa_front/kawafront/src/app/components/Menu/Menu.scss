@@ -1,9 +1,4 @@
 $bgurl: "https://i.ibb.co/16VyTJF/background-both-sides-thin.png";
-$bgcolor1: #f0b175;
-$bgcolor2: #3d2d1e;
-$bgcolor3: #a37850;
-$bgcolor4: #634931;
-$bgcolor5: #3d2d1e;
 .menu {
     display: flex;
     justify-content: center;
@@ -20,6 +15,7 @@ $bgcolor5: #3d2d1e;
     &__block {
         font-family: Roboto;
         font-weight: 700;
+        font-size: 2vh;
         display: flex;
         justify-content: center;
         padding: 2%;
