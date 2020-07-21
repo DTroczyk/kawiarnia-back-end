@@ -8,6 +8,7 @@ function Input() {
     <label className="coffeeCup__checkboxContainer">
     <input
       type="checkbox"
+      className="coffeeCup__input"
       checked={orderProperties.isContainChocolate}
       onChange={() => dispatch(orderActions.toggleChocolate())}
     />

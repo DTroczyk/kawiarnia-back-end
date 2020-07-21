@@ -89,7 +89,7 @@
       text-align: center;
     }
   }
-  
+
   &__button {
     font-family: Roboto;
     font-weight: 700;
@@ -111,8 +111,15 @@
       background-color: cornflowerblue;
     }
   }
-  
 
+  &__input {
+    position: absolute;
+    opacity: 0;
+    display: none;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
   &__checkboxContainer {
     display: block;
     position: relative;
@@ -121,14 +128,6 @@
     cursor: pointer;
     font-size: 22px;
     user-select: none;
-    & input {
-      position: absolute;
-      opacity: 0;
-      display: none;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-    }
   }
   &__checkmark {
     position: absolute;
@@ -141,7 +140,7 @@
     transition: all 0.3s ease-out;
     border: 1px solid #757575;
   }
-  &__checkboxContainer input:checked ~ &__checkmark {
+  &__input:checked ~ &__checkmark {
     background-color: #ffffff;
     border-radius: 5px;
     transform: rotate(0deg) scale(1);
@@ -163,7 +162,7 @@
     transition: all 0.3s ease-out;
   }
 
-  &__checkboxContainer input:checked ~ &__checkmark::after {
+  &__input:checked ~ &__checkmark::after {
     transform: rotate(45deg) scale(1);
     opacity: 1;
     left: 8px;
