@@ -1,0 +1,12 @@
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\bin\Release\netcoreapp3.1\Api.DAL.deps.json
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\bin\Release\netcoreapp3.1\Api.DAL.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\bin\Release\netcoreapp3.1\Api.DAL.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\bin\Release\netcoreapp3.1\Api.BLL.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\bin\Release\netcoreapp3.1\Api.BLL.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Release\netcoreapp3.1\Api.DAL.csprojAssemblyReference.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Release\netcoreapp3.1\Api.DAL.AssemblyInfoInputs.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Release\netcoreapp3.1\Api.DAL.AssemblyInfo.cs
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Release\netcoreapp3.1\Api.DAL.csproj.CoreCompileInputs.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Release\netcoreapp3.1\Api.DAL.csproj.CopyComplete
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Release\netcoreapp3.1\Api.DAL.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.DAL\obj\Release\netcoreapp3.1\Api.DAL.pdb

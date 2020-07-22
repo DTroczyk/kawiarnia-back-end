@@ -1,0 +1,9 @@
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\bin\Release\netcoreapp3.1\Api.BLL.deps.json
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\bin\Release\netcoreapp3.1\Api.BLL.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\bin\Release\netcoreapp3.1\Api.BLL.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\obj\Release\netcoreapp3.1\Api.BLL.csprojAssemblyReference.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\obj\Release\netcoreapp3.1\Api.BLL.AssemblyInfoInputs.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\obj\Release\netcoreapp3.1\Api.BLL.AssemblyInfo.cs
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\obj\Release\netcoreapp3.1\Api.BLL.csproj.CoreCompileInputs.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\obj\Release\netcoreapp3.1\Api.BLL.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\obj\Release\netcoreapp3.1\Api.BLL.pdb

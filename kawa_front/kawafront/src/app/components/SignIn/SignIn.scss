@@ -1,0 +1,149 @@
+$bgurl: "https://i.ibb.co/hKTYq0m/background-both-sides.png";
+
+.signIn {
+    display: flex;
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url($bgurl);
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    &__formulee {
+      width: 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: rgba($color: white, $alpha: 0.8);
+      //backdrop-filter: blur(5px) brightness(120%);
+      padding: 5% 5% 2% 5%;
+      border: 1px solid #999;
+      border-radius: 15px;
+    }
+    &__button {
+        font-family: Roboto;
+        font-weight: 700;
+        font-size: 2vh;
+        align-content: center;
+        padding: 2%;
+        width: 100%;
+        border-radius: 10px;
+        border: 1px #999 solid;
+        background-color: white;
+        transition: background-color 0.3s;
+        &:hover {
+            border-color: cornflowerblue;
+            background-color: darken($color: white, $amount: 4);
+            cursor: pointer;
+        }
+      }
+
+      //a'la material design
+  &__field {
+    position: relative;
+    margin-bottom: 45px;
+    width: 100%;
+  }
+
+  &__input {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #757575;
+    background-color: rgba($color: #000000, $alpha: 0);
+    &:focus {
+      outline: none;
+      //background-color: darken($color: white, $amount: 3);
+    }
+  }
+
+  &__input:focus ~ label,
+  &__input:valid ~ label
+  {
+    top: -20px;
+    font-size: 14px;
+    color: cornflowerblue;
+  }
+
+  &__label {
+    color: #999;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+  }
+
+  
+  /* BOTTOM BARS ================================= */
+  &__input {
+    &--bar {
+      position: relative;
+      display: block;
+      width: 100%;
+    }
+
+    &--bar:before,
+    &--bar:after {
+      content: "";
+      height: 2px;
+      width: 0;
+      bottom: 1px;
+      position: absolute;
+      background: cornflowerblue;
+      transition: 0.2s ease all;
+      -moz-transition: 0.2s ease all;
+      -webkit-transition: 0.2s ease all;
+    }
+    &--bar:before {
+      left: 50%;
+    }
+    &--bar:after {
+      right: 50%;
+    }
+
+    /* active state */
+    &:focus ~ &--bar:before,
+    &:focus ~ &--bar:after {
+      width: 50%;
+    }
+
+    /* HIGHLIGHTER ================================== */
+    &--highlight {
+      position: absolute;
+      height: 60%;
+      width: 100%;
+      top: 25%;
+      left: 0;
+      pointer-events: none;
+      opacity: 0.1;
+    }
+
+    /* active state */
+    &:focus ~ &--highlight {
+      -webkit-animation: inputHighlighter 0.3s ease;
+      -moz-animation: inputHighlighter 0.3s ease;
+      animation: inputHighlighter 0.3s ease;
+    }
+  }
+  
+}
+
+@media only screen and (max-width: 900px) {
+  .signIn {
+    &__formulee { 
+      width: 100%;
+      height: 100vh;
+      border: none;
+    }
+  }
+}

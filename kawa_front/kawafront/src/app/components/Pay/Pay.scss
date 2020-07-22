@@ -1,0 +1,21 @@
+$bgurl: "https://i.ibb.co/hKTYq0m/background-both-sides.png";
+
+.pay {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  padding: 10vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), url($bgurl);
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  & iframe {
+    height: 80vh;
+    outline: none;
+    border: 1px solid #757575;
+    border-radius: 10px;
+  }
+}
