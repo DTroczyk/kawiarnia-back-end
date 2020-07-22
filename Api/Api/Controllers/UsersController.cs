@@ -53,19 +53,15 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserVm>>> GetUsers()
         {
-            if (Autorization())
+            if (!Autorization())
             {
-                var userEntities = await _context.Users.ToListAsync();
-                IEnumerable<UserVm> userVms = Mapper.Map<IEnumerable<UserVm>>(userEntities);
-                return Ok(userVms);
+                return Unauthorized();
             }
 
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claims = identity.Claims.ToList();
+            var userEntities = await _context.Users.ToListAsync();
+            IEnumerable<UserVm> userVms = Mapper.Map<IEnumerable<UserVm>>(userEntities);
 
-            var userEntity = await _context.Users.FindAsync(claims[0].Value);
-            IEnumerable<UserVm> userVm = Mapper.Map<IEnumerable<UserVm>>(userEntity);
-            return Ok(userVm);
+            return Ok(userVms);
         }
 
         // GET: Users/5
@@ -132,10 +128,10 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            //if (!Autorization())
-            //{
-            //    return Unauthorized();
-            //}
+            if (!Autorization())
+            {
+                return Unauthorized();
+            }
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
