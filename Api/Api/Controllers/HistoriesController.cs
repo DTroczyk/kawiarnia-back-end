@@ -37,28 +37,12 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HistoryVm>>> GetHistoryItems()
         {
-            var historyEntities = await _context.Orders
-                .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffe)
-                .Where(o => o.IsPaymentCompleted == true)
-                .ToListAsync();
-
-            IEnumerable<HistoryVm> historyVms = Mapper.Map<IEnumerable<HistoryVm>>(historyEntities);
-
-            return Ok(historyVms);
-        }
-
-        //GET: Histories/userName
-        [HttpGet("{userName}")]
-        public async Task<ActionResult<IEnumerable<HistoryVm>>> GetHistoryUserItems(string userName)
-        {
             var username = getUserName();
 
             var historyEntities = await _context.Orders
                 .Include(o => o.Items)
                     .ThenInclude(c => c.Coffe)
                 .Where(o => o.IsPaymentCompleted == true)
-                .Where(o => o.ClientId == userName)
                 .Where(o => o.ClientId == username)
                 .ToListAsync();
 
@@ -67,26 +51,23 @@ namespace Api.Controllers
             return Ok(historyVms);
         }
 
-        // GET: Histories/userName&date
-        [HttpGet("{userName}&{date}")]
-        public async Task<ActionResult<HistoryVm>> GetHistoryItem(string userName, DateTime date)
+        //GET: Histories/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<HistoryVm>>> GetHistoryUserItems(int id)
         {
-            var historyEntity = await _context.Orders
+            var username = getUserName();
+
+            var historyEntities = await _context.Orders
                 .Include(o => o.Items)
                     .ThenInclude(c => c.Coffe)
                 .Where(o => o.IsPaymentCompleted == true)
-                .Where(o => o.ClientId == userName)
-                .Where(o => o.OrderDate == date)
-                .FirstOrDefaultAsync();
+                .Where(o => o.ClientId == username)
+                .Where(o => o.Id == id)
+                .ToListAsync();
 
-            if (historyEntity == null)
-            {
-                return NotFound();
-            }
+            IEnumerable<HistoryVm> historyVms = Mapper.Map<IEnumerable<HistoryVm>>(historyEntities);
 
-            HistoryVm historyVm = Mapper.Map<HistoryVm>(historyEntity);
-
-            return Ok(historyVm);
+            return Ok(historyVms);
         }
 
         //// PUT: Histories/5
@@ -135,11 +116,11 @@ namespace Api.Controllers
             return CreatedAtAction("GetOrderItem", new { id = order.Id }, order);
         }
 
-        // DELETE: histories/date
-        [HttpDelete("{date}")]
-        public async Task<ActionResult<Order>> DeleteHistory(DateTime date)
+        // DELETE: histories/id
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Order>> DeleteHistory(int id)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.OrderDate == date);
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
             if (order == null)
             {
                 return NotFound();

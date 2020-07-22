@@ -63,6 +63,18 @@ namespace Api.Configuration
                     .ForMember(dest => dest.Items, x => x.MapFrom(src => src.items))
                     .ForMember(dest => dest.ClientId, x => x.MapFrom(src => src.username))
                     .ForMember(dest => dest.Id, x => x.MapFrom(src => src.id));
+                mapper.CreateMap<UserVm, User>()
+                    .ForMember(dest => dest.UserName, x => x.MapFrom(src => src.username))
+                    .ForMember(dest => dest.PasswordHash, x => x.MapFrom(src => src.password))
+                    .ForMember(dest => dest.Email, x => x.MapFrom(src => src.email))
+                    .ForMember(dest => dest.FirstName, x => x.MapFrom(src => src.firstName))
+                    .ForMember(dest => dest.LastName, x => x.MapFrom(src => src.lastName))
+                    .ForMember(dest => dest.DateOfBirth, x => x.MapFrom(src => src.dateOfBirth))
+                    .ForMember(dest => dest.Street, x => x.MapFrom(src => src.road))
+                    .ForMember(dest => dest.HouseNumber, x => x.MapFrom(src => src.houseNumber))
+                    .ForMember(dest => dest.PostalCode, x => x.MapFrom(src => src.zipcode))
+                    .ForMember(dest => dest.City, x => x.MapFrom(src => src.place))
+                    .ForMember(dest => dest.PhoneNumber, x => x.MapFrom(src => src.telephone));
 
             });
 

@@ -26,7 +26,6 @@ namespace Api.DAL.Migrations
                 columns: table => new
                 {
                     UserName = table.Column<string>(nullable: false),
-                    NormalizedUserName = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     PhoneNumber = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<string>(nullable: false),
@@ -119,12 +118,6 @@ namespace Api.DAL.Migrations
                 name: "IX_Users_Email",
                 table: "Users",
                 column: "Email",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_NormalizedUserName",
-                table: "Users",
-                column: "NormalizedUserName",
                 unique: true);
         }
 

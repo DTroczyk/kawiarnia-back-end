@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200717110755_Initial")]
+    [Migration("20200722110634_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -137,10 +137,6 @@ namespace Api.DAL.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NormalizedUserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -160,9 +156,6 @@ namespace Api.DAL.Migrations
                     b.HasKey("UserName");
 
                     b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("NormalizedUserName")
                         .IsUnique();
 
                     b.ToTable("Users");

@@ -8,7 +8,7 @@ namespace Api.DAL.EF
 {
     public class ApplicationDbContext : DbContext
     {
-        private readonly string _connectionString = "Data Source=s30home.ddns.net\\BASTION-1603\\UCZELNIA,12345; Initial Catalog=Kawiarnia; User Id=Coffe; Password=coffe";
+        private readonly string _connectionString = "Server=tcp:kawiarniadb.database.windows.net,1433;Initial Catalog=kawiarniaDb;Persist Security Info=False;User ID=praktyki2020;Password=Covid2019;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Coffe> Coffes { get; set; }

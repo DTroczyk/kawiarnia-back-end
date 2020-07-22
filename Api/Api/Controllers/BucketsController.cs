@@ -51,42 +51,20 @@ namespace Api.Controllers
             return Ok(bucketVms);
         }
 
-        //GET: Buckets/userName
-        [HttpGet("{userName}")]
-        public async Task<ActionResult<IEnumerable<BucketVm>>> GetHistoryUserItems(string userName)
+        //GET: Buckets/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<BucketVm>>> GetHistoryUserItems(int id)
         {
             var bucketEntities = await _context.Orders
                 .Include(o => o.Items)
                     .ThenInclude(c => c.Coffe)
                 .Where(o => o.IsPaymentCompleted == false)
-                .Where(o => o.ClientId == userName)
+                .Where(o => o.Id == id)
                 .ToListAsync();
 
             IEnumerable<BucketVm> bucketVms = Mapper.Map<IEnumerable<BucketVm>>(bucketEntities);
 
             return Ok(bucketVms);
-        }
-
-        // GET: Buckets/userName&date
-        [HttpGet("{userName}&{date}")]
-        public async Task<ActionResult<BucketVm>> GetHistoryItem(string userName, DateTime date)
-        {
-            var bucketEntity = await _context.Orders
-                .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffe)
-                .Where(o => o.IsPaymentCompleted == false)
-                .Where(o => o.ClientId == userName)
-                .Where(o => o.OrderDate == date)
-                .FirstOrDefaultAsync();
-
-            if (bucketEntity == null)
-            {
-                return NotFound();
-            }
-
-            BucketVm bucketVm = Mapper.Map<BucketVm>(bucketEntity);
-
-            return Ok(bucketVm);
         }
 
         //// PUT: Buckets/5
@@ -135,11 +113,11 @@ namespace Api.Controllers
             return CreatedAtAction("GetOrderItem", new { id = order.Id }, order);
         }
 
-        // DELETE: Buckets/date
-        [HttpDelete("{date}")]
-        public async Task<ActionResult<Order>> DeleteHistory(DateTime date)
+        // DELETE: Buckets/id
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Order>> DeleteHistory(int id)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.OrderDate == date);
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
             if (order == null)
             {
                 return NotFound();

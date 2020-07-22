@@ -14,7 +14,6 @@ using System.Security.Claims;
 
 namespace Api.Controllers
 {
-    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -39,32 +38,43 @@ namespace Api.Controllers
             return false;
         }
 
-        // GET: Users/User
-        [HttpGet("user")]
-        public String GetUser()
+        private bool Autorization(string username)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             IList<Claim> claims = identity.Claims.ToList();
 
-            return claims[0].Value;
+            if (claims[0].Value.ToUpper() == username.ToUpper())
+            {
+                return true;
+            }
+
+            return false;
         }
 
         // GET: Users
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserVm>>> GetUsers()
         {
-            if (!Autorization())
+            if (Autorization())
             {
-                return Unauthorized();
+                var userEntities = await _context.Users.ToListAsync();
+                IEnumerable<UserVm> userVms = Mapper.Map<IEnumerable<UserVm>>(userEntities);
+
+                return Ok(userVms);
             }
 
-            var userEntities = await _context.Users.ToListAsync();
-            IEnumerable<UserVm> userVms = Mapper.Map<IEnumerable<UserVm>>(userEntities);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IList<Claim> claims = identity.Claims.ToList();
 
-            return Ok(userVms);
+            var userEntity = await _context.Users.Where(x => x.UserName == claims[0].Value).ToListAsync();
+            IEnumerable<UserVm> userVm = Mapper.Map<IEnumerable<UserVm>>(userEntity);
+
+            return Ok(userVm);
         }
 
-        // GET: Users/5
+        // GET: Users/userName
+        [Authorize]
         [HttpGet("{userName}")]
         public async Task<ActionResult<UserVm>> GetUser(string userName)
         {
@@ -85,16 +95,19 @@ namespace Api.Controllers
             return Ok(userVm);
         }
 
-        // PUT: Users/5
+        // PUT: Users/userName
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize]
         [HttpPut("{userName}")]
-        public async Task<IActionResult> PutUser(string userName, User user)
+        public async Task<IActionResult> PutUser(string userName, UserVm userVm)
         {
-            if (!Autorization())
+            if (!Autorization(userName))
             {
                 return Unauthorized();
             }
+
+            var user = Mapper.Map<User>(userVm);
 
             if (userName != user.UserName)
             {
@@ -126,12 +139,10 @@ namespace Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<UserVm>> PostUser(UserVm userVm)
         {
-            if (!Autorization())
-            {
-                return Unauthorized();
-            }
+            var user = Mapper.Map<User>(userVm);
+            user.RegistrationDate = DateTime.Now;
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -140,10 +151,11 @@ namespace Api.Controllers
         }
 
         // DELETE: Users/5
+        [Authorize]
         [HttpDelete("{userName}")]
         public async Task<ActionResult<User>> DeleteUser(string userName)
         {
-            if (!Autorization())
+            if (!Autorization(userName))
             {
                 return Unauthorized();
             }
