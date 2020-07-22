@@ -77,10 +77,10 @@ namespace Api.Controllers
         }
 
         //// PUT: Buckets/5
-        //[HttpPut("{date}")]
-        //public async Task<IActionResult> PutOrderItem(DateTime date, HistoryVm historyVm)
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutOrderItem(int id, HistoryVm historyVm)
         //{
-        //    if (date != historyVm.date)
+        //    if (id != historyVm.id)
         //    {
         //        return BadRequest();
         //    }
@@ -93,7 +93,7 @@ namespace Api.Controllers
         //    }
         //    catch (DbUpdateConcurrencyException)
         //    {
-        //        if (!HistoryExists(date))
+        //        if (!BucketExists(date))
         //        {
         //            return NotFound();
         //        }
@@ -138,7 +138,23 @@ namespace Api.Controllers
             return order;
         }
 
-        private bool HistoryExists(DateTime id)
+        // DELETE: Buckets/id
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Order>> DeleteHistory(int id)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
+
+            return order;
+        }
+
+        private bool BucketExists(DateTime id)
         {
             return _context.Orders.Any(e => e.OrderDate == id);
         }
