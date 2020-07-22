@@ -56,7 +56,7 @@ namespace Api.Controllers
             {
                 return null;
             }
-            if(login.UserName.ToUpper() == user.UserName.ToUpper() && login.PasswordHash == user.PasswordHash)
+            if (login.UserName.ToUpper() == user.UserName.ToUpper() && login.PasswordHash == user.PasswordHash)
             {
                 return user;
             }
@@ -79,7 +79,7 @@ namespace Api.Controllers
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Issuer"],
                 claims,
-                expires: DateTime.Now.AddMinutes(20),
+                expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials);
 
             var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
