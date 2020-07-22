@@ -9,9 +9,12 @@ using Api.BLL.Entity;
 using Api.DAL.EF;
 using Api.BLL.ViewModel;
 using AutoMapper;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class HistoriesController : ControllerBase
@@ -21,6 +24,13 @@ namespace Api.Controllers
         public HistoriesController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        private string getUserName()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IList<Claim> claims = identity.Claims.ToList();
+            return claims[0].Value;
         }
 
         // GET: Histories
@@ -42,11 +52,14 @@ namespace Api.Controllers
         [HttpGet("{userName}")]
         public async Task<ActionResult<IEnumerable<HistoryVm>>> GetHistoryUserItems(string userName)
         {
+            var username = getUserName();
+
             var historyEntities = await _context.Orders
                 .Include(o => o.Items)
                     .ThenInclude(c => c.Coffe)
                 .Where(o => o.IsPaymentCompleted == true)
                 .Where(o => o.ClientId == userName)
+                .Where(o => o.ClientId == username)
                 .ToListAsync();
 
             IEnumerable<HistoryVm> historyVms = Mapper.Map<IEnumerable<HistoryVm>>(historyEntities);

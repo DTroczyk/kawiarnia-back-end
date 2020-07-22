@@ -33,7 +33,7 @@ namespace Api.Controllers
 
             if (claims[0].Value.ToUpper() == "DTROCZYK")
             {
-                return true;;
+                return true;
             }
 
             return false;

@@ -9,9 +9,12 @@ using Api.BLL.Entity;
 using Api.DAL.EF;
 using Api.BLL.ViewModel;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class BucketsController : ControllerBase
@@ -23,14 +26,24 @@ namespace Api.Controllers
             _context = context;
         }
 
+        private string getUserName()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IList<Claim> claims = identity.Claims.ToList();
+            return claims[0].Value;
+        }
+
         // GET: Buckets
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BucketVm>>> GetHistoryItems()
         {
+            var username = getUserName();
+
             var bucketEntities = await _context.Orders
                 .Include(o => o.Items)
                     .ThenInclude(c => c.Coffe)
                 .Where(o => o.IsPaymentCompleted == false)
+                .Where(o => o.ClientId == username)
                 .ToListAsync();
 
             IEnumerable<BucketVm> bucketVms = Mapper.Map<IEnumerable<BucketVm>>(bucketEntities);
