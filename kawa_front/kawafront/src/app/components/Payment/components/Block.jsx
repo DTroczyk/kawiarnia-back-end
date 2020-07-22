@@ -29,7 +29,7 @@ const Block = ({ children, type, orderedProducts }) => {
       case "addToBucket":
         setIsClicked(true);
         if (!isClicked) {
-          toast.info("Dodano do koszyka!", {
+          toast.info("Dodanoo do koszyka!", {
             position: "top-left",
             autoClose: 5000,
             hideProgressBar: true,
