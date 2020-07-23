@@ -73,27 +73,29 @@ namespace Api.Controllers
             return Ok(userVm);
         }
 
-        // GET: Users/userName
-        [Authorize]
-        [HttpGet("{userName}")]
-        public async Task<ActionResult<UserVm>> GetUser(string userName)
-        {
-            if (!Autorization())
-            {
-                return Unauthorized();
-            }
+        //// GET: Users/userName
+        //[Authorize]
+        //[HttpGet("{userName}")]
+        //public async Task<ActionResult<UserVm>> GetUser(string userName)
+        //{
+        //    if (!Autorization())
+        //    {
+        //        return Unauthorized();
+        //    }
 
-            var user = await _context.Users.FindAsync(userName);
+        //    var user = await _context.Users.FindAsync(userName);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            UserVm userVm = Mapper.Map<UserVm>(user);
+        //    UserVm userVm = Mapper.Map<UserVm>(user);
 
-            return Ok(userVm);
-        }
+        //    return Ok(userVm);
+        //}
+
+        
 
         // PUT: Users/userName
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -138,17 +140,7 @@ namespace Api.Controllers
         // POST: Users
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<UserVm>> PostUser(UserVm userVm)
-        {
-            var user = Mapper.Map<User>(userVm);
-            user.RegistrationDate = DateTime.Now;
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.UserName }, user);
-        }
+        
 
         // DELETE: Users/5
         [Authorize]

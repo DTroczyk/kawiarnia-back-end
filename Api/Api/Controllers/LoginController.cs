@@ -43,7 +43,11 @@ namespace Api.Controllers
             if(user != null)
             {
                 var tokenStr = GenerateJSONWebToken(user);
-                response = Ok(new { token = tokenStr });
+                response = Ok(new { token = tokenStr, status = 200 });
+            }
+            else
+            {
+                response = Unauthorized();
             }
 
             return response;
