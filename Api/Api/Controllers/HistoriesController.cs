@@ -41,14 +41,20 @@ namespace Api.Controllers
 
             var historyEntities = await _context.Orders
                 .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffe)
+                    .ThenInclude(c => c.Coffee)
                 .Where(o => o.IsPaymentCompleted == true)
                 .Where(o => o.ClientId == username)
                 .ToListAsync();
 
+            int counter = 0;
+            foreach (Order order in historyEntities)
+            {
+                counter += order.Items.Count();
+            }
+
             IEnumerable<HistoryVm> historyVms = Mapper.Map<IEnumerable<HistoryVm>>(historyEntities);
 
-            return Ok(historyVms);
+            return Ok(new { counter = counter, historyVms });
         }
 
         //GET: Histories/5
@@ -59,7 +65,7 @@ namespace Api.Controllers
 
             var historyEntities = await _context.Orders
                 .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffe)
+                    .ThenInclude(c => c.Coffee)
                 .Where(o => o.IsPaymentCompleted == true)
                 .Where(o => o.ClientId == username)
                 .Where(o => o.Id == id)
@@ -68,32 +74,6 @@ namespace Api.Controllers
             IEnumerable<HistoryVm> historyVms = Mapper.Map<IEnumerable<HistoryVm>>(historyEntities);
 
             return Ok(historyVms);
-        }
-
-        //GET: Histories/counter
-        //Counter drunk coffees
-        [Route("Counter")]
-        [HttpGet]
-        public async Task<ActionResult<int>> CoffeeCounter()
-        {
-            var username = getUserName();
-
-            var historyEntities = await _context.Orders
-                .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffe)
-                .Where(o => o.IsPaymentCompleted == true)
-                .Where(o => o.ClientId == username)
-                .ToListAsync();
-
-            int counter = 0;
-
-            foreach (Order order in historyEntities)
-            {
-                counter += order.Items.Count();
-            }
-
-
-            return Ok(new { counter = counter });
         }
 
         //// PUT: Histories/5

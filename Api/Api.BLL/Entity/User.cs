@@ -26,5 +26,7 @@ namespace Api.BLL.Entity
         public string Street { get; set; }
         public string PostalCode { get; set; }
         public string HouseNumber { get; set; }
+
+        public bool IsVerifiedEmail { get; set; }
     }
 }

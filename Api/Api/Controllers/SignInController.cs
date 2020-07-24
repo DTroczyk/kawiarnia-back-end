@@ -41,6 +41,24 @@ namespace Api.Controllers
         public async Task<ActionResult<UserVm>> RegisterUser(UserVm userVm)
         {
             var user = Mapper.Map<User>(userVm);
+
+            bool isUserExist = false;
+            bool isEmailExist = false;
+
+            if (_context.Users.Any(u => u.UserName == user.UserName))
+            {
+                isUserExist = true;
+            }
+            if (_context.Users.Any(u => u.Email == user.Email))
+            {
+                isEmailExist = true;
+            }
+
+            if (isUserExist || isEmailExist)
+            {
+                return Conflict(new { usernameConflict = isUserExist, emailConflict = isEmailExist });
+            }
+
             user.RegistrationDate = DateTime.Now;
 
             _context.Users.Add(user);

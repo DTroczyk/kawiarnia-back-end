@@ -10,9 +10,9 @@ namespace Api.BLL.Entity
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("Coffe")]
-        public int CoffeId { get; set; }
-        public Coffe Coffe { get; set; }
+        [ForeignKey("Coffee")]
+        public string CoffeeId { get; set; }
+        public Coffee Coffee { get; set; }
         [ForeignKey("Order")]
         public int OrderId { get; set; }
         public Order Order { get; set; }

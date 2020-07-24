@@ -9,9 +9,12 @@ using Api.BLL.Entity;
 using Api.DAL.EF;
 using Api.BLL.ViewModel;
 using AutoMapper;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
@@ -23,15 +26,11 @@ namespace Api.Controllers
             _context = context;
         }
 
-        // GET: Orders
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderVm>>> GetOrders()
+        private string getUserName()
         {
-            var orderItemsEntities = await _context.OrderItems.ToListAsync();
-
-            IEnumerable<OrderVm> orderVms = Mapper.Map<IEnumerable<OrderVm>>(orderItemsEntities);
-
-            return Ok(orderVms);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IList<Claim> claims = identity.Claims.ToList();
+            return claims[0].Value;
         }
 
         // GET: Orders/5
@@ -86,8 +85,36 @@ namespace Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderItem)
+        public async Task<ActionResult<OrderVm>> PostOrderItem(OrderVm orderVm)
         {
+            var username = getUserName();
+
+            var bucketEntity = await _context.Orders
+                .Include(o => o.Items)
+                    .ThenInclude(c => c.Coffee)
+                .Where(o => o.ClientId == username)
+                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+
+            if (bucketEntity == null)
+            {
+                bucketEntity = new Order();
+                bucketEntity.IsPaymentCompleted = false;
+                bucketEntity.ClientId = username;
+                bucketEntity.Items = new List<OrderItem>();
+
+                _context.Orders.Add(bucketEntity);
+                await _context.SaveChangesAsync();
+
+                bucketEntity = await _context.Orders
+                .Include(o => o.Items)
+                    .ThenInclude(c => c.Coffee)
+                .Where(o => o.ClientId == username)
+                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+            }
+
+            OrderItem orderItem = Mapper.Map<OrderItem>(orderVm);
+            orderItem.OrderId = bucketEntity.Id;
+
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
 

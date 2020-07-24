@@ -7,7 +7,7 @@ INSERT INTO Coffes (Name,Description) VALUES ('Latte', 'W³oski napój kawowy pows
 INSERT INTO Coffes (Name,Description) VALUES ('Mocca', 'Jeden z wariantów kawy latte. Sk³ada siê z espresso, gor¹cego mleka oraz ciemnej lub mlecznej czekolady.');
 INSERT INTO Coffes (Name,Description) VALUES ('Americana', 'Czarna kawa powsta³a z po³¹czenia wody i espresso.');
 INSERT INTO Coffes (Name,Description) VALUES ('Flat white', 'Napój kawowy pochodz¹cy z Austraill lub Nowej Zelandii. Jest przygotowywany poprzez zalanie jednej lub dwóch porcji espresso spienionym mlekiem o jednorodnej, aksamitnej konsystencji.');
-INSERT INTO Coffes (Name,Description) VALUES ('Espresso', 'Wywodzi siê z W³och, gdzie w 1901 Luigi Bezzera stworzy³ pierwszy ekspres do expresso. By³ on jednak konstrikcj¹ opart¹ na przep³ywie pary i wody, co prowadzi³o do smakowych zmian ekstraktu.');
+INSERT INTO Coffes (Name,Description) VALUES ('Espresso', 'Wywodzi siê z W³och, gdzie w 1901 Luigi Bezzera stworzy³ pierwszy ekspres do expresso. By³ on jednak konstrukcj¹ opart¹ na przep³ywie pary i wody, co prowadzi³o do smakowych zmian ekstraktu.');
 
 Select * FROM Coffes
 
@@ -20,15 +20,15 @@ INSERT INTO Orders (OrderDate, ClientId, City, Street, HouseNumber, PaymentMetho
 
 Select * FROM Orders
 
-INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES (1, 1, 2, 0, 6, 10.99);
-INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES (1, 1, 2, 0, 7, 11.50);
-INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES (2, 2, 4, 0, 6, 12.99);
-INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES (3, 2, 4, 1, 7, 15.50);
+INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES ('Latte', 1, 2, 0, 6, 10.99);
+INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES ('Latte', 1, 2, 0, 7, 11.50);
+INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES ('Mocca', 2, 4, 0, 6, 12.99);
+INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES ('Americana', 2, 4, 1, 7, 15.50);
 
-INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES (5, 3, 8, 1, 2, 42.99);
-INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES (4, 3, 5, 0, 7, 22.50);
-INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES (2, 4, 1, 0, 6, 8.99);
-INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES (3, 4, 2, 1, 7, 15.50);
+INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES ('Espresso', 3, 8, 1, 2, 42.99);
+INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES ('Flat white', 3, 5, 0, 7, 22.50);
+INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES ('Mocca', 4, 1, 0, 6, 8.99);
+INSERT INTO OrderItems(CoffeId, OrderId, EspressoCount, IsContainChocolate, MilkCount, Price) VALUES ('Americana', 4, 2, 1, 7, 15.50);
 
 Select * FROM OrderItems
 

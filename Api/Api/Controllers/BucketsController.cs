@@ -35,36 +35,31 @@ namespace Api.Controllers
 
         // GET: Buckets
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BucketVm>>> GetHistoryItems()
+        public async Task<ActionResult<IEnumerable<OrderVm>>> GetBucketItems()
         {
             var username = getUserName();
 
-            var bucketEntities = await _context.Orders
+            var bucketEntity = await _context.Orders
                 .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffe)
-                .Where(o => o.IsPaymentCompleted == false)
+                    .ThenInclude(c => c.Coffee)
                 .Where(o => o.ClientId == username)
-                .ToListAsync();
+                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
 
-            IEnumerable<BucketVm> bucketVms = Mapper.Map<IEnumerable<BucketVm>>(bucketEntities);
+            if (bucketEntity == null || bucketEntity.Items.Count == 0)
+            {
+                return Ok("The bucket is empty");
+            }
 
-            return Ok(bucketVms);
-        }
+            IList<OrderItem> orderItems = new List<OrderItem>();
 
-        //GET: Buckets/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<BucketVm>>> GetHistoryUserItems(int id)
-        {
-            var bucketEntities = await _context.Orders
-                .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffe)
-                .Where(o => o.IsPaymentCompleted == false)
-                .Where(o => o.Id == id)
-                .ToListAsync();
+            foreach (OrderItem order in bucketEntity.Items)
+            {
+                orderItems.Add(order);
+            }
 
-            IEnumerable<BucketVm> bucketVms = Mapper.Map<IEnumerable<BucketVm>>(bucketEntities);
+            IEnumerable<OrderVm> orderVms = Mapper.Map<IEnumerable<OrderVm>>(bucketEntity);
 
-            return Ok(bucketVms);
+            return Ok(orderVms);
         }
 
         //// PUT: Buckets/5
@@ -96,22 +91,6 @@ namespace Api.Controllers
 
         //    return NoContent();
         //}
-
-        // POST: Buckets
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<BucketVm>> PostHistory(BucketVm bucket)
-        {
-            Order order = Mapper.Map<Order>(bucket);
-
-            order.IsPaymentCompleted = false;
-
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetOrderItem", new { id = order.Id }, order);
-        }
 
         // DELETE: Buckets/id
         [HttpDelete("{id}")]
