@@ -70,6 +70,32 @@ namespace Api.Controllers
             return Ok(historyVms);
         }
 
+        //GET: Histories/counter
+        //Counter drunk coffees
+        [Route("Counter")]
+        [HttpGet]
+        public async Task<ActionResult<int>> CoffeeCounter()
+        {
+            var username = getUserName();
+
+            var historyEntities = await _context.Orders
+                .Include(o => o.Items)
+                    .ThenInclude(c => c.Coffe)
+                .Where(o => o.IsPaymentCompleted == true)
+                .Where(o => o.ClientId == username)
+                .ToListAsync();
+
+            int counter = 0;
+
+            foreach (Order order in historyEntities)
+            {
+                counter += order.Items.Count();
+            }
+
+
+            return Ok(new { counter = counter });
+        }
+
         //// PUT: Histories/5
         //[HttpPut("{date}")]
         //public async Task<IActionResult> PutOrderItem(DateTime date, HistoryVm historyVm)
