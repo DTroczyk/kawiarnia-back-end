@@ -8,17 +8,15 @@ namespace Api.DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Coffes",
+                name: "Coffees",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Coffes", x => x.Id);
+                    table.PrimaryKey("PK_Coffees", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
@@ -36,7 +34,8 @@ namespace Api.DAL.Migrations
                     City = table.Column<string>(nullable: true),
                     Street = table.Column<string>(nullable: true),
                     PostalCode = table.Column<string>(nullable: true),
-                    HouseNumber = table.Column<string>(nullable: true)
+                    HouseNumber = table.Column<string>(nullable: true),
+                    IsVerifiedEmail = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,7 +74,7 @@ namespace Api.DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CoffeId = table.Column<int>(nullable: false),
+                    CoffeeId = table.Column<string>(nullable: true),
                     OrderId = table.Column<int>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     MilkCount = table.Column<int>(nullable: false),
@@ -86,11 +85,11 @@ namespace Api.DAL.Migrations
                 {
                     table.PrimaryKey("PK_OrderItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderItems_Coffes_CoffeId",
-                        column: x => x.CoffeId,
-                        principalTable: "Coffes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_OrderItems_Coffees_CoffeeId",
+                        column: x => x.CoffeeId,
+                        principalTable: "Coffees",
+                        principalColumn: "Name",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
@@ -100,9 +99,9 @@ namespace Api.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_CoffeId",
+                name: "IX_OrderItems_CoffeeId",
                 table: "OrderItems",
-                column: "CoffeId");
+                column: "CoffeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
@@ -127,7 +126,7 @@ namespace Api.DAL.Migrations
                 name: "OrderItems");
 
             migrationBuilder.DropTable(
-                name: "Coffes");
+                name: "Coffees");
 
             migrationBuilder.DropTable(
                 name: "Orders");

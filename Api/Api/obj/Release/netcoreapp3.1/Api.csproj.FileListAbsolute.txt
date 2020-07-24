@@ -158,3 +158,4 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Release\netcoreapp3.1\Api.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Release\netcoreapp3.1\Api.pdb
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Release\netcoreapp3.1\Api.genruntimeconfig.cache
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Release\netcoreapp3.1\AutoMapper.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Release\netcoreapp3.1\Stripe.net.dll

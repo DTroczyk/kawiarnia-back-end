@@ -60,6 +60,7 @@ namespace Api.Controllers
             }
 
             user.RegistrationDate = DateTime.Now;
+            user.IsVerifiedEmail = false;
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();

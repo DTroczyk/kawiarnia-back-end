@@ -47,7 +47,7 @@ namespace Api.Controllers
 
             if (bucketEntity == null || bucketEntity.Items.Count == 0)
             {
-                return Ok("The bucket is empty");
+                return NoContent();
             }
 
             IList<OrderItem> orderItems = new List<OrderItem>();
@@ -57,7 +57,7 @@ namespace Api.Controllers
                 orderItems.Add(order);
             }
 
-            IEnumerable<OrderVm> orderVms = Mapper.Map<IEnumerable<OrderVm>>(bucketEntity);
+            IEnumerable<OrderVm> orderVms = Mapper.Map<IEnumerable<OrderVm>>(orderItems);
 
             return Ok(orderVms);
         }

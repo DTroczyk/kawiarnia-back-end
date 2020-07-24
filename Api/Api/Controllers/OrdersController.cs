@@ -33,57 +33,7 @@ namespace Api.Controllers
             return claims[0].Value;
         }
 
-        // GET: Orders/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<OrderVm>> GetOrderItem(int id)
-        {
-            var orderItem = await _context.OrderItems.FindAsync(id);
-
-            if (orderItem == null)
-            {
-                return NotFound();
-            }
-
-            OrderVm orderVm = Mapper.Map<OrderVm>(orderItem);
-
-            return Ok(orderVm);
-        }
-
-        // PUT: api/Orders/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrderItem(int id, OrderItem orderItem)
-        {
-            if (id != orderItem.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(orderItem).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderItemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Orders
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // POST: Orders
         [HttpPost]
         public async Task<ActionResult<OrderVm>> PostOrderItem(OrderVm orderVm)
         {
@@ -114,6 +64,7 @@ namespace Api.Controllers
 
             OrderItem orderItem = Mapper.Map<OrderItem>(orderVm);
             orderItem.OrderId = bucketEntity.Id;
+            orderItem.PaymentStatus = (PaymentStatus)1;
 
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
@@ -121,20 +72,26 @@ namespace Api.Controllers
             return CreatedAtAction("GetOrderItem", new { id = orderItem.Id }, orderItem);
         }
 
-        // DELETE: api/Orders/5
+        // DELETE: Orders/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<OrderItem>> DeleteOrderItem(int id)
         {
+            string username = getUserName();
+
             var orderItem = await _context.OrderItems.FindAsync(id);
             if (orderItem == null)
             {
                 return NotFound();
             }
+            if (orderItem.Order.ClientId.ToUpper() != username.ToUpper())
+            {
+                return StatusCode(405);
+            }
 
             _context.OrderItems.Remove(orderItem);
             await _context.SaveChangesAsync();
 
-            return orderItem;
+            return Ok();
         }
 
         private bool OrderItemExists(int id)

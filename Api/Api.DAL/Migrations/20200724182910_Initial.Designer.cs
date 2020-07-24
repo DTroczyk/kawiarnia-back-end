@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200722110634_Initial")]
+    [Migration("20200724182910_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,24 +21,18 @@ namespace Api.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Api.BLL.Entity.Coffe", b =>
+            modelBuilder.Entity("Api.BLL.Entity.Coffee", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Name");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Coffes");
+                    b.ToTable("Coffees");
                 });
 
             modelBuilder.Entity("Api.BLL.Entity.Order", b =>
@@ -86,8 +80,8 @@ namespace Api.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CoffeId")
-                        .HasColumnType("int");
+                    b.Property<string>("CoffeeId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("EspressoCount")
                         .HasColumnType("int");
@@ -106,7 +100,7 @@ namespace Api.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CoffeId");
+                    b.HasIndex("CoffeeId");
 
                     b.HasIndex("OrderId");
 
@@ -133,6 +127,9 @@ namespace Api.DAL.Migrations
 
                     b.Property<string>("HouseNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsVerifiedEmail")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -170,11 +167,9 @@ namespace Api.DAL.Migrations
 
             modelBuilder.Entity("Api.BLL.Entity.OrderItem", b =>
                 {
-                    b.HasOne("Api.BLL.Entity.Coffe", "Coffe")
+                    b.HasOne("Api.BLL.Entity.Coffee", "Coffee")
                         .WithMany()
-                        .HasForeignKey("CoffeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CoffeeId");
 
                     b.HasOne("Api.BLL.Entity.Order", "Order")
                         .WithMany("Items")

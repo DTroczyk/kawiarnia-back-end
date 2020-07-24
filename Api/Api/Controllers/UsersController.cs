@@ -119,7 +119,7 @@ namespace Api.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         
 
-        // DELETE: Users/5
+        // DELETE: Users/userName
         [HttpDelete("{userName}")]
         public async Task<ActionResult<User>> DeleteUser(string userName)
         {

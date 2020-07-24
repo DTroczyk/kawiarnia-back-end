@@ -67,7 +67,7 @@ namespace Api.Configuration
                     .ForMember(dest => dest.City, x => x.MapFrom(src => src.place))
                     .ForMember(dest => dest.PhoneNumber, x => x.MapFrom(src => src.telephone));
                 mapper.CreateMap<OrderVm, OrderItem>()
-                    .ForMember(dest => dest.Coffee.Name, x => x.MapFrom(src => src.coffeeName))
+                    .ForMember(dest => dest.CoffeeId, x => x.MapFrom(src => src.coffeeName))
                     .ForMember(dest => dest.EspressoCount, x => x.MapFrom(src => src.espressoCount))
                     .ForMember(dest => dest.MilkCount, x => x.MapFrom(src => src.milkCount))
                     .ForMember(dest => dest.IsContainChocolate, x => x.MapFrom(src => src.isContainChocolate))

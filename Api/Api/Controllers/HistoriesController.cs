@@ -76,68 +76,6 @@ namespace Api.Controllers
             return Ok(historyVms);
         }
 
-        //// PUT: Histories/5
-        //[HttpPut("{date}")]
-        //public async Task<IActionResult> PutOrderItem(DateTime date, HistoryVm historyVm)
-        //{
-        //    if (date != historyVm.date)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(historyVm).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!HistoryExists(date))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
-        // POST: Histories
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<HistoryVm>> PostHistory(HistoryVm history)
-        {
-            Order order = Mapper.Map<Order>(history);
-
-            order.IsPaymentCompleted = false;
-
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetOrderItem", new { id = order.Id }, order);
-        }
-
-        // DELETE: histories/id
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Order>> DeleteHistory(int id)
-        {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-
-            return order;
-        }
-
         private bool HistoryExists(DateTime id)
         {
             return _context.Orders.Any(e => e.OrderDate == id);
