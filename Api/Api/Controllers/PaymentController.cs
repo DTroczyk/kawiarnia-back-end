@@ -79,10 +79,15 @@ namespace Api.Controllers
 
 
             StripeConfiguration.ApiKey = "xxx";
+            var FrontURL= {
+                successUrl="https://quirky-bose-7d6097.netlify.app/panel/success",
+                cancelUrl="https://quirky-bose-7d6097.netlify.app/panel/cancel"
+
+            }
             var options = new SessionCreateOptions
             {
-                SuccessUrl = "https://example.com/success",
-                CancelUrl = "https://example.com/cancel",
+                SuccessUrl = FrontURL.successUrl,
+                CancelUrl = FrontURL.cancelUrl,
                 PaymentMethodTypes = new List<string>
                 {
                     "card",
