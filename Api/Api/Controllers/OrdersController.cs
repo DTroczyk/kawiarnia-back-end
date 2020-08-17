@@ -33,6 +33,19 @@ namespace Api.Controllers
             return claims[0].Value;
         }
 
+        // GET: Orders
+        [HttpGet]
+        public async Task<ActionResult<OrderVm>> GetOrderItem(int orderId)
+        {
+            var username = getUserName();
+
+            var orderEntity = await _context.OrderItems.FirstOrDefaultAsync(oi => oi.Id == orderId);
+
+            var orderVm = Mapper.Map<OrderVm>(orderEntity);
+
+            return Ok(orderVm);
+        }
+
         // POST: Orders
         [HttpPost]
         public async Task<ActionResult<OrderVm>> PostOrderItem(OrderVm orderVm)
@@ -69,7 +82,7 @@ namespace Api.Controllers
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOrderItem", new { id = orderItem.Id }, orderItem);
+            return StatusCode(201);
         }
 
         // DELETE: Orders/5
@@ -78,7 +91,9 @@ namespace Api.Controllers
         {
             string username = getUserName();
 
-            var orderItem = await _context.OrderItems.FindAsync(id);
+            var orderItem = await _context.OrderItems
+                .Include(oi => oi.Order)
+                .FirstOrDefaultAsync(oi => oi.Id == id);
             if (orderItem == null)
             {
                 return NotFound();
