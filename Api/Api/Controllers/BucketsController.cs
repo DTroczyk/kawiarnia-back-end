@@ -47,7 +47,7 @@ namespace Api.Controllers
 
             if (bucketEntity == null || bucketEntity.Items.Count == 0)
             {
-                return NoContent();
+                return Ok(new string[] { });
             }
 
             IList<OrderItem> orderItems = new List<OrderItem>();

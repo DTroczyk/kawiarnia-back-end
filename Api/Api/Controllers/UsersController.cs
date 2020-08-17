@@ -52,28 +52,6 @@ namespace Api.Controllers
             return Ok(userVm);
         }
 
-        //// GET: Users/userName
-        //[HttpGet("{userName}")]
-        //public async Task<ActionResult<UserVm>> GetUser(string userName)
-        //{
-        //    if (!Autorization())
-        //    {
-        //        return Unauthorized();
-        //    }
-
-        //    var user = await _context.Users.FindAsync(userName);
-
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    UserVm userVm = Mapper.Map<UserVm>(user);
-
-        //    return Ok(userVm);
-        //}
-
-
 
         // PUT: Users/userName
         // To protect from overposting attacks, enable the specific properties you want to bind to, for

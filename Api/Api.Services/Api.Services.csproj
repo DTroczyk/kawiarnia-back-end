@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <ProjectReference Include="..\Api.DAL\Api.DAL.csproj" />
+    <ProjectReference Include="..\Api.ViewModels\Api.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
