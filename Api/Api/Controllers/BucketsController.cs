@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Api.BLL.Entity;
 using Api.DAL.EF;
-using Api.BLL.ViewModel;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Api.ViewModels.ViewModel;
 
 namespace Api.Controllers
 {

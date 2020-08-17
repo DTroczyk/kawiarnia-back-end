@@ -1,0 +1,8 @@
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.Services\bin\Debug\netcoreapp3.1\Api.Services.deps.json
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.Services\bin\Debug\netcoreapp3.1\Api.Services.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.Services\bin\Debug\netcoreapp3.1\Api.Services.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.Services\obj\Debug\netcoreapp3.1\Api.Services.AssemblyInfoInputs.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.Services\obj\Debug\netcoreapp3.1\Api.Services.AssemblyInfo.cs
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.Services\obj\Debug\netcoreapp3.1\Api.Services.csproj.CoreCompileInputs.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.Services\obj\Debug\netcoreapp3.1\Api.Services.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.Services\obj\Debug\netcoreapp3.1\Api.Services.pdb

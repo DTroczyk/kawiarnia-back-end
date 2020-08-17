@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Api.BLL.Entity;
-using Api.BLL.ViewModel;
+using Api.ViewModels.ViewModel;
 using Api.DAL.EF;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -79,11 +79,10 @@ namespace Api.Controllers
 
 
             StripeConfiguration.ApiKey = "xxx";
-            var FrontURL= {
+            var FrontURL = new {
                 successUrl="https://quirky-bose-7d6097.netlify.app/panel/success",
-                cancelUrl="https://quirky-bose-7d6097.netlify.app/panel/cancel"
-
-            }
+                cancelUrl="https://quirky-bose-7d6097.netlify.app/panel/cancel",
+            };
             var options = new SessionCreateOptions
             {
                 SuccessUrl = FrontURL.successUrl,

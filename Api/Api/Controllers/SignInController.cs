@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.BLL.Entity;
-using Api.BLL.ViewModel;
+using Api.ViewModels.ViewModel;
 using Api.DAL.EF;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;

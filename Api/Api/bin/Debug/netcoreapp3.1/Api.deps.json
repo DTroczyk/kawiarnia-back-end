@@ -25,6 +25,7 @@
       "Api/1.0.0": {
         "dependencies": {
           "Api.DAL": "1.0.0",
+          "Api.ViewModels": "1.0.0",
           "AutoMapper": "8.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.5",
           "Microsoft.EntityFrameworkCore.Sqlite": "3.1.5",
@@ -2452,6 +2453,14 @@
         },
         "compile": {
           "Api.DAL.dll": {}
+        }
+      },
+      "Api.ViewModels/1.0.0": {
+        "runtime": {
+          "Api.ViewModels.dll": {}
+        },
+        "compile": {
+          "Api.ViewModels.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
@@ -5280,6 +5289,11 @@
       "sha512": ""
     },
     "Api.DAL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Api.ViewModels/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

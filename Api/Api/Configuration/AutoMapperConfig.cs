@@ -1,5 +1,5 @@
 ﻿using Api.BLL.Entity;
-using Api.BLL.ViewModel;
+using Api.ViewModels.ViewModel;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
