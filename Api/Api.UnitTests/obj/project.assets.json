@@ -2657,6 +2657,7 @@
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "Api.DAL": "1.0.0",
+          "Api.Services": "1.0.0",
           "Api.ViewModels": "1.0.0",
           "AutoMapper": "8.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.5",
@@ -2699,6 +2700,21 @@
         },
         "runtime": {
           "bin/placeholder/Api.DAL.dll": {}
+        }
+      },
+      "Api.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Api.DAL": "1.0.0",
+          "Api.ViewModels": "1.0.0",
+          "AutoMapper": "8.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Api.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Api.Services.dll": {}
         }
       },
       "Api.ViewModels/1.0.0": {
@@ -8700,6 +8716,11 @@
       "type": "project",
       "path": "../Api.DAL/Api.DAL.csproj",
       "msbuildProject": "../Api.DAL/Api.DAL.csproj"
+    },
+    "Api.Services/1.0.0": {
+      "type": "project",
+      "path": "../Api.Services/Api.Services.csproj",
+      "msbuildProject": "../Api.Services/Api.Services.csproj"
     },
     "Api.ViewModels/1.0.0": {
       "type": "project",

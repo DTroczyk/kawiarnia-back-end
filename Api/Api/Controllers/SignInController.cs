@@ -8,6 +8,7 @@ using Api.DAL.EF;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Api.Services.Interfaces;
 
 namespace Api.Controllers
 {
@@ -15,57 +16,26 @@ namespace Api.Controllers
     [ApiController]
     public class SignInController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUserService _userService;
 
-        public SignInController(ApplicationDbContext context)
+        public SignInController(IUserService userService)
         {
-            _context = context;
-        }
-
-        [HttpGet("{username}")]
-        public async Task<ActionResult<UserVm>> GetUser(string username)
-        {
-            var userEntity = await _context.Users.FindAsync(username);
-
-            if (userEntity == null)
-            {
-                return NotFound();
-            }
-
-            UserVm userVm = Mapper.Map<UserVm>(userEntity);
-
-            return Ok(userVm);
+            _userService = userService;
         }
 
         [HttpPost]
         public async Task<ActionResult<UserVm>> RegisterUser(UserVm userVm)
         {
-            var user = Mapper.Map<User>(userVm);
-
-            bool isUserExist = false;
-            bool isEmailExist = false;
-
-            if (_context.Users.Any(u => u.UserName == user.UserName))
+            try
             {
-                isUserExist = true;
+                userVm = await _userService.AddOrUpdate(userVm);
             }
-            if (_context.Users.Any(u => u.Email == user.Email))
+            catch (Exception e)
             {
-                isEmailExist = true;
+                return StatusCode(406, new { message = e.Message });
             }
 
-            if (isUserExist || isEmailExist)
-            {
-                return Conflict(new { usernameConflict = isUserExist, emailConflict = isEmailExist });
-            }
-
-            user.RegistrationDate = DateTime.Now;
-            user.IsVerifiedEmail = false;
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { username = user.UserName }, user);
+            return StatusCode(201, userVm);
         }
     }
 }

@@ -11,6 +11,7 @@ using Api.ViewModels.ViewModel;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Api.Services.Interfaces;
 
 namespace Api.Controllers
 {
@@ -19,108 +20,64 @@ namespace Api.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
 
-        public UsersController(ApplicationDbContext context)
+        private readonly IUserService _userService;
+
+        public UsersController(IUserService userService)
         {
-            _context = context;
+            _userService = userService;
         }
 
-        private bool Autorization(string username)
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claims = identity.Claims.ToList();
-
-            if (claims[0].Value.ToUpper() == username.ToUpper())
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        //// GET: Users
+        // GET: Users
         [HttpGet]
         public async Task<ActionResult<UserVm>> GetCurrentUser()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claims = identity.Claims.ToList();
 
-            var userEntity = await _context.Users.FirstOrDefaultAsync(x => x.UserName == claims[0].Value);
-            UserVm userVm = Mapper.Map<UserVm>(userEntity);
+            var userVm = await _userService.GetCurrentUser(identity);
 
             return Ok(userVm);
         }
 
 
-        // PUT: Users/userName
+        // PUT: Users
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{userName}")]
-        public async Task<IActionResult> PutUser(string userName, UserVm userVm)
+        [HttpPut]
+        public async Task<IActionResult> PutUser(UserVm userVm)
         {
-            if (!Autorization(userName))
-            {
-                return Unauthorized();
-            }
-
-            var user = Mapper.Map<User>(userVm);
-
-            if (userName != user.UserName)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(user).State = EntityState.Modified;
-
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
             try
             {
-                await _context.SaveChangesAsync();
+                userVm = await _userService.AddOrUpdate(userVm, identity);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!UserExists(userName))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return StatusCode(406, new { message = e.Message });
             }
 
-            return NoContent();
+            return Ok(userVm);
         }
 
-        // POST: Users
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        
+        //// DELETE: Users/userName
+        //[HttpDelete("{userName}")]
+        //public async Task<ActionResult<User>> DeleteUser(string userName)
+        //{
+        //    if (!Autorization(userName))
+        //    {
+        //        return Unauthorized();
+        //    }
 
-        // DELETE: Users/userName
-        [HttpDelete("{userName}")]
-        public async Task<ActionResult<User>> DeleteUser(string userName)
-        {
-            if (!Autorization(userName))
-            {
-                return Unauthorized();
-            }
+        //    var user = await _context.Users.FindAsync(userName);
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var user = await _context.Users.FindAsync(userName);
-            if (user == null)
-            {
-                return NotFound();
-            }
+        //    _context.Users.Remove(user);
+        //    await _context.SaveChangesAsync();
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return user;
-        }
-
-        private bool UserExists(string userName)
-        {
-            return _context.Users.Any(e => e.UserName == userName);
-        }
+        //    return user;
+        //}
     }
 }

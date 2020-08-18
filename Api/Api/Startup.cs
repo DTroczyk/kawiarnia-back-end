@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Api.Configuration;
 using Api.DAL.EF;
+using Api.Services.Interfaces;
+using Api.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -60,6 +62,8 @@ namespace Api
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
+
+            services.AddScoped<IUserService, UserService>();
 
             services.AddMvc();
 

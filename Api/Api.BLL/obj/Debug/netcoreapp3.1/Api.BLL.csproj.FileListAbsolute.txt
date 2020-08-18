@@ -6,3 +6,4 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\obj\Debug\netcoreapp3.1\Api.B
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\obj\Debug\netcoreapp3.1\Api.BLL.csproj.CoreCompileInputs.cache
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\obj\Debug\netcoreapp3.1\Api.BLL.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\obj\Debug\netcoreapp3.1\Api.BLL.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.BLL\obj\Debug\netcoreapp3.1\Api.BLL.csprojAssemblyReference.cache
