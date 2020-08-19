@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Api.BLL.Entity;
 using Api.DAL.EF;
+using Api.Services.Interfaces;
+using Api.ViewModels.ViewModel;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,92 +22,27 @@ namespace Api.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private IConfiguration _config;
+        private ILoginService _loginService;
 
-        private ApplicationDbContext _dbContext;
-
-        public LoginController(IConfiguration config, ApplicationDbContext dbContext)
+        public LoginController(ILoginService loginService )
         {
-            _config = config;
-            _dbContext = dbContext;
+            _loginService = loginService;
         }
 
         [HttpGet]
         public IActionResult Login(string username, string pass)
         {
-            
-            User login = new User();
-            login.UserName = username;
-            login.PasswordHash = pass;
-            IActionResult response = Unauthorized();
+            var user = _loginService.Login(username, pass);
 
-            var user = AuthenticateUser(login);
-
-            if(user != null)
-            {
-                var tokenStr = GenerateJSONWebToken(user);
-                response = Ok(new { token = tokenStr, status = 200 });
-            }
-            else
-            {
-                response = Unauthorized();
-            }
-
-            return response;
-        }
-
-        private User AuthenticateUser(User login)
-        {
-            User user = _dbContext.Users.FirstOrDefault(u => u.UserName == login.UserName);
             if (user == null)
             {
-                return null;
+                return Unauthorized();
             }
-            if(login.UserName.ToUpper() == user.UserName.ToUpper() && login.PasswordHash == user.PasswordHash)
-            {
-                return user;
-            }
-            return null;
-        }
 
-        private string GenerateJSONWebToken(User userInfo)
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var token = _loginService.GenerateJSONWebToken(user);
+            UserVm userVm = Mapper.Map<UserVm>(user);
 
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
-                new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Issuer"],
-                claims,
-                expires: DateTime.Now.AddMinutes(20),
-                signingCredentials: credentials);
-
-            var encodetoken = new JwtSecurityTokenHandler().WriteToken(token);
-            return encodetoken;
-        }
-
-        [Authorize]
-        [HttpPost("Post")]
-        public string Post()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claims = identity.Claims.ToList();
-            var userName = claims[0].Value;
-            return "Welcome To: " + userName;
-        }
-
-        [Authorize]
-        [HttpGet("GetValue")]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "Value1", "Value2", "Value3" };
+            return Ok(new { token = token, status = 200, user = userVm });
         }
     }
 }

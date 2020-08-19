@@ -103,65 +103,65 @@ namespace Api.Controllers
             return Ok(session.ToJson());
         }
 
-        //[HttpPut]
-        //[Route("accept")]
-        //public async Task<ActionResult<Session>> FinishPayment()
-        //{
-        //    var username = getUserName();
+        [HttpPut]
+        [Route("accept")]
+        public async Task<ActionResult<Session>> FinishPayment()
+        {
+            var username = getUserName();
 
-        //    var bucketEntity = await _context.Orders
-        //        .Include(o => o.Items)
-        //            .ThenInclude(c => c.Coffee)
-        //        .Where(o => o.ClientId == username)
-        //        .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+            var bucketEntity = await _context.Orders
+                .Include(o => o.Items)
+                    .ThenInclude(c => c.Coffee)
+                .Where(o => o.ClientId == username)
+                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
 
-        //    var items = bucketEntity.Items.Where(i => i.PaymentStatus == (PaymentStatus)2);
+            var items = bucketEntity.Items.Where(i => i.PaymentStatus == (PaymentStatus)2);
 
-        //    foreach (BLL.Entity.OrderItem item in items)
-        //    {
-        //        item.PaymentStatus = (PaymentStatus)3;
-        //        _context.OrderItems.Update(item);
-        //    }
+            foreach (BLL.Entity.OrderItem item in items)
+            {
+                item.PaymentStatus = (PaymentStatus)3;
+                _context.OrderItems.Update(item);
+            }
 
-        //    if (items.Count() == bucketEntity.Items.Count())
-        //    {
-        //        bucketEntity.IsPaymentCompleted = true;
-        //        bucketEntity.OrderDate = DateTime.Now;
-        //        _context.Orders.Update(bucketEntity);
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    else
-        //    {
-        //        var newBucket = new BLL.Entity.Order();
-        //        newBucket.ClientId = bucketEntity.ClientId;
-        //        await _context.SaveChangesAsync();
-        //    }
-            
-            
+            if (items.Count() == bucketEntity.Items.Count())
+            {
+                bucketEntity.IsPaymentCompleted = true;
+                bucketEntity.OrderDate = DateTime.Now;
+                _context.Orders.Update(bucketEntity);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                var newBucket = new BLL.Entity.Order();
+                newBucket.ClientId = bucketEntity.ClientId;
+                await _context.SaveChangesAsync();
+            }
 
-        //    return Ok();
-        //}
 
-        //[HttpPut]
-        //[Route("denied")]
-        //public async Task<ActionResult<Session>> CancelPayment()
-        //{
-        //    var username = getUserName();
 
-        //    var bucketEntity = await _context.Orders
-        //        .Include(o => o.Items)
-        //            .ThenInclude(c => c.Coffee)
-        //        .Where(o => o.ClientId == username)
-        //        .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+            return Ok();
+        }
 
-        //    foreach (BLL.Entity.OrderItem item in bucketEntity.Items)
-        //    {
-        //        item.PaymentStatus = (PaymentStatus)1;
-        //        _context.Update(item);
-        //    }
-        //    await _context.SaveChangesAsync();
+        [HttpPut]
+        [Route("denied")]
+        public async Task<ActionResult<Session>> CancelPayment()
+        {
+            var username = getUserName();
 
-        //    return Ok();
-        //}
+            var bucketEntity = await _context.Orders
+                .Include(o => o.Items)
+                    .ThenInclude(c => c.Coffee)
+                .Where(o => o.ClientId == username)
+                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+
+            foreach (BLL.Entity.OrderItem item in bucketEntity.Items)
+            {
+                item.PaymentStatus = (PaymentStatus)1;
+                _context.Update(item);
+            }
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }
