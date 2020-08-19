@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Api.BLL.Entity;
-using Api.DAL.EF;
 using Api.ViewModels.ViewModel;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Api.Services.Interfaces;
@@ -41,8 +35,6 @@ namespace Api.Controllers
 
 
         // PUT: Users
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
         public async Task<IActionResult> PutUser(UserVm userVm)
         {
