@@ -8,4 +8,8 @@
     <Folder Include="DTOs\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Api.BLL\Api.BLL.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -11,7 +11,7 @@ namespace Api.ViewModels.ViewModel
         public string email { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
-        public DateTime dateOfBirth { get; set; }
+        public Date dateOfBirth { get; set; }
         public string road { get; set; }
         public string houseNumber { get; set; }
         public string zipcode { get; set; }

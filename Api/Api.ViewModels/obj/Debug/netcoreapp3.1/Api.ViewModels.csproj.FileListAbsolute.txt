@@ -7,3 +7,6 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Debug\netcoreapp3.
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Debug\netcoreapp3.1\Api.ViewModels.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Debug\netcoreapp3.1\Api.ViewModels.pdb
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Debug\netcoreapp3.1\Api.ViewModels.csprojAssemblyReference.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\bin\Debug\netcoreapp3.1\Api.BLL.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\bin\Debug\netcoreapp3.1\Api.BLL.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Debug\netcoreapp3.1\Api.ViewModels.csproj.CopyComplete

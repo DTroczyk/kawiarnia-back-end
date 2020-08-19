@@ -228,7 +228,11 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj": {
+                "projectPath": "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

@@ -28,13 +28,10 @@
           "Api.Services": "1.0.0",
           "Api.ViewModels": "1.0.0",
           "AutoMapper": "8.0.0",
-          "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.5",
           "Microsoft.EntityFrameworkCore.Sqlite": "3.1.5",
           "Microsoft.EntityFrameworkCore.Tools": "3.1.5",
-          "Microsoft.IdentityModel.Tokens": "6.7.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.3",
           "Stripe.net": "37.24.0",
-          "System.IdentityModel.Tokens.Jwt": "6.7.1",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "3.1.0.0",
@@ -2460,7 +2457,11 @@
         "dependencies": {
           "Api.DAL": "1.0.0",
           "Api.ViewModels": "1.0.0",
-          "AutoMapper": "8.0.0"
+          "AutoMapper": "8.0.0",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.5",
+          "Microsoft.IdentityModel.Tokens": "6.7.1",
+          "Stripe.net": "37.24.0",
+          "System.IdentityModel.Tokens.Jwt": "6.7.1"
         },
         "runtime": {
           "Api.Services.dll": {}

@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "Api.BLL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Api.BLL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Api.BLL.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Api.BLL/1.0.0": {
+      "type": "project",
+      "path": "../Api.BLL/Api.BLL.csproj",
+      "msbuildProject": "../Api.BLL/Api.BLL.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "Api.BLL >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\DTroc\\.nuget\\packages\\": {}
@@ -32,7 +51,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj": {
+              "projectPath": "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.BLL\\Api.BLL.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
