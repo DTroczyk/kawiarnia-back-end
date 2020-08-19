@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6ju6Le491BfBHcyC5nA7ZoIphezggoWKxqN1MiB6NtNNpwt00IDegk/NbFdkmPdzmYmS0t5RccmquJxP7BnLog==",
+  "dgSpecHash": "nxQgO9m2ugbSQaSOwilWcRQdArVeAqmrjG98wc9bqaN1pmo8v5tg9O2uObUCkJtBW9f3GBKX78eP1cs7MwNrKw==",
   "success": true,
   "projectFilePath": "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.Services\\Api.Services.csproj",
   "expectedPackageFiles": [
@@ -41,6 +41,7 @@
     "C:\\Users\\DTroc\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\DTroc\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\DTroc\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\DTroc\\.nuget\\packages\\stripe.net\\37.24.0\\stripe.net.37.24.0.nupkg.sha512",
     "C:\\Users\\DTroc\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\DTroc\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",
     "C:\\Users\\DTroc\\.nuget\\packages\\system.collections.immutable\\1.7.1\\system.collections.immutable.1.7.1.nupkg.sha512",

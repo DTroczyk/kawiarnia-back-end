@@ -65,6 +65,7 @@ namespace Api
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IPaymentService, PaymentService>();
 
             services.AddMvc();
 

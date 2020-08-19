@@ -23,7 +23,7 @@ namespace Api.Controllers
 
             if (user == null)
             {
-                return Unauthorized();
+                return Unauthorized(new { message = "Username or password is incorrect."});
             }
 
             var token = _loginService.GenerateJSONWebToken(user);
