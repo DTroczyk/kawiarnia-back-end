@@ -1,9 +1,4 @@
-﻿using Api.BLL.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Api.ViewModels.ViewModel
+﻿namespace Api.ViewModels.ViewModel
 {
     public class Date
     {

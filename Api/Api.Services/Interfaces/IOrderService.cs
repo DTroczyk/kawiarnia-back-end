@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Api.ViewModels.ViewModel;
+using System.Threading.Tasks;
 
 namespace Api.Services.Interfaces
 {
-    interface IOrderService
+    public interface IOrderService
     {
+        public Task<OrderVm> GetOrderItem(int orderId);
+        public Task<OrderVm> AddOrderItem(OrderVm orderVm, string username);
+        public Task<OrderVm> DeleteOrderItem(int id, string username);
     }
 }

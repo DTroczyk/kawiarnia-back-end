@@ -2,7 +2,6 @@
 using Api.DAL.EF;
 using Api.Services.Interfaces;
 using Api.ViewModels.ViewModel;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stripe;
 using Stripe.Checkout;

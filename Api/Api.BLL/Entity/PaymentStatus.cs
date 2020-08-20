@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Api.BLL.Entity
+﻿namespace Api.BLL.Entity
 {
     public enum PaymentStatus
     {

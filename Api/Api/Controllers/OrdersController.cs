@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Api.BLL.Entity;
-using Api.DAL.EF;
 using Api.ViewModels.ViewModel;
-using AutoMapper;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Api.Services.Interfaces;
 
 namespace Api.Controllers
 {
@@ -19,29 +15,20 @@ namespace Api.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUserService _userService;
+        private readonly IOrderService _orderService;
 
-        public OrdersController(ApplicationDbContext context)
+        public OrdersController(IUserService userService, IOrderService orderService)
         {
-            _context = context;
-        }
-
-        private string getUserName()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claims = identity.Claims.ToList();
-            return claims[0].Value;
+            _userService = userService;
+            _orderService = orderService;
         }
 
         // GET: Orders
         [HttpGet]
         public async Task<ActionResult<OrderVm>> GetOrderItem(int orderId)
         {
-            var username = getUserName();
-
-            var orderEntity = await _context.OrderItems.FirstOrDefaultAsync(oi => oi.Id == orderId);
-
-            var orderVm = Mapper.Map<OrderVm>(orderEntity);
+            var orderVm = await _orderService.GetOrderItem(orderId);
 
             return Ok(orderVm);
         }
@@ -50,68 +37,37 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<ActionResult<OrderVm>> PostOrderItem(OrderVm orderVm)
         {
-            var username = getUserName();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
 
-            var bucketEntity = await _context.Orders
-                .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffee)
-                .Where(o => o.ClientId == username)
-                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+            var userVm = await _orderService.AddOrderItem(orderVm, username);
 
-            if (bucketEntity == null)
-            {
-                bucketEntity = new Order();
-                bucketEntity.IsPaymentCompleted = false;
-                bucketEntity.ClientId = username;
-                bucketEntity.Items = new List<OrderItem>();
-
-                _context.Orders.Add(bucketEntity);
-                await _context.SaveChangesAsync();
-
-                bucketEntity = await _context.Orders
-                .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffee)
-                .Where(o => o.ClientId == username)
-                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
-            }
-
-            OrderItem orderItem = Mapper.Map<OrderItem>(orderVm);
-            orderItem.OrderId = bucketEntity.Id;
-            orderItem.PaymentStatus = (PaymentStatus)1;
-
-            _context.OrderItems.Add(orderItem);
-            await _context.SaveChangesAsync();
-
-            return StatusCode(201);
+            return StatusCode(201, new { status = 201, user = userVm});
         }
 
         // DELETE: Orders/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<OrderItem>> DeleteOrderItem(int id)
         {
-            string username = getUserName();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
 
-            var orderItem = await _context.OrderItems
-                .Include(oi => oi.Order)
-                .FirstOrDefaultAsync(oi => oi.Id == id);
-            if (orderItem == null)
+            try
             {
-                return NotFound();
+                var orderVm = await _orderService.DeleteOrderItem(id, username);
+                return Ok(new { status = 200, order = orderVm });
             }
-            if (orderItem.Order.ClientId.ToUpper() != username.ToUpper())
+            catch (Exception e)
             {
-                return StatusCode(405);
+                if (e.Message == "Method Not Allowed")
+                {
+                    return StatusCode(405, new { message = e.Message, status = 405 });
+                }
+                else
+                {
+                    return StatusCode(406, new { message = e.Message, status = 406 });
+                }
             }
-
-            _context.OrderItems.Remove(orderItem);
-            await _context.SaveChangesAsync();
-
-            return Ok();
-        }
-
-        private bool OrderItemExists(int id)
-        {
-            return _context.OrderItems.Any(e => e.Id == id);
         }
     }
 }
