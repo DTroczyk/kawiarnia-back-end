@@ -7,3 +7,6 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Release\netcoreapp
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Release\netcoreapp3.1\Api.ViewModels.csproj.CoreCompileInputs.cache
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Release\netcoreapp3.1\Api.ViewModels.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Release\netcoreapp3.1\Api.ViewModels.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\bin\Release\netcoreapp3.1\Api.BLL.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\bin\Release\netcoreapp3.1\Api.BLL.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Release\netcoreapp3.1\Api.ViewModels.csproj.CopyComplete

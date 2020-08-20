@@ -21,7 +21,7 @@ namespace Api.Services.Services
 
         private bool Validation(User user)
         {
-            // RegEx here
+            // Validation here
 
             return true;
         }
@@ -105,6 +105,21 @@ namespace Api.Services.Services
             IList<Claim> claims = identity.Claims.ToList();
             string userName = claims[0].Value;
             return userName;
+        }
+
+        public async Task<UserVm> Delete(UserVm userVm)
+        {
+            var userEntity = await _dbContext.Users.FindAsync(userVm.username);
+
+            if (userEntity == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            _dbContext.Users.Remove(userEntity);
+            await _dbContext.SaveChangesAsync();
+
+            return userVm;
         }
     }
 }

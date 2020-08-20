@@ -20,7 +20,25 @@ namespace Api.Services.Services
 
         }
 
-        public async Task<ActionResult<Session>> StatrPayment(IList<OrderVm> orderVms, string username)
+        public async Task Cancel(string username)
+        {
+            var bucketEntity = await _dbContext.Orders
+                .Include(o => o.Items)
+                    .ThenInclude(c => c.Coffee)
+                .Where(o => o.ClientId == username)
+                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+
+            foreach (BLL.Entity.OrderItem item in bucketEntity.Items)
+            {
+                item.PaymentStatus = (PaymentStatus)1;
+                _dbContext.Update(item);
+            }
+            await _dbContext.SaveChangesAsync();
+
+            return;
+        }
+
+        public async Task<Session> StatrPayment(IList<OrderVm> orderVms, string username)
         {
             if (orderVms.Count == 0 || orderVms == null)
             {
@@ -79,13 +97,66 @@ namespace Api.Services.Services
                 },
                 LineItems = lineItem,
                 Mode = "payment",
-                CustomerEmail = user.Email,
+                Customer = user.UserName,
             };
 
             var service = new SessionService();
             Session session = service.Create(options);
 
             return session;
+        }
+
+        public async Task Success(string username)
+        {
+            var bucketEntity = await _dbContext.Orders
+                .Include(o => o.Items)
+                    .ThenInclude(c => c.Coffee)
+                .Where(o => o.ClientId == username)
+                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+
+            var items = bucketEntity.Items.Where(i => i.PaymentStatus == (PaymentStatus)2);
+
+            foreach (BLL.Entity.OrderItem item in items)
+            {
+                item.PaymentStatus = (PaymentStatus)3;
+                _dbContext.OrderItems.Update(item);
+            }
+
+            if (items.Count() == bucketEntity.Items.Count())
+            {
+                bucketEntity.IsPaymentCompleted = true;
+                bucketEntity.OrderDate = DateTime.Now;
+                _dbContext.Orders.Update(bucketEntity);
+                await _dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                var newBucket = new BLL.Entity.Order();
+                newBucket.ClientId = bucketEntity.ClientId;
+                await _dbContext.SaveChangesAsync();
+
+                newBucket = await _dbContext.Orders
+                .Include(o => o.Items)
+                    .ThenInclude(c => c.Coffee)
+                .Where(o => o.ClientId == username)
+                .Where(o => o.Id != bucketEntity.Id)
+                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+
+                var oldItems = bucketEntity.Items.Where(i => i.PaymentStatus == (PaymentStatus)1);
+                foreach (BLL.Entity.OrderItem item in oldItems)
+                {
+                    item.OrderId = newBucket.Id;
+                    _dbContext.OrderItems.Update(item);
+                }
+                await _dbContext.SaveChangesAsync();
+
+                bucketEntity.IsPaymentCompleted = true;
+                bucketEntity.OrderDate = DateTime.Now;
+                _dbContext.Orders.Update(bucketEntity);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return;
         }
     }
 }

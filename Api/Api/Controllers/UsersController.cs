@@ -51,25 +51,27 @@ namespace Api.Controllers
             return Ok(userVm);
         }
 
-        //// DELETE: Users/userName
-        //[HttpDelete("{userName}")]
-        //public async Task<ActionResult<User>> DeleteUser(string userName)
-        //{
-        //    if (!Autorization(userName))
-        //    {
-        //        return Unauthorized();
-        //    }
+        // DELETE: Users
+        [HttpDelete]
+        public async Task<ActionResult<UserVm>> DeleteUser(UserVm userVm)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
 
-        //    var user = await _context.Users.FindAsync(userName);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (username != userVm.username)
+            {
+                return StatusCode(405, new { message = "Method Not Allowed. Wrong user." });
+            }
 
-        //    _context.Users.Remove(user);
-        //    await _context.SaveChangesAsync();
-
-        //    return user;
-        //}
+            try
+            {
+                var user = await _userService.Delete(userVm);
+                return Ok(new { status = 200, user = user });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(406, new { message = e.Message });
+            }
+        }
     }
 }

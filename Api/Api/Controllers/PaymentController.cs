@@ -28,13 +28,6 @@ namespace Api.Controllers
             _paymentService = paymentService;
         }
 
-        private string getUserName()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claims = identity.Claims.ToList();
-            return claims[0].Value;
-        }
-
         [HttpPost]
         public async Task<ActionResult<Session>> StartPayment(IList<OrderVm> orderVms)
         {
@@ -47,69 +40,32 @@ namespace Api.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(406, new { message = e.Message});
+                return StatusCode(406, new { message = e.Message, status = 406});
             }
         }
 
-        //[HttpPut]
-        //[Route("accept")]
-        //public async Task<ActionResult<Session>> FinishPayment()
-        //{
-        //    var username = getUserName();
+        [HttpPut]
+        [Route("success")]
+        public async Task<ActionResult<Session>> FinishPayment()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
 
-        //    var bucketEntity = await _context.Orders
-        //        .Include(o => o.Items)
-        //            .ThenInclude(c => c.Coffee)
-        //        .Where(o => o.ClientId == username)
-        //        .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+            await _paymentService.Success(username);
 
-        //    var items = bucketEntity.Items.Where(i => i.PaymentStatus == (PaymentStatus)2);
+            return Ok();
+        }
 
-        //    foreach (BLL.Entity.OrderItem item in items)
-        //    {
-        //        item.PaymentStatus = (PaymentStatus)3;
-        //        _context.OrderItems.Update(item);
-        //    }
+        [HttpPut]
+        [Route("cancel")]
+        public async Task<ActionResult<Session>> CancelPayment()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
 
-        //    if (items.Count() == bucketEntity.Items.Count())
-        //    {
-        //        bucketEntity.IsPaymentCompleted = true;
-        //        bucketEntity.OrderDate = DateTime.Now;
-        //        _context.Orders.Update(bucketEntity);
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    else
-        //    {
-        //        var newBucket = new BLL.Entity.Order();
-        //        newBucket.ClientId = bucketEntity.ClientId;
-        //        await _context.SaveChangesAsync();
-        //    }
+            await _paymentService.Cancel(username);
 
-
-
-        //    return Ok();
-        //}
-
-        //[HttpPut]
-        //[Route("denied")]
-        //public async Task<ActionResult<Session>> CancelPayment()
-        //{
-        //    var username = getUserName();
-
-        //    var bucketEntity = await _context.Orders
-        //        .Include(o => o.Items)
-        //            .ThenInclude(c => c.Coffee)
-        //        .Where(o => o.ClientId == username)
-        //        .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
-
-        //    foreach (BLL.Entity.OrderItem item in bucketEntity.Items)
-        //    {
-        //        item.PaymentStatus = (PaymentStatus)1;
-        //        _context.Update(item);
-        //    }
-        //    await _context.SaveChangesAsync();
-
-        //    return Ok();
-        //}
+            return Ok();
+        }
     }
 }

@@ -2067,6 +2067,9 @@
         }
       },
       "Api.ViewModels/1.0.0": {
+        "dependencies": {
+          "Api.BLL": "1.0.0"
+        },
         "runtime": {
           "Api.ViewModels.dll": {}
         }
