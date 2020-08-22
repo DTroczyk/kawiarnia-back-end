@@ -7,7 +7,7 @@ namespace Api.Services.Interfaces
 {
     public interface IPaymentService
     {
-        public Task<Session> StatrPayment(IList<OrderVm> orderVms, AddressVm addressVm, string username);
+        public Task<Session> StatrPayment(OrderItemsVm itemsVm, string username);
         public Task Success(string username);
         public Task Cancel(string username);
     }

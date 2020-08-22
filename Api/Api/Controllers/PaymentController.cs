@@ -24,13 +24,13 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Session>> StartPayment(IList<OrderVm> orderVms, AddressVm addressVm)
+        public async Task<ActionResult<Session>> StartPayment(OrderItemsVm itemsVm)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var username = _userService.GetUserName(identity);
             try
             {
-                var session = await _paymentService.StatrPayment(orderVms, addressVm, username);
+                var session = await _paymentService.StatrPayment(itemsVm, username);
                 return Ok(session);
             }
             catch (Exception e)

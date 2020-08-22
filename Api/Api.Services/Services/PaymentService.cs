@@ -45,8 +45,11 @@ namespace Api.Services.Services
             return;
         }
 
-        public async Task<Session> StatrPayment(IList<OrderVm> orderVms, AddressVm addressVm, string username)
+        public async Task<Session> StatrPayment(OrderItemsVm itemsVm, string username)
         {
+            var orderVms = itemsVm.items;
+            var addressVm = itemsVm.address;
+
             if (orderVms.Count == 0 || orderVms == null)
             {
                 throw new Exception("The order is null or empty.");
