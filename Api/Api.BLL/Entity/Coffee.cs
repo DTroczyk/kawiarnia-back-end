@@ -9,6 +9,6 @@ namespace Api.BLL.Entity
         [Required]
         public string Description { get; set; }
         [Required]
-        public int Price { get; set; }
+        public long Price { get; set; }
     }
 }

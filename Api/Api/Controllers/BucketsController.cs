@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Api.BLL.Entity;
-using Api.DAL.EF;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Api.ViewModels.ViewModel;
+using Api.Services.Interfaces;
 
 namespace Api.Controllers
 {
@@ -19,98 +15,31 @@ namespace Api.Controllers
     [ApiController]
     public class BucketsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUserService _userService;
+        private readonly IBucketService _bucketService;
 
-        public BucketsController(ApplicationDbContext context)
+        public BucketsController(IUserService userService, IBucketService bucketService)
         {
-            _context = context;
-        }
-
-        private string getUserName()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claims = identity.Claims.ToList();
-            return claims[0].Value;
+            _bucketService = bucketService;
+            _userService = userService;
         }
 
         // GET: Buckets
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderVm>>> GetBucketItems()
         {
-            var username = getUserName();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
 
-            var bucketEntity = await _context.Orders
-                .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffee)
-                .Where(o => o.ClientId == username)
-                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
-
-            if (bucketEntity == null || bucketEntity.Items.Count == 0)
+            try
             {
-                return Ok(new string[] { });
+                var orderVms = await _bucketService.GetBucketItems(username);
+                return Ok(orderVms);
             }
-
-            IList<OrderItem> orderItems = new List<OrderItem>();
-
-            foreach (OrderItem order in bucketEntity.Items)
+            catch (Exception e)
             {
-                orderItems.Add(order);
+                return Ok(new { status = 200, message = e.Message });
             }
-
-            IEnumerable<OrderVm> orderVms = Mapper.Map<IEnumerable<OrderVm>>(orderItems);
-
-            return Ok(orderVms);
-        }
-
-        //// PUT: Buckets/5
-        //[HttpPut("{date}")]
-        //public async Task<IActionResult> PutOrderItem(DateTime date, HistoryVm historyVm)
-        //{
-        //    if (date != historyVm.date)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(historyVm).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!HistoryExists(date))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
-        // DELETE: Buckets/id
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Order>> DeleteHistory(int id)
-        {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-
-            return order;
-        }
-
-        private bool HistoryExists(DateTime id)
-        {
-            return _context.Orders.Any(e => e.OrderDate == id);
         }
     }
 }

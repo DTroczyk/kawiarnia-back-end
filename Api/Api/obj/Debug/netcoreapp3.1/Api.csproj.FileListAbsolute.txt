@@ -163,4 +163,3 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Debug\netcoreapp3.1\Api.pdb
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Debug\netcoreapp3.1\Api.genruntimeconfig.cache
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.Services.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.Services.pdb
-C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Debug\netcoreapp3.1\Api.MvcApplicationPartsAssemblyInfo.cs

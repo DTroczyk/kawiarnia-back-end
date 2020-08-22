@@ -37,6 +37,7 @@ namespace Api.Services.Services
             bucketEntity.Street = String.Empty;
             bucketEntity.HouseNumber = String.Empty;
             bucketEntity.PostalCode = String.Empty;
+            bucketEntity.OrderDate = DateTime.MinValue;
             _dbContext.Update(bucketEntity);
 
             await _dbContext.SaveChangesAsync();
