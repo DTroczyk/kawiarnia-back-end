@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Api.ViewModels.ViewModel;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Api.Services.Interfaces
 {
-    interface IHistoryService
+    public interface IHistoryService
     {
+        public Task<IEnumerable<HistoryVm>> GetHistoryItems(string username);
+        public Task<HistoryVm> GetHistoryItem(int id, string username);
+        public Task<int> CountHistoryItems(string username);
     }
 }

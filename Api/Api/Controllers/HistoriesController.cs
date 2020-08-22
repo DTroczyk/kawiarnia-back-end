@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Api.BLL.Entity;
-using Api.DAL.EF;
 using Api.ViewModels.ViewModel;
-using AutoMapper;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Api.Services.Interfaces;
 
 namespace Api.Controllers
 {
@@ -19,66 +14,38 @@ namespace Api.Controllers
     [ApiController]
     public class HistoriesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IHistoryService _historyService;
+        private readonly IUserService _userService;
 
-        public HistoriesController(ApplicationDbContext context)
+        public HistoriesController(IHistoryService historyService, IUserService userService)
         {
-            _context = context;
-        }
-
-        private string getUserName()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claims = identity.Claims.ToList();
-            return claims[0].Value;
+            _historyService = historyService;
+            _userService = userService;
         }
 
         // GET: Histories
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HistoryVm>>> GetHistoryItems()
         {
-            var username = getUserName();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
 
-            var historyEntities = await _context.Orders
-                .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffee)
-                .Where(o => o.IsPaymentCompleted == true)
-                .Where(o => o.ClientId == username)
-                .ToListAsync();
+            int counter = await _historyService.CountHistoryItems(username);
+            var historyVms = await _historyService.GetHistoryItems(username);
 
-            int counter = 0;
-            foreach (Order order in historyEntities)
-            {
-                counter += order.Items.Count();
-            }
-
-            IEnumerable<HistoryVm> historyVms = Mapper.Map<IEnumerable<HistoryVm>>(historyEntities);
-
-            return Ok(new { counter = counter, historyVms });
+            return Ok(new { status = 200, counter = counter, historyVms });
         }
 
         //GET: Histories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<HistoryVm>>> GetHistoryUserItems(int id)
+        public async Task<ActionResult<HistoryVm>> GetHistoryItem(int id)
         {
-            var username = getUserName();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
 
-            var historyEntities = await _context.Orders
-                .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffee)
-                .Where(o => o.IsPaymentCompleted == true)
-                .Where(o => o.ClientId == username)
-                .Where(o => o.Id == id)
-                .ToListAsync();
+            var historyVm = await _historyService.GetHistoryItem(id, username);
 
-            IEnumerable<HistoryVm> historyVms = Mapper.Map<IEnumerable<HistoryVm>>(historyEntities);
-
-            return Ok(historyVms);
-        }
-
-        private bool HistoryExists(DateTime id)
-        {
-            return _context.Orders.Any(e => e.OrderDate == id);
+            return Ok(new { status = 200, historyVm });
         }
     }
 }
