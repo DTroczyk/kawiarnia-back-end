@@ -5,19 +5,14 @@ namespace Api.DAL.EF
 {
     public class ApplicationDbContext : DbContext
     {
-        private readonly string _connectionString = "Server=tcp:kawiarniadb.database.windows.net,1433;Initial Catalog=kawiarniaDb;Persist Security Info=False;User ID=praktyki2020;Password=Covid2019;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        private readonly ConnectionStringDto _connectionString;
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Coffee> Coffees { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
-            : base(options)
-        {
-        }
-
-        public ApplicationDbContext(string connectionString)
+        public ApplicationDbContext(ConnectionStringDto connectionString)
         {
             _connectionString = connectionString;
         }
@@ -26,7 +21,7 @@ namespace Api.DAL.EF
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder
-                .UseSqlServer(_connectionString);
+                .UseSqlServer(_connectionString.ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

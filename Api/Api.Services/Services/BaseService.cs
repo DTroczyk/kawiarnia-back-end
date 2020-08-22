@@ -3,7 +3,7 @@ using System;
 
 namespace Api.Services.Services
 {
-    public abstract class BaseService
+    public abstract class BaseService :IDisposable
     {
         protected readonly ApplicationDbContext _dbContext;
         private bool _disposed;

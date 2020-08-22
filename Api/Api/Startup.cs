@@ -24,7 +24,7 @@ namespace Api
 
             Configuration = builder.Build();
 
-            _connectionString = Configuration["ConnectionStrings:MsSqlConnection"];
+            _connectionString = Configuration["ConnectionStrings:MsSqlHome"];
 
             Configuration = configuration;
         }
@@ -55,6 +55,11 @@ namespace Api
                     };
                 });
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(_connectionString); // SQL SERVER
+            });
+
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IPaymentService, PaymentService>();
@@ -64,13 +69,16 @@ namespace Api
 
             services.AddMvc();
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_connectionString));
+            var cs = new ConnectionStringDto() { ConnectionString = _connectionString };
+            services.AddSingleton(cs);
 
             var mappingConfig = new AutoMapper.MapperConfiguration(cfg =>
             {
                 cfg.Mapping();
             });
             services.AddSingleton(x => mappingConfig.CreateMapper());
+            services.AddScoped<DbContext, ApplicationDbContext>();
+            services.AddScoped<DbContextOptions<ApplicationDbContext>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

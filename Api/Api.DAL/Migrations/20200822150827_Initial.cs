@@ -12,7 +12,8 @@ namespace Api.DAL.Migrations
                 columns: table => new
                 {
                     Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false)
+                    Description = table.Column<string>(nullable: false),
+                    Price = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
