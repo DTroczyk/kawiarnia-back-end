@@ -31,6 +31,10 @@ namespace Api.Services.Services
                 bucketEntity.IsPaymentCompleted = false;
                 bucketEntity.ClientId = username;
                 bucketEntity.Items = new List<OrderItem>();
+                bucketEntity.PostalCode = String.Empty;
+                bucketEntity.Street = String.Empty;
+                bucketEntity.City = String.Empty;
+                bucketEntity.HouseNumber = String.Empty;
 
                 _dbContext.Orders.Add(bucketEntity);
                 await _dbContext.SaveChangesAsync();

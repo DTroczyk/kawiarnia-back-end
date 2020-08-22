@@ -32,12 +32,19 @@ namespace Api.Services.Services
                 item.PaymentStatus = (PaymentStatus)1;
                 _dbContext.Update(item);
             }
+
+            bucketEntity.City = String.Empty;
+            bucketEntity.Street = String.Empty;
+            bucketEntity.HouseNumber = String.Empty;
+            bucketEntity.PostalCode = String.Empty;
+            _dbContext.Update(bucketEntity);
+
             await _dbContext.SaveChangesAsync();
 
             return;
         }
 
-        public async Task<Session> StatrPayment(IList<OrderVm> orderVms, string username)
+        public async Task<Session> StatrPayment(IList<OrderVm> orderVms, AddressVm addressVm, string username)
         {
             if (orderVms.Count == 0 || orderVms == null)
             {
@@ -54,6 +61,7 @@ namespace Api.Services.Services
             {
                 throw new Exception("Bucket is empty");
             }
+
             User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserName == username);
 
             List<SessionLineItemOptions> lineItem = new List<SessionLineItemOptions>();
@@ -77,6 +85,13 @@ namespace Api.Services.Services
                 item.PaymentStatus = (PaymentStatus)2;
                 _dbContext.OrderItems.Update(item);
             }
+
+            bucketEntity.City = addressVm.place;
+            bucketEntity.Street = addressVm.road;
+            bucketEntity.HouseNumber = addressVm.houseNumber;
+            bucketEntity.PostalCode = addressVm.zipcode;
+            _dbContext.Update(bucketEntity);
+
             await _dbContext.SaveChangesAsync();
 
             StripeConfiguration.ApiKey = "xxx";
