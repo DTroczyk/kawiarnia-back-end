@@ -21,7 +21,8 @@ namespace Api.BLL.Entity
         public string Street { get; set; }
         public string PostalCode { get; set; }
         public string HouseNumber { get; set; }
-        //public float[] LatLng { get; set; }
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
 
         // Payment
 

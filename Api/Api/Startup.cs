@@ -24,7 +24,7 @@ namespace Api
 
             Configuration = builder.Build();
 
-            _connectionString = Configuration["ConnectionStrings:MsSqlHome"];
+            _connectionString = Configuration["ConnectionStrings:MsSqlAzure"];
 
             Configuration = configuration;
         }

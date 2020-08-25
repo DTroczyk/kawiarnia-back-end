@@ -9,7 +9,6 @@ using Api.Services.Interfaces;
 
 namespace Api.Controllers
 {
-    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -23,6 +22,7 @@ namespace Api.Controllers
         }
 
         // GET: Users
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<UserVm>> GetCurrentUser()
         {
@@ -35,6 +35,7 @@ namespace Api.Controllers
 
 
         // PUT: Users
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> PutUser(UserVm userVm)
         {
@@ -52,6 +53,7 @@ namespace Api.Controllers
         }
 
         // DELETE: Users
+        [Authorize]
         [HttpDelete]
         public async Task<ActionResult<UserVm>> DeleteUser(UserVm userVm)
         {
@@ -73,5 +75,13 @@ namespace Api.Controllers
                 return StatusCode(406, new { message = e.Message });
             }
         }
+
+        [Route("forgotten")]
+        [HttpPost]
+        public ActionResult<UserVm> ForgetPassword()
+        {
+            return Ok(new { message = "Not implemented." });
+        }
+
     }
 }

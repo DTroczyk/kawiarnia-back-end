@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Stripe.Checkout;
 using Api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers
 {
     [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class PaymentController : ControllerBase
     {
@@ -31,7 +33,7 @@ namespace Api.Controllers
             try
             {
                 var session = await _paymentService.StatrPayment(itemsVm, username);
-                return Ok(session);
+                return Ok(session.ToJson());
             }
             catch (Exception e)
             {

@@ -115,7 +115,6 @@ namespace Api.Services.Services
                 },
                 LineItems = lineItem,
                 Mode = "payment",
-                Customer = user.UserName,
             };
 
             var service = new SessionService();
