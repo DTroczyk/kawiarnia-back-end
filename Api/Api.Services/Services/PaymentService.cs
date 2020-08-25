@@ -38,6 +38,8 @@ namespace Api.Services.Services
             bucketEntity.HouseNumber = String.Empty;
             bucketEntity.PostalCode = String.Empty;
             bucketEntity.OrderDate = DateTime.MinValue;
+            bucketEntity.Latitude = 0;
+            bucketEntity.Longitude = 0;
             _dbContext.Update(bucketEntity);
 
             await _dbContext.SaveChangesAsync();
@@ -45,10 +47,13 @@ namespace Api.Services.Services
             return;
         }
 
-        public async Task<Session> StatrPayment(OrderItemsVm itemsVm, string username)
+        public async Task<bool> Payment(OrderItemsVm itemsVm, string username)
         {
-            var orderVms = itemsVm.items;
+            var orderVms = itemsVm.orderedProducts;
             var addressVm = itemsVm.address;
+            var token = itemsVm.token;
+
+            StripeConfiguration.ApiKey = "sxxx";
 
             if (orderVms.Count == 0 || orderVms == null)
             {
@@ -66,61 +71,49 @@ namespace Api.Services.Services
                 throw new Exception("Bucket is empty");
             }
 
-            User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserName == username);
+            long dbPriceSum = 0;
 
-            List<SessionLineItemOptions> lineItem = new List<SessionLineItemOptions>();
             foreach (OrderVm order in orderVms)
             {
                 var item = bucketEntity.Items.FirstOrDefault(i => i.Id == order.id);
+                dbPriceSum += (long)(item.Price * 100);
 
                 if (item.Id != order.id)
                 {
                     throw new Exception("The order's id is invalid.");
                 }
 
-                lineItem.Add(new SessionLineItemOptions
-                {
-                    Quantity = 1,
-                    Amount = (long)(item.Price * 100),
-                    Currency = "pln",
-                    Name = item.CoffeeId,
-                    Description = item.Coffee.Description
-                });
                 item.PaymentStatus = (PaymentStatus)2;
                 _dbContext.OrderItems.Update(item);
+            }
+            await _dbContext.SaveChangesAsync();
+
+            var amount = (long)(orderVms.Sum(o => o.price) * 100);
+            if (amount != dbPriceSum)
+            {
+                return false;
             }
 
             bucketEntity.City = addressVm.place;
             bucketEntity.Street = addressVm.road;
             bucketEntity.HouseNumber = addressVm.houseNumber;
             bucketEntity.PostalCode = addressVm.zipcode;
+            bucketEntity.Latitude = addressVm.latLng.latitude;
+            bucketEntity.Longitude = addressVm.latLng.longitude;
             _dbContext.Update(bucketEntity);
-
             await _dbContext.SaveChangesAsync();
 
-            StripeConfiguration.ApiKey = "xxx";
-            var FrontURL = new
+            var options = new ChargeCreateOptions
             {
-                successUrl = "https://quirky-bose-7d6097.netlify.app/panel/success",
-                cancelUrl = "https://quirky-bose-7d6097.netlify.app/panel/cancel",
+                Amount = amount,
+                Currency = "pln",
+                Description = "Płatność",
+                Source = token
             };
-            var options = new SessionCreateOptions
-            {
-                SuccessUrl = FrontURL.successUrl,
-                CancelUrl = FrontURL.cancelUrl,
-                PaymentMethodTypes = new List<string>
-                {
-                    "card",
-                    "p24"
-                },
-                LineItems = lineItem,
-                Mode = "payment",
-            };
+            var service = new ChargeService();
+            Charge charge = service.Create(options);
 
-            var service = new SessionService();
-            Session session = service.Create(options);
-
-            return session;
+            return true;
         }
 
         public async Task Success(string username)
@@ -150,6 +143,7 @@ namespace Api.Services.Services
             {
                 var newBucket = new BLL.Entity.Order();
                 newBucket.ClientId = bucketEntity.ClientId;
+                _dbContext.Orders.Add(newBucket);
                 await _dbContext.SaveChangesAsync();
 
                 newBucket = await _dbContext.Orders

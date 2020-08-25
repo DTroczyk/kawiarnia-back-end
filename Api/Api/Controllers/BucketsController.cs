@@ -31,15 +31,8 @@ namespace Api.Controllers
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var username = _userService.GetUserName(identity);
 
-            try
-            {
-                var orderVms = await _bucketService.GetBucketItems(username);
-                return Ok(orderVms);
-            }
-            catch (Exception e)
-            {
-                return Ok(new { status = 200, message = e.Message });
-            }
+            var orderVms = await _bucketService.GetBucketItems(username);
+            return Ok(orderVms);
         }
     }
 }

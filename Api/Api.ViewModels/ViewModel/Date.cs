@@ -2,8 +2,8 @@
 {
     public class Date
     {
-        public int day { get; set; }
-        public int month { get; set; }
-        public int year { get; set; }
+        public string day { get; set; }
+        public string month { get; set; }
+        public string year { get; set; }
     }
 }

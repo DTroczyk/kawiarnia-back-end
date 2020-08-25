@@ -26,43 +26,25 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Session>> StartPayment(OrderItemsVm itemsVm)
+        public async Task<ActionResult> StartPayment(OrderItemsVm itemsVm)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var username = _userService.GetUserName(identity);
             try
             {
-                var session = await _paymentService.StatrPayment(itemsVm, username);
-                return Ok(session.ToJson());
+                if (await _paymentService.Payment(itemsVm,username))
+                {
+                    await _paymentService.Success(username);
+                    return Ok(new { status = 200, message = "Payment complete." });
+                }
+                await _paymentService.Cancel(username);
+                return StatusCode(406, new { status = 406, message = "Something went wrong." });
             }
             catch (Exception e)
             {
+                await _paymentService.Cancel(username);
                 return StatusCode(406, new { message = e.Message, status = 406});
             }
-        }
-
-        [HttpPut]
-        [Route("success")]
-        public async Task<ActionResult<Session>> FinishPayment()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var username = _userService.GetUserName(identity);
-
-            await _paymentService.Success(username);
-
-            return Ok();
-        }
-
-        [HttpPut]
-        [Route("cancel")]
-        public async Task<ActionResult<Session>> CancelPayment()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var username = _userService.GetUserName(identity);
-
-            await _paymentService.Cancel(username);
-
-            return Ok();
         }
     }
 }
