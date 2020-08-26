@@ -53,7 +53,7 @@ namespace Api.Services.Services
             var addressVm = itemsVm.address;
             var token = itemsVm.token;
 
-            StripeConfiguration.ApiKey = "sxxx";
+            StripeConfiguration.ApiKey = "xxx";
 
             if (orderVms.Count == 0 || orderVms == null)
             {
@@ -112,6 +112,8 @@ namespace Api.Services.Services
             };
             var service = new ChargeService();
             Charge charge = service.Create(options);
+            bucketEntity.PaymentMethod = charge.PaymentMethodDetails.Card.Brand;
+            await _dbContext.SaveChangesAsync();
 
             return true;
         }
