@@ -26,5 +26,6 @@ namespace Api.BLL.Entity
         public string HouseNumber { get; set; }
 
         public bool IsVerifiedEmail { get; set; }
+        public string Salt { get; set; }
     }
 }

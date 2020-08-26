@@ -48,8 +48,8 @@ namespace Api.Controllers
             {
                 return StatusCode(406, new { message = e.Message });
             }
-
-            return Ok(userVm);
+            
+            return Ok(new { status = 200, user = userVm });
         }
 
         // DELETE: Users

@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Api.Services.Services
 {
@@ -28,7 +30,7 @@ namespace Api.Services.Services
 
         public async Task<UserVm> AddOrUpdate(UserVm userVm, ClaimsIdentity identity = null)
         {
-            var user = Mapper.Map<User>(userVm);
+            var user = Mapper.Map<User>(userVm);;
 
             if (identity == null)
             {
@@ -59,6 +61,11 @@ namespace Api.Services.Services
                 user.RegistrationDate = DateTime.Now;
                 user.IsVerifiedEmail = false;
 
+                var userHash = PasswordHashService.HashPassword(userVm.password);
+
+                user.PasswordHash = userHash.PasswordHash;
+                user.Salt = userHash.Salt;
+
                 if (Validation(user))
                 {
                     _dbContext.Add(user);
@@ -70,8 +77,23 @@ namespace Api.Services.Services
             }
             else if (GetUserName(identity) == user.UserName)
             {
+                User userDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserName == userVm.username);
+                user.RegistrationDate = userDb.RegistrationDate;
+                if (PasswordHashService.ValidatePassword(userVm.password, userDb) || userVm.password == userDb.PasswordHash)
+                {
+                    user.PasswordHash = userDb.PasswordHash;
+                    user.Salt = userDb.Salt;
+                }
+                else
+                {
+                    var userHash = PasswordHashService.HashPassword(userVm.password);
+
+                    user.PasswordHash = userHash.PasswordHash;
+                    user.Salt = userHash.Salt;
+                }
                 if (Validation(user))
                 {
+                    _dbContext.Entry(userDb).State = EntityState.Detached;
                     _dbContext.Update(user);
                 }
                 else

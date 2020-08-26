@@ -4,8 +4,8 @@ namespace Api.Services.Interfaces
 {
     public interface ILoginService
     {
-        public User Login(string username, string pass);
-        public User AuthenticateUser(User login);
-        public string GenerateJSONWebToken(User userInfo);
+        User Login(string username, string pass);
+        User AuthenticateUser(User login);
+        string GenerateJSONWebToken(User userInfo);
     }
 }

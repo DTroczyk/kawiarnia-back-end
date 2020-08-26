@@ -7,6 +7,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Api.Services.Services
@@ -27,7 +28,7 @@ namespace Api.Services.Services
             {
                 return null;
             }
-            if (login.UserName.ToUpper() == user.UserName.ToUpper() && login.PasswordHash == user.PasswordHash)
+            if (login.UserName.ToUpper() == user.UserName.ToUpper() && (PasswordHashService.ValidatePassword(login.PasswordHash, user) || login.PasswordHash == user.PasswordHash))
             {
                 return user;
             }
