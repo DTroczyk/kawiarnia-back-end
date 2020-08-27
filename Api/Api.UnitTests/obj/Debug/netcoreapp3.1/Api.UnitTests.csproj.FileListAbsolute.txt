@@ -234,10 +234,12 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\bin\Debug\netcoreapp3.1
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\obj\Debug\netcoreapp3.1\Api.UnitTests.csprojAssemblyReference.cache
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\obj\Debug\netcoreapp3.1\Api.UnitTests.AssemblyInfoInputs.cache
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\obj\Debug\netcoreapp3.1\Api.UnitTests.AssemblyInfo.cs
-C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\obj\Debug\netcoreapp3.1\Api.UnitTests.csproj.CoreCompileInputs.cache
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\obj\Debug\netcoreapp3.1\Api.UnitTests.csproj.CopyComplete
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\obj\Debug\netcoreapp3.1\Api.UnitTests.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\obj\Debug\netcoreapp3.1\Api.UnitTests.pdb
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\obj\Debug\netcoreapp3.1\Api.UnitTests.genruntimeconfig.cache
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\bin\Debug\netcoreapp3.1\Api.Services.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\bin\Debug\netcoreapp3.1\Api.Services.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\bin\Debug\netcoreapp3.1\Castle.Core.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\bin\Debug\netcoreapp3.1\Moq.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.UnitTests\obj\Debug\netcoreapp3.1\Api.UnitTests.csproj.CoreCompileInputs.cache
