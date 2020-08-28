@@ -6,6 +6,7 @@ using Api.ViewModels.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Api.Services.Interfaces;
+using Api.ViewModels.DTOs;
 
 namespace Api.Controllers
 {
@@ -46,7 +47,7 @@ namespace Api.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(406, new { message = e.Message });
+                return StatusCode(406, new { message = e.Message, status = 406 });
             }
             
             return Ok(new { status = 200, user = userVm });
@@ -72,15 +73,27 @@ namespace Api.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(406, new { message = e.Message });
+                return StatusCode(406, new { message = e.Message, status = 406 });
             }
         }
 
         [Route("forgotten")]
         [HttpPost]
-        public ActionResult<UserVm> ForgetPassword()
+        public async Task<ActionResult> ForgetPassword(EmailDto email)
         {
-            return Ok(new { message = "Not implemented." });
+            try
+            {
+                if (await _userService.ForgottenPassword(email.email) == true)
+                { 
+                    return Ok(new { message = "Email was sent", status = 200 }); 
+                }
+                return StatusCode(406, new { message = "Something gone wrong", status = 406 });
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(406, new { message = e.Message, status = 406 });
+            }
         }
 
     }

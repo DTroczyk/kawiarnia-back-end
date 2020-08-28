@@ -9,8 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using MimeKit;
+using MailKit.Net.Smtp;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace Api.Services.Services
 {
@@ -142,6 +143,53 @@ namespace Api.Services.Services
             await _dbContext.SaveChangesAsync();
 
             return userVm;
+        }
+
+        public async Task<bool> ForgottenPassword(string email)
+        {
+            var user = await _dbContext.Users
+                .Where(u => u.Email.ToUpper() == email.ToUpper())
+                .FirstOrDefaultAsync();
+            if (user == null)
+            {
+                throw new Exception("Email address does not exist.");
+            }
+
+            var cryptoProvider = new RNGCryptoServiceProvider();
+            byte[] password = new byte[10];
+            cryptoProvider.GetBytes(password);
+            string newPassword = Convert.ToBase64String(password);
+
+            User userHash = PasswordHashService.HashPassword(newPassword);
+
+            user.PasswordHash = userHash.PasswordHash;
+            user.Salt = userHash.Salt;
+
+            _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
+
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Cafe", "kawiarnia2020@outlook.com"));
+            message.To.Add(new MailboxAddress($"{user.FirstName} {user.LastName}", user.Email));
+            message.Subject = "Cafe password recovery";
+            message.Body = new TextPart("plain")
+            {
+                Text = @$"Hello, {user.FirstName}. 
+                    
+This is your new password: {newPassword}
+Regards Cafe"
+            };
+
+            using (var client = new SmtpClient ())
+            {
+                client.Connect("smtp.office365.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+
+                client.Authenticate("kawiarnia2020@outlook.com", "password");
+
+                await client.SendAsync(message);
+                client.Disconnect(true);
+            }
+            return true;
         }
     }
 }

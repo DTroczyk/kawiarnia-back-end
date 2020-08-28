@@ -10,5 +10,6 @@ namespace Api.Services.Interfaces
         string GetUserName(ClaimsIdentity identity);
         Task<UserVm> GetCurrentUser(ClaimsIdentity identity);
         Task<UserVm> Delete(UserVm userVm);
+        Task<bool> ForgottenPassword(string email);
     }
 }
