@@ -40,6 +40,7 @@ namespace Api.Services.Services
             bucketEntity.OrderDate = DateTime.MinValue;
             bucketEntity.Latitude = 0;
             bucketEntity.Longitude = 0;
+            bucketEntity.PaymentCard = String.Empty;
             _dbContext.Update(bucketEntity);
 
             await _dbContext.SaveChangesAsync();
@@ -53,7 +54,7 @@ namespace Api.Services.Services
             var addressVm = itemsVm.address;
             var token = itemsVm.token;
 
-            StripeConfiguration.ApiKey = "xxx";
+            StripeConfiguration.ApiKey = "sk_test_51H7HDaCS5MzPPrYcsDLFMQen4AZaCZht6brtwieDeVLCrBC8tvYELmYYX10EqoQXOEpj9qce2iiKm5XMyMAfmxHS00gcWT9a9I";
 
             if (orderVms.Count == 0 || orderVms == null)
             {
@@ -113,6 +114,7 @@ namespace Api.Services.Services
             var service = new ChargeService();
             Charge charge = service.Create(options);
             bucketEntity.PaymentMethod = charge.PaymentMethodDetails.Card.Brand;
+            bucketEntity.PaymentCard = "**** **** **** " + charge.PaymentMethodDetails.Card.Last4;
             await _dbContext.SaveChangesAsync();
 
             return true;

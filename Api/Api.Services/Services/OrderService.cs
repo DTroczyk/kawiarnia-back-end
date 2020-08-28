@@ -35,6 +35,7 @@ namespace Api.Services.Services
                 bucketEntity.Street = String.Empty;
                 bucketEntity.City = String.Empty;
                 bucketEntity.HouseNumber = String.Empty;
+                bucketEntity.PaymentCard = String.Empty;
 
                 _dbContext.Orders.Add(bucketEntity);
                 await _dbContext.SaveChangesAsync();

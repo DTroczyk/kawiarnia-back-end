@@ -11,5 +11,6 @@ namespace Api.ViewModels.ViewModel
         public bool status { get; set; }
         public string paymentMethod { get; set; }
         public IList<OrderVm> items { get; set; }
+        public string paymentCard { get; set; }
     }
 }
