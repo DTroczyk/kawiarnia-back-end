@@ -120,6 +120,64 @@ namespace Api.Services.Services
             return true;
         }
 
+        public async Task<bool> PaymentOnDelivery(OrderItemsVm itemsVm, string username)
+        {
+            var orderVms = itemsVm.orderedProducts;
+            var addressVm = itemsVm.address;
+
+            if (orderVms.Count == 0 || orderVms == null)
+            {
+                throw new Exception("The order is null or empty.");
+            }
+
+            var bucketEntity = await _dbContext.Orders
+                .Include(o => o.Items)
+                    .ThenInclude(c => c.Coffee)
+                .Where(o => o.ClientId == username)
+                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+
+            if (bucketEntity == null || bucketEntity.Items.Count == 0)
+            {
+                throw new Exception("Bucket is empty");
+            }
+
+            long dbPriceSum = 0;
+
+            foreach (OrderVm order in orderVms)
+            {
+                var item = bucketEntity.Items.FirstOrDefault(i => i.Id == order.id);
+                dbPriceSum += (long)(item.Price * 100);
+
+                if (item.Id != order.id)
+                {
+                    throw new Exception("The order's id is invalid.");
+                }
+
+                item.PaymentStatus = (PaymentStatus)2;
+                _dbContext.OrderItems.Update(item);
+            }
+            await _dbContext.SaveChangesAsync();
+
+            var amount = (long)(orderVms.Sum(o => o.price) * 100);
+            if (amount != dbPriceSum)
+            {
+                return false;
+            }
+
+            bucketEntity.City = addressVm.place;
+            bucketEntity.Street = addressVm.road;
+            bucketEntity.HouseNumber = addressVm.houseNumber;
+            bucketEntity.PostalCode = addressVm.zipcode;
+            bucketEntity.Latitude = addressVm.latLng.latitude;
+            bucketEntity.Longitude = addressVm.latLng.longitude;
+            bucketEntity.PaymentMethod = "On Delivery";
+            bucketEntity.PaymentCard = "";
+            _dbContext.Update(bucketEntity);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task Success(string username)
         {
             var bucketEntity = await _dbContext.Orders

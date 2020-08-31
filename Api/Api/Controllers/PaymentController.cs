@@ -46,5 +46,28 @@ namespace Api.Controllers
                 return StatusCode(406, new { message = e.Message, status = 406});
             }
         }
+
+        [HttpPost]
+        [Route("onDelivery")]
+        public async Task<ActionResult> OnDelivery(OrderItemsVm itemsVm)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
+            try
+            {
+                if (await _paymentService.PaymentOnDelivery(itemsVm, username))
+                {
+                    await _paymentService.Success(username);
+                    return Ok(new { status = 200, message = "Order complete." });
+                }
+                await _paymentService.Cancel(username);
+                return StatusCode(406, new { status = 406, message = "Something went wrong." });
+            }
+            catch (Exception e)
+            {
+                await _paymentService.Cancel(username);
+                return StatusCode(406, new { message = e.Message, status = 406 });
+            }
+        }
     }
 }
