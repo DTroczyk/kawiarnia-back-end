@@ -54,7 +54,7 @@ namespace Api.Services.Services
             var addressVm = itemsVm.address;
             var token = itemsVm.token;
 
-            StripeConfiguration.ApiKey = "sk_test_51H7HDaCS5MzPPrYcsDLFMQen4AZaCZht6brtwieDeVLCrBC8tvYELmYYX10EqoQXOEpj9qce2iiKm5XMyMAfmxHS00gcWT9a9I";
+            StripeConfiguration.ApiKey = "xxx";
 
             if (orderVms.Count == 0 || orderVms == null)
             {

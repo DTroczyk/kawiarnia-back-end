@@ -7,6 +7,7 @@ INSERT INTO Coffees (Name,Description,Price) VALUES ('Mocca', 'Jeden z wariantów
 INSERT INTO Coffees (Name,Description,Price) VALUES ('Americana', 'Czarna kawa powsta³a z po³¹czenia wody i espresso.',100);
 INSERT INTO Coffees (Name,Description,Price) VALUES ('FlatWhite', 'Napój kawowy pochodz¹cy z Austraill lub Nowej Zelandii. Jest przygotowywany poprzez zalanie jednej lub dwóch porcji espresso spienionym mlekiem o jednorodnej, aksamitnej konsystencji.',100);
 INSERT INTO Coffees (Name,Description,Price) VALUES ('Espresso', 'Wywodzi siê z W³och, gdzie w 1901 Luigi Bezzera stworzy³ pierwszy ekspres do expresso. By³ on jednak konstrukcj¹ opart¹ na przep³ywie pary i wody, co prowadzi³o do smakowych zmian ekstraktu.',100);
+INSERT INTO Coffees (Name,Description,Price) VALUES ('YourOwn', 'Do it yourself.',100);
 
 Select * FROM Coffees
 

@@ -184,7 +184,7 @@ Regards Cafe"
             {
                 client.Connect("smtp.office365.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
 
-                client.Authenticate("kawiarnia2020@outlook.com", "uibrotho3421");
+                client.Authenticate("kawiarnia2020@outlook.com", "password");
 
                 await client.SendAsync(message);
                 client.Disconnect(true);
