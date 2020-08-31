@@ -42,7 +42,7 @@ namespace Api.Services.Services
             }
 
             // first name
-            regex = new Regex(@"^([a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}");
+            regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}");
             if (!regex.IsMatch(user.FirstName))
             {
                 message += "first name, ";
@@ -69,14 +69,14 @@ namespace Api.Services.Services
             }
 
             // place
-            regex = new Regex(@"^([a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}");
+            regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}");
             if (!regex.IsMatch(user.City))
             {
                 message += "place, ";
             }
 
             // road
-            regex = new Regex(@"^([a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}");
+            regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}");
             if (!regex.IsMatch(user.Street) && user.Street == String.Empty)
             {
                 message += "road, ";
@@ -147,6 +147,10 @@ namespace Api.Services.Services
                 if (message == "Incorrect.")
                 {
                     _dbContext.Add(user);
+                    string text = @$"Hello, {user.FirstName}
+
+Welcome to Cafe.";
+                    await SendEmail(user, text, "Hello");
                 }
                 else
                 {
@@ -228,6 +232,30 @@ namespace Api.Services.Services
             return userVm;
         }
 
+        private async Task<bool> SendEmail(User user, string text, string subject)
+        {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Cafe", "kawiarnia2020@outlook.com"));
+            message.To.Add(new MailboxAddress($"{user.FirstName} {user.LastName}", user.Email));
+            message.Subject = subject;
+            message.Body = new TextPart("plain")
+            {
+                Text = text
+            };
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp.office365.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+
+                client.Authenticate("kawiarnia2020@outlook.com", "password");
+
+                await client.SendAsync(message);
+                client.Disconnect(true);
+            }
+
+            return true;
+        }
+
         public async Task<bool> ForgottenPassword(string email)
         {
             var user = await _dbContext.Users
@@ -248,30 +276,19 @@ namespace Api.Services.Services
             user.PasswordHash = userHash.PasswordHash;
             user.Salt = userHash.Salt;
 
+            var text = @$"Hello, {user.FirstName}. 
+                    
+This is your new password: {newPassword}
+Regards Cafe";
+            if (await SendEmail(user, text, "Cafe password recovery") == false)
+            {
+                throw new Exception("Email wasn't send. Try again.");
+            }
+
             _dbContext.Users.Update(user);
             await _dbContext.SaveChangesAsync();
 
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Cafe", "kawiarnia2020@outlook.com"));
-            message.To.Add(new MailboxAddress($"{user.FirstName} {user.LastName}", user.Email));
-            message.Subject = "Cafe password recovery";
-            message.Body = new TextPart("plain")
-            {
-                Text = @$"Hello, {user.FirstName}. 
-                    
-This is your new password: {newPassword}
-Regards Cafe"
-            };
-
-            using (var client = new SmtpClient ())
-            {
-                client.Connect("smtp.office365.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-
-                client.Authenticate("kawiarnia2020@outlook.com", "password");
-
-                await client.SendAsync(message);
-                client.Disconnect(true);
-            }
+            
             return true;
         }
     }
