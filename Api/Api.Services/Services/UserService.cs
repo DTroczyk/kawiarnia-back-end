@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using MimeKit;
 using MailKit.Net.Smtp;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace Api.Services.Services
 {
@@ -22,11 +23,85 @@ namespace Api.Services.Services
 
         }
 
-        private bool Validation(User user)
+        private string Validation(User user)
         {
-            // Validation here
+            string message = "Incorrect: ";
 
-            return true;
+            // username
+            Regex regex = new Regex(@"^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{2,29}$");
+            if (!regex.IsMatch(user.UserName))
+            {
+                message += "username, ";
+            }
+
+            // password
+            regex = new Regex(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
+            if (!regex.IsMatch(user.PasswordHash))
+            {
+                message += "password, ";
+            }
+
+            // first name
+            regex = new Regex(@"^([a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}");
+            if (!regex.IsMatch(user.FirstName))
+            {
+                message += "first name, ";
+            }
+
+            // last name
+            if (!regex.IsMatch(user.LastName))
+            {
+                message += "last name, ";
+            }
+
+            // email
+            regex = new Regex(@"^\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b");
+            if (!regex.IsMatch(user.Email))
+            {
+                message += "email, ";
+            }
+
+            // zipcode
+            regex = new Regex(@"^[0-9]{2}-[0-9]{3}");
+            if (!regex.IsMatch(user.PostalCode))
+            {
+                message += "zipcode, ";
+            }
+
+            // place
+            regex = new Regex(@"^([a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}");
+            if (!regex.IsMatch(user.City))
+            {
+                message += "place, ";
+            }
+
+            // road
+            regex = new Regex(@"^([a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}");
+            if (!regex.IsMatch(user.Street) && user.Street == String.Empty)
+            {
+                message += "road, ";
+            }
+
+            // house number
+            regex = new Regex(@"^[0-9]{1,}[A-z]{1}|^[0-9]{1,}");
+            if (!regex.IsMatch(user.HouseNumber))
+            {
+                message += "house number, ";
+            }
+
+            // telephone
+            regex = new Regex(@"^(([0-9]{9})|(\+{1}[0-9]{2,})|(([0-9]{3} ){2}[0-9]{3})|(\+{1}[0-9]{2,} ([0-9]{3} ){2}[0-9]{3}))");
+            if (!regex.IsMatch(user.PhoneNumber))
+            {
+                message += "telephone, ";
+            }
+
+            // date of birth
+
+            message = message.Remove(message.Length - 2);
+            message += ".";
+
+            return message;
         }
 
         public async Task<UserVm> AddOrUpdate(UserVm userVm, ClaimsIdentity identity = null)
@@ -64,22 +139,27 @@ namespace Api.Services.Services
 
                 var userHash = PasswordHashService.HashPassword(userVm.password);
 
+                var message = Validation(user);
+
                 user.PasswordHash = userHash.PasswordHash;
                 user.Salt = userHash.Salt;
 
-                if (Validation(user))
+                if (message == "Incorrect.")
                 {
                     _dbContext.Add(user);
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    throw new Exception(message);
                 }
             }
             else if (GetUserName(identity) == user.UserName)
             {
                 User userDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserName == userVm.username);
                 user.RegistrationDate = userDb.RegistrationDate;
+
+                var message = Validation(user);
+
                 if (PasswordHashService.ValidatePassword(userVm.password, userDb) || userVm.password == userDb.PasswordHash)
                 {
                     user.PasswordHash = userDb.PasswordHash;
@@ -92,14 +172,15 @@ namespace Api.Services.Services
                     user.PasswordHash = userHash.PasswordHash;
                     user.Salt = userHash.Salt;
                 }
-                if (Validation(user))
+
+                if (message == "Incorrect.")
                 {
                     _dbContext.Entry(userDb).State = EntityState.Detached;
                     _dbContext.Update(user);
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    throw new Exception(message);
                 }
             }
             else if (GetUserName(identity) != user.UserName)
