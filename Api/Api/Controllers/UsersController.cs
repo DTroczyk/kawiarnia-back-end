@@ -56,7 +56,7 @@ namespace Api.Controllers
         // DELETE: Users
         [Authorize]
         [HttpDelete]
-        public async Task<ActionResult<UserVm>> DeleteUser(UserVm userVm)
+        public async Task<ActionResult<UserVm>> DeleteUser()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var username = _userService.GetUserName(identity);

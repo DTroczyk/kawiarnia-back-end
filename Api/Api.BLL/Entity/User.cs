@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Api.BLL.Entity
@@ -27,5 +28,9 @@ namespace Api.BLL.Entity
 
         public bool IsVerifiedEmail { get; set; }
         public string Salt { get; set; }
+
+        // Collections
+
+        public IList<Order> Orders { get; set; }
     }
 }

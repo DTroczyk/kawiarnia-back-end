@@ -177,8 +177,9 @@ namespace Api.DAL.Migrations
             modelBuilder.Entity("Api.BLL.Entity.Order", b =>
                 {
                     b.HasOne("Api.BLL.Entity.User", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
+                        .WithMany("Orders")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("Api.BLL.Entity.OrderItem", b =>

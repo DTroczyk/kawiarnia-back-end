@@ -31,6 +31,10 @@ namespace Api.DAL.EF
             builder.Entity<User>()
                 .HasIndex(u => u.Email)
                     .IsUnique();
+            builder.Entity<User>()
+                .HasMany(o => o.Orders)
+                .WithOne(u => u.Client)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
