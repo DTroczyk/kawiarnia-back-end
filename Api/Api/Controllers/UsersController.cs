@@ -61,15 +61,10 @@ namespace Api.Controllers
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var username = _userService.GetUserName(identity);
 
-            if (username != userVm.username)
-            {
-                return StatusCode(405, new { message = "Method Not Allowed. Wrong user." });
-            }
-
             try
             {
-                var user = await _userService.Delete(userVm);
-                return Ok(new { status = 200, user = user });
+                var user = await _userService.Delete(username);
+                return Ok(new { status = 200, user = user , message = "Account deleted."});
             }
             catch (Exception e)
             {

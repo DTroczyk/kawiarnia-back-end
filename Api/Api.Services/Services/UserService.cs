@@ -130,14 +130,16 @@ namespace Api.Services.Services
             return userName;
         }
 
-        public async Task<UserVm> Delete(UserVm userVm)
+        public async Task<UserVm> Delete(string username)
         {
-            var userEntity = await _dbContext.Users.FindAsync(userVm.username);
+            var userEntity = await _dbContext.Users.FindAsync(username);
 
             if (userEntity == null)
             {
                 throw new Exception("User not found.");
             }
+
+            var userVm = Mapper.Map<UserVm>(userEntity);
 
             _dbContext.Users.Remove(userEntity);
             await _dbContext.SaveChangesAsync();

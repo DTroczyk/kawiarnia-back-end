@@ -9,7 +9,7 @@ namespace Api.Services.Interfaces
         Task<UserVm> AddOrUpdate(UserVm userVm, ClaimsIdentity identity = null);
         string GetUserName(ClaimsIdentity identity);
         Task<UserVm> GetCurrentUser(ClaimsIdentity identity);
-        Task<UserVm> Delete(UserVm userVm);
+        Task<UserVm> Delete(string username);
         Task<bool> ForgottenPassword(string email);
     }
 }
