@@ -19,24 +19,21 @@ namespace Api.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Api.BLL.Entity.Coffe", b =>
+            modelBuilder.Entity("Api.BLL.Entity.Coffee", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
 
-                    b.HasKey("Id");
+                    b.HasKey("Name");
 
-                    b.ToTable("Coffes");
+                    b.ToTable("Coffees");
                 });
 
             modelBuilder.Entity("Api.BLL.Entity.Order", b =>
@@ -58,11 +55,20 @@ namespace Api.DAL.Migrations
                     b.Property<bool>("IsPaymentCompleted")
                         .HasColumnType("bit");
 
+                    b.Property<float>("Latitude")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Longitude")
+                        .HasColumnType("real");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaymentMethod")
-                        .HasColumnType("int");
+                    b.Property<string>("PaymentCard")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentMethod")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");
@@ -84,8 +90,8 @@ namespace Api.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CoffeId")
-                        .HasColumnType("int");
+                    b.Property<string>("CoffeeId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("EspressoCount")
                         .HasColumnType("int");
@@ -99,12 +105,15 @@ namespace Api.DAL.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("int");
+
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CoffeId");
+                    b.HasIndex("CoffeeId");
 
                     b.HasIndex("OrderId");
 
@@ -132,6 +141,9 @@ namespace Api.DAL.Migrations
                     b.Property<string>("HouseNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsVerifiedEmail")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
@@ -148,6 +160,9 @@ namespace Api.DAL.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Salt")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Street")
                         .HasColumnType("nvarchar(max)");
 
@@ -162,17 +177,16 @@ namespace Api.DAL.Migrations
             modelBuilder.Entity("Api.BLL.Entity.Order", b =>
                 {
                     b.HasOne("Api.BLL.Entity.User", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
+                        .WithMany("Orders")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("Api.BLL.Entity.OrderItem", b =>
                 {
-                    b.HasOne("Api.BLL.Entity.Coffe", "Coffe")
+                    b.HasOne("Api.BLL.Entity.Coffee", "Coffee")
                         .WithMany()
-                        .HasForeignKey("CoffeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CoffeeId");
 
                     b.HasOne("Api.BLL.Entity.Order", "Order")
                         .WithMany("Items")

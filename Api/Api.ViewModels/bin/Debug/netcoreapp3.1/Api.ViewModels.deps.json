@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Api.ViewModels/1.0.0": {
+        "dependencies": {
+          "Api.BLL": "1.0.0"
+        },
+        "runtime": {
+          "Api.ViewModels.dll": {}
+        }
+      },
+      "Api.BLL/1.0.0": {
+        "runtime": {
+          "Api.BLL.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Api.ViewModels/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Api.BLL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,12 @@
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\bin\Release\netcoreapp3.1\Api.ViewModels.deps.json
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\bin\Release\netcoreapp3.1\Api.ViewModels.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\bin\Release\netcoreapp3.1\Api.ViewModels.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Release\netcoreapp3.1\Api.ViewModels.csprojAssemblyReference.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Release\netcoreapp3.1\Api.ViewModels.AssemblyInfoInputs.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Release\netcoreapp3.1\Api.ViewModels.AssemblyInfo.cs
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Release\netcoreapp3.1\Api.ViewModels.csproj.CoreCompileInputs.cache
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Release\netcoreapp3.1\Api.ViewModels.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Release\netcoreapp3.1\Api.ViewModels.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\bin\Release\netcoreapp3.1\Api.BLL.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\bin\Release\netcoreapp3.1\Api.BLL.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api.ViewModels\obj\Release\netcoreapp3.1\Api.ViewModels.csproj.CopyComplete

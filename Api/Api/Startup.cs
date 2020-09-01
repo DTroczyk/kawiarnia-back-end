@@ -1,21 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
 using Api.Configuration;
 using Api.DAL.EF;
+using Api.Services.Interfaces;
+using Api.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Api
@@ -30,7 +24,7 @@ namespace Api
 
             Configuration = builder.Build();
 
-            _connectionString = Configuration["ConnectionStrings:MsSqlConnection"];
+            _connectionString = Configuration["ConnectionStrings:MsSqlAzure"];
 
             Configuration = configuration;
         }
@@ -61,15 +55,30 @@ namespace Api
                     };
                 });
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(_connectionString); // SQL SERVER
+            });
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IBucketService, BucketService>();
+            services.AddScoped<IHistoryService, HistoryService>();
+
             services.AddMvc();
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_connectionString));
+            var cs = new ConnectionStringDto() { ConnectionString = _connectionString };
+            services.AddSingleton(cs);
 
             var mappingConfig = new AutoMapper.MapperConfiguration(cfg =>
             {
                 cfg.Mapping();
             });
             services.AddSingleton(x => mappingConfig.CreateMapper());
+            services.AddScoped<DbContext, ApplicationDbContext>();
+            services.AddScoped<DbContextOptions<ApplicationDbContext>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

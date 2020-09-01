@@ -1,118 +1,73 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Api.BLL.Entity;
-using Api.DAL.EF;
-using Api.BLL.ViewModel;
-using AutoMapper;
+using Api.ViewModels.ViewModel;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Api.Services.Interfaces;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUserService _userService;
+        private readonly IOrderService _orderService;
 
-        public OrdersController(ApplicationDbContext context)
+        public OrdersController(IUserService userService, IOrderService orderService)
         {
-            _context = context;
+            _userService = userService;
+            _orderService = orderService;
         }
 
         // GET: Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderVm>>> GetOrders()
+        public async Task<ActionResult<OrderVm>> GetOrderItem(int orderId)
         {
-            var orderItemsEntities = await _context.OrderItems.ToListAsync();
-
-            IEnumerable<OrderVm> orderVms = Mapper.Map<IEnumerable<OrderVm>>(orderItemsEntities);
-
-            return Ok(orderVms);
-        }
-
-        // GET: Orders/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<OrderVm>> GetOrderItem(int id)
-        {
-            var orderItem = await _context.OrderItems.FindAsync(id);
-
-            if (orderItem == null)
-            {
-                return NotFound();
-            }
-
-            OrderVm orderVm = Mapper.Map<OrderVm>(orderItem);
+            var orderVm = await _orderService.GetOrderItem(orderId);
 
             return Ok(orderVm);
         }
 
-        // PUT: api/Orders/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrderItem(int id, OrderItem orderItem)
-        {
-            if (id != orderItem.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(orderItem).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderItemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Orders
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // POST: Orders
         [HttpPost]
-        public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderItem)
+        public async Task<ActionResult<OrderVm>> PostOrderItem(OrderVm orderVm)
         {
-            _context.OrderItems.Add(orderItem);
-            await _context.SaveChangesAsync();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
 
-            return CreatedAtAction("GetOrderItem", new { id = orderItem.Id }, orderItem);
+            var userVm = await _orderService.AddOrderItem(orderVm, username);
+
+            return StatusCode(201, new { status = 201, user = userVm});
         }
 
-        // DELETE: api/Orders/5
+        // DELETE: Orders/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<OrderItem>> DeleteOrderItem(int id)
         {
-            var orderItem = await _context.OrderItems.FindAsync(id);
-            if (orderItem == null)
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
+
+            try
             {
-                return NotFound();
+                var orderVm = await _orderService.DeleteOrderItem(id, username);
+                return Ok(new { status = 200, order = orderVm });
             }
-
-            _context.OrderItems.Remove(orderItem);
-            await _context.SaveChangesAsync();
-
-            return orderItem;
-        }
-
-        private bool OrderItemExists(int id)
-        {
-            return _context.OrderItems.Any(e => e.Id == id);
+            catch (Exception e)
+            {
+                if (e.Message == "Method Not Allowed")
+                {
+                    return StatusCode(405, new { message = e.Message, status = 405 });
+                }
+                else
+                {
+                    return StatusCode(406, new { message = e.Message, status = 406 });
+                }
+            }
         }
     }
 }

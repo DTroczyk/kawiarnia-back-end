@@ -1,168 +1,95 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Api.BLL.Entity;
-using Api.DAL.EF;
-using Api.BLL.ViewModel;
-using AutoMapper;
+using Api.ViewModels.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Api.Services.Interfaces;
+using Api.ViewModels.DTOs;
 
 namespace Api.Controllers
 {
-    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
 
-        public UsersController(ApplicationDbContext context)
+        private readonly IUserService _userService;
+
+        public UsersController(IUserService userService)
         {
-            _context = context;
-        }
-
-        private bool Autorization()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claims = identity.Claims.ToList();
-
-            if (claims[0].Value.ToUpper() == "DTROCZYK")
-            {
-                return true;;
-            }
-
-            return false;
-        }
-
-        // GET: Users/User
-        [HttpGet("user")]
-        public String GetUser()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            IList<Claim> claims = identity.Claims.ToList();
-
-            return claims[0].Value;
+            _userService = userService;
         }
 
         // GET: Users
+        [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserVm>>> GetUsers()
+        public async Task<ActionResult<UserVm>> GetCurrentUser()
         {
-            if (!Autorization())
-            {
-                return Unauthorized();
-            }
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
 
-            var userEntities = await _context.Users.ToListAsync();
-            IEnumerable<UserVm> userVms = Mapper.Map<IEnumerable<UserVm>>(userEntities);
-
-            return Ok(userVms);
-        }
-
-        // GET: Users/5
-        [HttpGet("{userName}")]
-        public async Task<ActionResult<UserVm>> GetUser(string userName)
-        {
-            if (!Autorization())
-            {
-                return Unauthorized();
-            }
-
-            var user = await _context.Users.FindAsync(userName);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            UserVm userVm = Mapper.Map<UserVm>(user);
+            var userVm = await _userService.GetCurrentUser(identity);
 
             return Ok(userVm);
         }
 
-        // PUT: Users/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{userName}")]
-        public async Task<IActionResult> PutUser(string userName, User user)
+
+        // PUT: Users
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> PutUser(UserVm userVm)
         {
-            if (!Autorization())
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            try
             {
-                return Unauthorized();
+                userVm = await _userService.AddOrUpdate(userVm, identity);
             }
-
-            if (userName != user.UserName)
+            catch (Exception e)
             {
-                return BadRequest();
+                return StatusCode(406, new { message = e.Message, status = 406 });
             }
+            
+            return Ok(new { status = 200, user = userVm });
+        }
 
-            _context.Entry(user).State = EntityState.Modified;
+        // DELETE: Users
+        [Authorize]
+        [HttpDelete]
+        public async Task<ActionResult<UserVm>> DeleteUser()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
 
             try
             {
-                await _context.SaveChangesAsync();
+                var user = await _userService.Delete(username);
+                return Ok(new { status = 200, user = user , message = "Account deleted."});
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!UserExists(userName))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return StatusCode(406, new { message = e.Message, status = 406 });
             }
-
-            return NoContent();
         }
 
-        // POST: Users
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Route("forgotten")]
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult> ForgetPassword(EmailDto email)
         {
-            if (!Autorization())
+            try
             {
-                return Unauthorized();
+                if (await _userService.ForgottenPassword(email.email) == true)
+                { 
+                    return Ok(new { message = "Email was sent", status = 200 }); 
+                }
+                return StatusCode(406, new { message = "Something gone wrong", status = 406 });
+
             }
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.UserName }, user);
+            catch (Exception e)
+            {
+                return StatusCode(406, new { message = e.Message, status = 406 });
+            }
         }
 
-        // DELETE: Users/5
-        [HttpDelete("{userName}")]
-        public async Task<ActionResult<User>> DeleteUser(string userName)
-        {
-            if (!Autorization())
-            {
-                return Unauthorized();
-            }
-
-            var user = await _context.Users.FindAsync(userName);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return user;
-        }
-
-        private bool UserExists(string userName)
-        {
-            return _context.Users.Any(e => e.UserName == userName);
-        }
     }
 }

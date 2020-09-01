@@ -1,146 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Api.BLL.Entity;
-using Api.DAL.EF;
-using Api.BLL.ViewModel;
-using AutoMapper;
+using Api.ViewModels.ViewModel;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Api.Services.Interfaces;
 
 namespace Api.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class HistoriesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IHistoryService _historyService;
+        private readonly IUserService _userService;
 
-        public HistoriesController(ApplicationDbContext context)
+        public HistoriesController(IHistoryService historyService, IUserService userService)
         {
-            _context = context;
+            _historyService = historyService;
+            _userService = userService;
         }
 
         // GET: Histories
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HistoryVm>>> GetHistoryItems()
         {
-            var historyEntities = await _context.Orders
-                .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffe)
-                .Where(o => o.IsPaymentCompleted == true)
-                .ToListAsync();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
 
-            IEnumerable<HistoryVm> historyVms = Mapper.Map<IEnumerable<HistoryVm>>(historyEntities);
+            int counter = await _historyService.CountHistoryItems(username);
+            var historyVms = await _historyService.GetHistoryItems(username);
 
-            return Ok(historyVms);
+            return Ok(new { status = 200, counter = counter, historyVms });
         }
 
-        //GET: Histories/userName
-        [HttpGet("{userName}")]
-        public async Task<ActionResult<IEnumerable<HistoryVm>>> GetHistoryUserItems(string userName)
+        //GET: Histories/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<HistoryVm>> GetHistoryItem(int id)
         {
-            var historyEntities = await _context.Orders
-                .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffe)
-                .Where(o => o.IsPaymentCompleted == true)
-                .Where(o => o.ClientId == userName)
-                .ToListAsync();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var username = _userService.GetUserName(identity);
 
-            IEnumerable<HistoryVm> historyVms = Mapper.Map<IEnumerable<HistoryVm>>(historyEntities);
+            var historyVm = await _historyService.GetHistoryItem(id, username);
 
-            return Ok(historyVms);
-        }
-
-        // GET: Histories/userName&date
-        [HttpGet("{userName}&{date}")]
-        public async Task<ActionResult<HistoryVm>> GetHistoryItem(string userName, DateTime date)
-        {
-            var historyEntity = await _context.Orders
-                .Include(o => o.Items)
-                    .ThenInclude(c => c.Coffe)
-                .Where(o => o.IsPaymentCompleted == true)
-                .Where(o => o.ClientId == userName)
-                .Where(o => o.OrderDate == date)
-                .FirstOrDefaultAsync();
-
-            if (historyEntity == null)
-            {
-                return NotFound();
-            }
-
-            HistoryVm historyVm = Mapper.Map<HistoryVm>(historyEntity);
-
-            return Ok(historyVm);
-        }
-
-        //// PUT: Histories/5
-        //[HttpPut("{date}")]
-        //public async Task<IActionResult> PutOrderItem(DateTime date, HistoryVm historyVm)
-        //{
-        //    if (date != historyVm.date)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    _context.Entry(historyVm).State = EntityState.Modified;
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!HistoryExists(date))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
-        // POST: Histories
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<HistoryVm>> PostHistory(HistoryVm history)
-        {
-            Order order = Mapper.Map<Order>(history);
-
-            order.IsPaymentCompleted = false;
-
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetOrderItem", new { id = order.Id }, order);
-        }
-
-        // DELETE: histories/date
-        [HttpDelete("{date}")]
-        public async Task<ActionResult<Order>> DeleteHistory(DateTime date)
-        {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.OrderDate == date);
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-
-            return order;
-        }
-
-        private bool HistoryExists(DateTime id)
-        {
-            return _context.Orders.Any(e => e.OrderDate == id);
+            return Ok(new { status = 200, historyVm });
         }
     }
 }

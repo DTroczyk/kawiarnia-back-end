@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
 
 namespace Api.BLL.Entity
 {
@@ -23,11 +21,13 @@ namespace Api.BLL.Entity
         public string Street { get; set; }
         public string PostalCode { get; set; }
         public string HouseNumber { get; set; }
-        //public float[] LatLng { get; set; }
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
 
         // Payment
 
-        public PaymentMethod PaymentMethod { get; set; }
+        public string PaymentMethod { get; set; }
         public bool IsPaymentCompleted { get; set; }
+        public string PaymentCard { get; set; }
     }
 }

@@ -1,26 +1,18 @@
 ﻿using Api.BLL.Entity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Api.DAL.EF
 {
     public class ApplicationDbContext : DbContext
     {
-        private readonly string _connectionString = "Data Source=s30home.ddns.net\\BASTION-1603\\UCZELNIA,12345; Initial Catalog=Kawiarnia; User Id=Coffe; Password=coffe";
+        private readonly ConnectionStringDto _connectionString;
 
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Coffe> Coffes { get; set; }
+        public virtual DbSet<Coffee> Coffees { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
-            : base(options)
-        {
-        }
-
-        public ApplicationDbContext(string connectionString)
+        public ApplicationDbContext(ConnectionStringDto connectionString)
         {
             _connectionString = connectionString;
         }
@@ -29,7 +21,7 @@ namespace Api.DAL.EF
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder
-                .UseSqlServer(_connectionString);
+                .UseSqlServer(_connectionString.ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -39,6 +31,10 @@ namespace Api.DAL.EF
             builder.Entity<User>()
                 .HasIndex(u => u.Email)
                     .IsUnique();
+            builder.Entity<User>()
+                .HasMany(o => o.Orders)
+                .WithOne(u => u.Client)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

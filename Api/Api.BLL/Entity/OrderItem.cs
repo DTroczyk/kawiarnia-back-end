@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Api.BLL.Entity
 {
@@ -10,13 +7,14 @@ namespace Api.BLL.Entity
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("Coffe")]
-        public int CoffeId { get; set; }
-        public Coffe Coffe { get; set; }
+        [ForeignKey("Coffee")]
+        public string CoffeeId { get; set; }
+        public Coffee Coffee { get; set; }
         [ForeignKey("Order")]
         public int OrderId { get; set; }
         public Order Order { get; set; }
         public double Price { get; set; }
+        public PaymentStatus PaymentStatus { get; set; }
 
         // Coffe details
 

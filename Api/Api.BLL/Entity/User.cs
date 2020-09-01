@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Api.BLL.Entity
 {
@@ -26,5 +25,12 @@ namespace Api.BLL.Entity
         public string Street { get; set; }
         public string PostalCode { get; set; }
         public string HouseNumber { get; set; }
+
+        public bool IsVerifiedEmail { get; set; }
+        public string Salt { get; set; }
+
+        // Collections
+
+        public IList<Order> Orders { get; set; }
     }
 }
