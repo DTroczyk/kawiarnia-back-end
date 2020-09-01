@@ -197,7 +197,7 @@ namespace Api.Services.Services
             if (items.Count() == bucketEntity.Items.Count())
             {
                 bucketEntity.IsPaymentCompleted = true;
-                bucketEntity.OrderDate = DateTime.Now;
+                bucketEntity.OrderDate = DateTime.UtcNow.AddHours(2);
                 _dbContext.Orders.Update(bucketEntity);
                 await _dbContext.SaveChangesAsync();
             }
@@ -224,7 +224,7 @@ namespace Api.Services.Services
                 await _dbContext.SaveChangesAsync();
 
                 bucketEntity.IsPaymentCompleted = true;
-                bucketEntity.OrderDate = DateTime.Now;
+                bucketEntity.OrderDate = DateTime.UtcNow.AddHours(2);
                 _dbContext.Orders.Update(bucketEntity);
                 await _dbContext.SaveChangesAsync();
             }

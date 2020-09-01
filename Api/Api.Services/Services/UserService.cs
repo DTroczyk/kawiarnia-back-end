@@ -134,7 +134,7 @@ namespace Api.Services.Services
                     throw new Exception("Username already exist.");
                 }
 
-                user.RegistrationDate = DateTime.Now;
+                user.RegistrationDate = DateTime.UtcNow.AddHours(2);
                 user.IsVerifiedEmail = false;
 
                 var userHash = PasswordHashService.HashPassword(userVm.password);
@@ -147,10 +147,13 @@ namespace Api.Services.Services
                 if (message == "Incorrect.")
                 {
                     _dbContext.Add(user);
-                    string text = @$"Hello, {user.FirstName}
+                    string text = @$"Cześć, {user.FirstName}
 
-Welcome to Cafe.";
-                    await SendEmail(user, text, "Hello");
+Cieszymy się że dołączyłeś/dołączyłaś do klientów naszej kawiarni. Mamy nadzieję, że posmakuje Ci nasza kawa.
+
+Zapraszamy,
+Super Kawiarnia XYZ";
+                    await SendEmail(user, text, "Rejestracja w Super Kawiarnia XYZ");
                 }
                 else
                 {
@@ -266,21 +269,25 @@ Welcome to Cafe.";
                 throw new Exception("Email address does not exist.");
             }
 
-            var cryptoProvider = new RNGCryptoServiceProvider();
-            byte[] password = new byte[10];
-            cryptoProvider.GetBytes(password);
-            string newPassword = Convert.ToBase64String(password);
+            Random random = new Random();
+            string newPassword = String.Empty;
+            for (int i = 0; i < 16; i++)
+            {
+                newPassword += (char)(random.Next()%43+48);
+            }
 
             User userHash = PasswordHashService.HashPassword(newPassword);
 
             user.PasswordHash = userHash.PasswordHash;
             user.Salt = userHash.Salt;
 
-            var text = @$"Hello, {user.FirstName}. 
+            var text = @$"Cześć, {user.FirstName}. 
                     
-This is your new password: {newPassword}
-Regards Cafe";
-            if (await SendEmail(user, text, "Cafe password recovery") == false)
+Oto Twoje nowe hasło: {newPassword}
+
+Pozdrawiamy
+Super Kawiarnia XYZ";
+            if (await SendEmail(user, text, "Odzyskiwanie hasła Super Kawiarnia XYZ") == false)
             {
                 throw new Exception("Email wasn't send. Try again.");
             }
