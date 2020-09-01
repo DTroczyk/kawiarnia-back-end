@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 
-namespace Api.UnitTests
+namespace Api.UnitTests.ControllerTests
 {
     public class LoginControllerTests
     {
