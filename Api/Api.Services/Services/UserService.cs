@@ -33,6 +33,7 @@ namespace Api.Services.Services
             {
                 message += "username, ";
             }
+            
 
             // password
             regex = new Regex(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
@@ -42,7 +43,7 @@ namespace Api.Services.Services
             }
 
             // first name
-            regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}");
+            regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}$");
             if (!regex.IsMatch(user.FirstName))
             {
                 message += "first name, ";
@@ -55,42 +56,42 @@ namespace Api.Services.Services
             }
 
             // email
-            regex = new Regex(@"^\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b");
+            regex = new Regex(@"^\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b$");
             if (!regex.IsMatch(user.Email))
             {
                 message += "email, ";
             }
 
             // zipcode
-            regex = new Regex(@"^[0-9]{2}-[0-9]{3}");
+            regex = new Regex(@"^[0-9]{2}-[0-9]{3}$");
             if (!regex.IsMatch(user.PostalCode))
             {
                 message += "zipcode, ";
             }
 
             // place
-            regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}");
+            regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}$");
             if (!regex.IsMatch(user.City))
             {
                 message += "place, ";
             }
 
             // road
-            regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}");
-            if (!regex.IsMatch(user.Street) && user.Street == String.Empty)
+            regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]|[-. ,/'()]|[0-9]){1,}$");
+            if (!regex.IsMatch(user.Street) && user.Street == "")
             {
                 message += "road, ";
             }
 
             // house number
-            regex = new Regex(@"^[0-9]{1,}[A-z]{1}|^[0-9]{1,}");
+            regex = new Regex(@"^[0-9]{1,}[A-Z]{1}$|^[0-9]{1,}|^[0-9]{1,}[a-z]{1}$");
             if (!regex.IsMatch(user.HouseNumber))
             {
                 message += "house number, ";
             }
 
             // telephone
-            regex = new Regex(@"^(([0-9]{9})|(\+{1}[0-9]{2,})|(([0-9]{3} ){2}[0-9]{3})|(\+{1}[0-9]{2,} ([0-9]{3} ){2}[0-9]{3}))");
+            regex = new Regex(@"^(([0-9]{9})|(\+{1}[0-9]{2,})|(([0-9]{3} ){2}[0-9]{3})|(\+{1}[0-9]{2,} ([0-9]{3} ){2}[0-9]{3}))$");
             if (!regex.IsMatch(user.PhoneNumber))
             {
                 message += "telephone, ";
