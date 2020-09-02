@@ -36,6 +36,18 @@
           "lib/netstandard1.5/Castle.Core.dll": {}
         }
       },
+      "DotNetEnv/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/DotNetEnv.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/DotNetEnv.dll": {}
+        }
+      },
       "MailKit/2.8.0": {
         "type": "package",
         "dependencies": {
@@ -3255,6 +3267,7 @@
           "Api.DAL": "1.0.0",
           "Api.ViewModels": "1.0.0",
           "AutoMapper": "8.0.0",
+          "DotNetEnv": "1.4.0",
           "MailKit": "2.8.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.5",
           "Microsoft.IdentityModel.Tokens": "6.7.1",
@@ -3327,6 +3340,19 @@
         "lib/netstandard1.5/Castle.Core.dll",
         "lib/netstandard1.5/Castle.Core.xml",
         "readme.txt"
+      ]
+    },
+    "DotNetEnv/1.4.0": {
+      "sha512": "ye3WhbO/bHrgl6C6aE8VKKDewdRxEv1tSSnNMbYE1TxROegwkd1KXo/JjpBcC6nR/FbTpSBPZ2RzjxIimgVlSA==",
+      "type": "package",
+      "path": "dotnetenv/1.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "dotnetenv.1.4.0.nupkg.sha512",
+        "dotnetenv.nuspec",
+        "lib/netstandard1.3/DotNetEnv.dll"
       ]
     },
     "MailKit/2.8.0": {

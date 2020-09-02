@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "8hGh41w+PIwUgIYmF6FP71BYyBqlLSj0vpEKUnrXZc2wC6atACznQb9PR1x2n6e7IqeKHy1I7Al7z3C7cCJGJQ==",
+  "dgSpecHash": "d4juwyjI/orFVTbSQb2aFEIfr1s//5lnsp3dAlrg1vDGtktLMhF9hzJSLmiAFAw1Z2HDl8i/39iSo0k9EIjlxA==",
   "success": true,
   "projectFilePath": "C:\\Users\\DTroc\\Documents\\Git\\kawiarnia\\Api\\Api.UnitTests\\Api.UnitTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DTroc\\.nuget\\packages\\automapper\\8.0.0\\automapper.8.0.0.nupkg.sha512",
     "C:\\Users\\DTroc\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
+    "C:\\Users\\DTroc\\.nuget\\packages\\dotnetenv\\1.4.0\\dotnetenv.1.4.0.nupkg.sha512",
     "C:\\Users\\DTroc\\.nuget\\packages\\mailkit\\2.8.0\\mailkit.2.8.0.nupkg.sha512",
     "C:\\Users\\DTroc\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.5\\microsoft.aspnetcore.authentication.jwtbearer.3.1.5.nupkg.sha512",
     "C:\\Users\\DTroc\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

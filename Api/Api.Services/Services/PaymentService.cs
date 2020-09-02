@@ -16,7 +16,7 @@ namespace Api.Services.Services
     {
         public PaymentService(ApplicationDbContext dbContext) : base(dbContext)
         {
-
+            DotNetEnv.Env.Load();
         }
 
         public async Task Cancel(string username)
@@ -54,7 +54,7 @@ namespace Api.Services.Services
             var addressVm = itemsVm.address;
             var token = itemsVm.token;
 
-            StripeConfiguration.ApiKey = "xxx";
+            StripeConfiguration.ApiKey = System.Environment.GetEnvironmentVariable("STRIPE_SKKEY");
 
             if (orderVms.Count == 0 || orderVms == null)
             {

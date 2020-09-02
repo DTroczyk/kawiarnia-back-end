@@ -321,6 +321,20 @@
           "lib/netstandard2.0/AutoMapper.dll": {}
         }
       },
+      "DotNetEnv/1.4.0": {
+        "dependencies": {
+          "NETStandard.Library": "1.6.1"
+        },
+        "runtime": {
+          "lib/netstandard1.3/DotNetEnv.dll": {
+            "assemblyVersion": "1.4.0.0",
+            "fileVersion": "1.4.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/DotNetEnv.dll": {}
+        }
+      },
       "MailKit/2.8.0": {
         "dependencies": {
           "MimeKit": "2.9.1",
@@ -2549,6 +2563,7 @@
           "Api.DAL": "1.0.0",
           "Api.ViewModels": "1.0.0",
           "AutoMapper": "8.0.0",
+          "DotNetEnv": "1.4.0",
           "MailKit": "2.8.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.5",
           "Microsoft.IdentityModel.Tokens": "6.7.1",
@@ -4195,6 +4210,13 @@
       "sha512": "sha512-px8ZMtIq84dxciB29V+ZYOtsRLZP4JlflDDMW13LyeRdwsnIInzlcSHSxpWmVD6U3bbOl2FeLlgomnVtm0jvXw==",
       "path": "automapper/8.0.0",
       "hashPath": "automapper.8.0.0.nupkg.sha512"
+    },
+    "DotNetEnv/1.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ye3WhbO/bHrgl6C6aE8VKKDewdRxEv1tSSnNMbYE1TxROegwkd1KXo/JjpBcC6nR/FbTpSBPZ2RzjxIimgVlSA==",
+      "path": "dotnetenv/1.4.0",
+      "hashPath": "dotnetenv.1.4.0.nupkg.sha512"
     },
     "MailKit/2.8.0": {
       "type": "package",

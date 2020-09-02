@@ -166,3 +166,4 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Release\netcoreapp3.1\MailKit
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Release\netcoreapp3.1\MimeKit.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Release\netcoreapp3.1\BouncyCastle.Crypto.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Release\netcoreapp3.1\appsettings.json
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Release\netcoreapp3.1\DotNetEnv.dll

@@ -20,7 +20,7 @@ namespace Api.Services.Services
     {
         public UserService(ApplicationDbContext dbContext) : base(dbContext)
         {
-
+            DotNetEnv.Env.Load();
         }
 
         private string Validation(User user)
@@ -77,10 +77,13 @@ namespace Api.Services.Services
             }
 
             // road
-            regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]|[-. ,/'()]|[0-9]){1,}$");
-            if (!regex.IsMatch(user.Street) && user.Street == "")
+            if (user.Street != String.Empty || user.Street != "")
             {
-                message += "road, ";
+                regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]|[-. ,/'()]|[0-9]){1,}$");
+                if (!regex.IsMatch(user.Street))
+                {
+                    message += "road, ";
+                }
             }
 
             // house number
@@ -238,8 +241,10 @@ Super Kawiarnia XYZ";
 
         private async Task<bool> SendEmail(User user, string text, string subject)
         {
+            
+
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Cafe", "kawiarnia2020@outlook.com"));
+            message.From.Add(new MailboxAddress("Kawiarnia", System.Environment.GetEnvironmentVariable("EMAIL")));
             message.To.Add(new MailboxAddress($"{user.FirstName} {user.LastName}", user.Email));
             message.Subject = subject;
             message.Body = new TextPart("plain")
@@ -251,7 +256,7 @@ Super Kawiarnia XYZ";
             {
                 client.Connect("smtp.office365.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
 
-                client.Authenticate("kawiarnia2020@outlook.com", "password");
+                client.Authenticate(System.Environment.GetEnvironmentVariable("EMAIL"), System.Environment.GetEnvironmentVariable("EMAIL_PASSWORD"));
 
                 await client.SendAsync(message);
                 client.Disconnect(true);
