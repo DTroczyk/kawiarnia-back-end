@@ -17,13 +17,18 @@ namespace Api.Services.Services
         {
         }
 
-        public async Task<OrderVm> AddOrderItem(OrderVm orderVm, string username)
+        public OrderVm AddOrderItem(OrderVm orderVm, string username)
         {
-            var bucketEntity = await _dbContext.Orders
+            if (orderVm == null)
+            {
+                throw new Exception("Order item is null.");
+            }
+
+            var bucketEntity = _dbContext.Orders
                 .Include(o => o.Items)
                     .ThenInclude(c => c.Coffee)
                 .Where(o => o.ClientId == username)
-                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+                .FirstOrDefault(o => o.IsPaymentCompleted == false);
 
             if (bucketEntity == null)
             {
@@ -38,21 +43,27 @@ namespace Api.Services.Services
                 bucketEntity.PaymentCard = String.Empty;
 
                 _dbContext.Orders.Add(bucketEntity);
-                await _dbContext.SaveChangesAsync();
+                _dbContext.SaveChanges();
 
-                bucketEntity = await _dbContext.Orders
+                bucketEntity = _dbContext.Orders
                 .Include(o => o.Items)
                     .ThenInclude(c => c.Coffee)
                 .Where(o => o.ClientId == username)
-                .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
+                .FirstOrDefault(o => o.IsPaymentCompleted == false);
             }
 
             OrderItem orderItem = Mapper.Map<OrderItem>(orderVm);
             orderItem.OrderId = bucketEntity.Id;
             orderItem.PaymentStatus = (PaymentStatus)1;
 
+            // Set price
+            double price = 0;
+            price += orderItem.MilkCount * 1;
+            price += orderItem.EspressoCount * 1.5;
+            orderItem.Price = price;
+
             _dbContext.OrderItems.Add(orderItem);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
 
             return orderVm;
         }

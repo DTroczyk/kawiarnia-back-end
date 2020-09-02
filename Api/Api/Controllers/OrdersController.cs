@@ -35,14 +35,21 @@ namespace Api.Controllers
 
         // POST: Orders
         [HttpPost]
-        public async Task<ActionResult<OrderVm>> PostOrderItem(OrderVm orderVm)
+        public ActionResult<OrderVm> PostOrderItem(OrderVm orderVm)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var username = _userService.GetUserName(identity);
 
-            var userVm = await _orderService.AddOrderItem(orderVm, username);
+            try
+            {
+                var userVm = _orderService.AddOrderItem(orderVm, username);
+                return StatusCode(201, new { status = 201, user = userVm });
+            }
+            catch(Exception e)
+            {
+                return StatusCode(406, new { message = e.Message, status = 406 });
+            }
 
-            return StatusCode(201, new { status = 201, user = userVm});
         }
 
         // DELETE: Orders/5

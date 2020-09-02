@@ -187,6 +187,10 @@ namespace Api.Services.Services
                 .FirstOrDefaultAsync(o => o.IsPaymentCompleted == false);
 
             var items = bucketEntity.Items.Where(i => i.PaymentStatus == (PaymentStatus)2);
+            if (items.Count() == 0 || items == null)
+            {
+                throw new Exception("Bucket is empty.");
+            }
 
             foreach (BLL.Entity.OrderItem item in items)
             {

@@ -43,7 +43,7 @@ namespace Api.Controllers
             catch (Exception e)
             {
                 await _paymentService.Cancel(username);
-                return StatusCode(406, new { message = e.Message, status = 406});
+                return StatusCode(406, new { status = 406, message = e.Message });
             }
         }
 
@@ -66,7 +66,7 @@ namespace Api.Controllers
             catch (Exception e)
             {
                 await _paymentService.Cancel(username);
-                return StatusCode(406, new { message = e.Message, status = 406 });
+                return StatusCode(406, new { status = 406, message = e.Message });
             }
         }
     }
