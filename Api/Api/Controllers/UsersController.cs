@@ -38,12 +38,12 @@ namespace Api.Controllers
         // PUT: Users
         [Authorize]
         [HttpPut]
-        public async Task<IActionResult> PutUser(UserVm userVm)
+        public IActionResult PutUser(UserVm userVm)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             try
             {
-                userVm = await _userService.AddOrUpdate(userVm, identity);
+                userVm = _userService.AddOrUpdate(userVm, identity);
             }
             catch (Exception e)
             {
@@ -56,14 +56,14 @@ namespace Api.Controllers
         // DELETE: Users
         [Authorize]
         [HttpDelete]
-        public async Task<ActionResult<UserVm>> DeleteUser()
+        public ActionResult<UserVm> DeleteUser()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var username = _userService.GetUserName(identity);
 
             try
             {
-                var user = await _userService.Delete(username);
+                var user = _userService.Delete(username);
                 return Ok(new { status = 200, user = user , message = "Account deleted."});
             }
             catch (Exception e)

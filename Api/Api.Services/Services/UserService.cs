@@ -23,9 +23,9 @@ namespace Api.Services.Services
             DotNetEnv.Env.Load();
         }
 
-        private string Validation(User user)
+        public string Validation(User user)
         {
-            string message = "Incorrect: ";
+            string message = String.Empty;
 
             // username
             Regex regex = new Regex(@"^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{2,29}$");
@@ -43,7 +43,7 @@ namespace Api.Services.Services
             }
 
             // first name
-            regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}$");
+            regex = new Regex(@"^([A-Z]|[a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}$");
             if (!regex.IsMatch(user.FirstName))
             {
                 message += "first name, ";
@@ -70,7 +70,7 @@ namespace Api.Services.Services
             }
 
             // place
-            regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}$");
+            regex = new Regex(@"^(([A-Z]|[a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ])|([A-Z]|[a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,} ([A-Z]|[a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ])){1,}$");
             if (!regex.IsMatch(user.City))
             {
                 message += "place, ";
@@ -102,41 +102,47 @@ namespace Api.Services.Services
 
             // date of birth
 
-            message = message.Remove(message.Length - 2);
-            message += ".";
+            if (message != String.Empty)
+            {
+                message = message.Remove(message.Length - 2);
+            }
 
             return message;
         }
 
-        public async Task<UserVm> AddOrUpdate(UserVm userVm, ClaimsIdentity identity = null)
+        public void IsUserExist(User user)
         {
-            var user = Mapper.Map<User>(userVm);;
+            bool isUserExist = false;
+            bool isEmailExist = false;
+            if (_dbContext.Users.Any(u => u.UserName == user.UserName))
+            {
+                isUserExist = true;
+            }
+            if (_dbContext.Users.Any(u => u.Email == user.Email))
+            {
+                isEmailExist = true;
+            }
+            if (isEmailExist && isUserExist)
+            {
+                throw new Exception("Username and Email address already exist.");
+            }
+            if (isEmailExist)
+            {
+                throw new Exception("Email address already exist.");
+            }
+            if (isUserExist)
+            {
+                throw new Exception("Username already exist.");
+            }
+        }
+
+        public UserVm AddOrUpdate(UserVm userVm, ClaimsIdentity identity = null)
+        {
+            var user = Mapper.Map<User>(userVm);
 
             if (identity == null)
             {
-                bool isUserExist = false;
-                bool isEmailExist = false;
-
-                if (await _dbContext.Users.AnyAsync(u => u.UserName == user.UserName))
-                {
-                    isUserExist = true;
-                }
-                if (await _dbContext.Users.AnyAsync(u => u.Email == user.Email))
-                {
-                    isEmailExist = true;
-                }
-                if (isEmailExist && isUserExist)
-                {
-                    throw new Exception("Username and Email address already exist.");
-                }
-                if (isEmailExist)
-                {
-                    throw new Exception("Email address already exist.");
-                }
-                if (isUserExist)
-                {
-                    throw new Exception("Username already exist.");
-                }
+                IsUserExist(user);
 
                 user.RegistrationDate = DateTime.UtcNow.AddHours(2);
                 user.IsVerifiedEmail = false;
@@ -148,16 +154,9 @@ namespace Api.Services.Services
                 user.PasswordHash = userHash.PasswordHash;
                 user.Salt = userHash.Salt;
 
-                if (message == "Incorrect.")
+                if (message == String.Empty)
                 {
                     _dbContext.Add(user);
-                    string text = @$"Cześć, {user.FirstName}
-
-Cieszymy się że dołączyłeś/dołączyłaś do klientów naszej kawiarni. Mamy nadzieję, że posmakuje Ci nasza kawa.
-
-Zapraszamy,
-Super Kawiarnia XYZ";
-                    await SendEmail(user, text, "Rejestracja w Super Kawiarnia XYZ");
                 }
                 else
                 {
@@ -166,7 +165,7 @@ Super Kawiarnia XYZ";
             }
             else if (GetUserName(identity) == user.UserName)
             {
-                User userDb = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserName == userVm.username);
+                User userDb = _dbContext.Users.FirstOrDefault(u => u.UserName == userVm.username);
                 user.RegistrationDate = userDb.RegistrationDate;
 
                 var message = Validation(user);
@@ -184,7 +183,7 @@ Super Kawiarnia XYZ";
                     user.Salt = userHash.Salt;
                 }
 
-                if (message == "Incorrect.")
+                if (message == String.Empty)
                 {
                     _dbContext.Entry(userDb).State = EntityState.Detached;
                     _dbContext.Update(user);
@@ -199,8 +198,7 @@ Super Kawiarnia XYZ";
                 throw new Exception("User is invalid.");
             }
 
-            await _dbContext.SaveChangesAsync();
-
+            _dbContext.SaveChanges();
             userVm = Mapper.Map<UserVm>(user);
 
             return userVm;
@@ -222,9 +220,9 @@ Super Kawiarnia XYZ";
             return userName;
         }
 
-        public async Task<UserVm> Delete(string username)
+        public UserVm Delete(string username)
         {
-            var userEntity = await _dbContext.Users.FindAsync(username);
+            var userEntity = _dbContext.Users.Find(username);
 
             if (userEntity == null)
             {
@@ -234,18 +232,39 @@ Super Kawiarnia XYZ";
             var userVm = Mapper.Map<UserVm>(userEntity);
 
             _dbContext.Users.Remove(userEntity);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
 
             return userVm;
         }
 
-        private async Task<bool> SendEmail(User user, string text, string subject)
+        public async Task<bool> SendEmail(User user, string text, string subject)
         {
-            
-
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Kawiarnia", System.Environment.GetEnvironmentVariable("EMAIL")));
             message.To.Add(new MailboxAddress($"{user.FirstName} {user.LastName}", user.Email));
+            message.Subject = subject;
+            message.Body = new TextPart("plain")
+            {
+                Text = text
+            };
+
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp.office365.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+
+                client.Authenticate(System.Environment.GetEnvironmentVariable("EMAIL"), System.Environment.GetEnvironmentVariable("EMAIL_PASSWORD"));
+
+                await client.SendAsync(message);
+                client.Disconnect(true);
+            }
+
+            return true;
+        }
+        public async Task<bool> SendEmail(UserVm user, string text, string subject)
+        {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Kawiarnia", System.Environment.GetEnvironmentVariable("EMAIL")));
+            message.To.Add(new MailboxAddress($"{user.firstName} {user.lastName}", user.email));
             message.Subject = subject;
             message.Body = new TextPart("plain")
             {

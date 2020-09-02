@@ -24,8 +24,7 @@ namespace Api.UnitTests.ControllerTests
                 lastName = "Doe",
                 email = "JohnDoe@example.com"
             };
-            Task<UserVm> successTask = Task.FromResult(userVm);
-            mockUserService.Setup(x => x.AddOrUpdate(userVm, null)).Returns(successTask);
+            mockUserService.Setup(x => x.AddOrUpdate(userVm, null)).Returns(userVm);
             var signInController = new SignInController(mockUserService.Object);
 
             ActionResult<UserVm> result = await signInController.RegisterUser(userVm);

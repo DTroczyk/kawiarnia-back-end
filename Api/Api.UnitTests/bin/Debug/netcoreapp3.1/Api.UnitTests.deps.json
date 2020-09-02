@@ -50,6 +50,17 @@
           }
         }
       },
+      "DotNetEnv/1.4.0": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/DotNetEnv.dll": {
+            "assemblyVersion": "1.4.0.0",
+            "fileVersion": "1.4.0.0"
+          }
+        }
+      },
       "MailKit/2.8.0": {
         "dependencies": {
           "MimeKit": "2.9.1",
@@ -2352,6 +2363,7 @@
           "Api.DAL": "1.0.0",
           "Api.ViewModels": "1.0.0",
           "AutoMapper": "8.0.0",
+          "DotNetEnv": "1.4.0",
           "MailKit": "2.8.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.5",
           "Microsoft.IdentityModel.Tokens": "6.7.1",
@@ -2391,6 +2403,13 @@
       "sha512": "sha512-b5rRL5zeaau1y/5hIbI+6mGw3cwun16YjkHZnV9RRT5UyUIFsgLmNXJ0YnIN9p8Hw7K7AbG1q1UclQVU3DinAQ==",
       "path": "castle.core/4.4.0",
       "hashPath": "castle.core.4.4.0.nupkg.sha512"
+    },
+    "DotNetEnv/1.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ye3WhbO/bHrgl6C6aE8VKKDewdRxEv1tSSnNMbYE1TxROegwkd1KXo/JjpBcC6nR/FbTpSBPZ2RzjxIimgVlSA==",
+      "path": "dotnetenv/1.4.0",
+      "hashPath": "dotnetenv.1.4.0.nupkg.sha512"
     },
     "MailKit/2.8.0": {
       "type": "package",

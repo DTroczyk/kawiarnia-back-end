@@ -22,7 +22,14 @@ namespace Api.Controllers
         {
             try
             {
-                userVm = await _userService.AddOrUpdate(userVm);
+                userVm = _userService.AddOrUpdate(userVm);
+                string text = @$"Cześć, {userVm.firstName}
+
+Cieszymy się że dołączyłeś/dołączyłaś do klientów naszej kawiarni. Mamy nadzieję, że posmakuje Ci nasza kawa.
+
+Zapraszamy,
+Super Kawiarnia XYZ";
+                await _userService.SendEmail(userVm, text, "Rejestracja w Super Kawiarnia XYZ");
             }
             catch (Exception e)
             {

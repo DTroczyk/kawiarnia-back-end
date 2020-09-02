@@ -8,6 +8,8 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.runti
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.pdb
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\DotNetEnv.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\MailKit.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
@@ -52,8 +54,10 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Microsoft
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\MimeKit.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\NuGet.Frameworks.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\SQLitePCLRaw.batteries_v2.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\SQLitePCLRaw.nativelibrary.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\SQLitePCLRaw.core.dll
@@ -145,8 +149,10 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\runtimes\
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.BLL.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.DAL.dll
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.Services.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.ViewModels.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.DAL.pdb
+C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.Services.pdb
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.ViewModels.pdb
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.BLL.pdb
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Debug\netcoreapp3.1\Api.csprojAssemblyReference.cache
@@ -161,8 +167,3 @@ C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Debug\netcoreapp3.1\staticweb
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Debug\netcoreapp3.1\Api.dll
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Debug\netcoreapp3.1\Api.pdb
 C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\obj\Debug\netcoreapp3.1\Api.genruntimeconfig.cache
-C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.Services.dll
-C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\Api.Services.pdb
-C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\MailKit.dll
-C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\MimeKit.dll
-C:\Users\DTroc\Documents\Git\kawiarnia\Api\Api\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
