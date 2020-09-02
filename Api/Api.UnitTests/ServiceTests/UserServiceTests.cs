@@ -1,6 +1,7 @@
 ﻿using Api.BLL.Entity;
 using Api.DAL.EF;
 using Api.Services.Services;
+using Api.ViewModels.ViewModel;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,119 @@ namespace Api.UnitTests.ServiceTests
                 ConnectionString = "Server=BASTION-1603\\UCZELNIA;Initial Catalog=Kawiarnia;User ID=Coffe;Password=coffe;Connection Timeout=30;"
             };
             _dbContext = new ApplicationDbContext(testcs);
+        }
+
+        // Date validation
+        [Test]
+        public void DateValidation_CorrectDate_ShouldReturnTrue()
+        {
+            var userservice = new UserService(_dbContext);
+            var date = new Date
+            {
+                year = "1998",
+                month = "7",
+                day = "21"
+            };
+
+            var result = userservice.DateValidation(date);
+
+            Assert.That(result, Is.EqualTo(true));
+        }
+
+        [Test]
+        public void DateValidation_CorrectDateIsLeap_ShouldReturnTrue()
+        {
+            var userservice = new UserService(_dbContext);
+            var date = new Date
+            {
+                year = "2000", // leap year
+                month = "2",
+                day = "29"
+            };
+
+            var result = userservice.DateValidation(date);
+
+            Assert.That(result, Is.EqualTo(true));
+        }
+
+        [Test]
+        public void DateValidation_IncorrectDateIsNotLeap_ShouldReturnFalse()
+        {
+            var userservice = new UserService(_dbContext);
+            var date = new Date
+            {
+                year = "2001", // not leap year
+                month = "2",
+                day = "29"
+            };
+
+            var result = userservice.DateValidation(date);
+
+            Assert.That(result, Is.EqualTo(false));
+        }
+
+        [Test]
+        public void DateValidation_IncorrectDateOutOfRangeDayUp_ShouldReturnFalse()
+        {
+            var userservice = new UserService(_dbContext);
+            var date = new Date
+            {
+                year = "2001", // not leap year
+                month = "4",
+                day = "31"
+            };
+
+            var result = userservice.DateValidation(date);
+
+            Assert.That(result, Is.EqualTo(false));
+        }
+
+        [Test]
+        public void DateValidation_IncorrectDateOutOfRangeDayDown_ShouldReturnFalse()
+        {
+            var userservice = new UserService(_dbContext);
+            var date = new Date
+            {
+                year = "2001", // not leap year
+                month = "4",
+                day = "0"
+            };
+
+            var result = userservice.DateValidation(date);
+
+            Assert.That(result, Is.EqualTo(false));
+        }
+
+        [Test]
+        public void DateValidation_IncorrectDateOutOfRangeMonthUp_ShouldReturnFalse()
+        {
+            var userservice = new UserService(_dbContext);
+            var date = new Date
+            {
+                year = "2001", // not leap year
+                month = "13",
+                day = "21"
+            };
+
+            var result = userservice.DateValidation(date);
+
+            Assert.That(result, Is.EqualTo(false));
+        }
+
+        [Test]
+        public void DateValidation_IncorrectDateOutOfRangeMonthDown_ShouldReturnFalse()
+        {
+            var userservice = new UserService(_dbContext);
+            var date = new Date
+            {
+                year = "2001", // not leap year
+                month = "0",
+                day = "21"
+            };
+
+            var result = userservice.DateValidation(date);
+
+            Assert.That(result, Is.EqualTo(false));
         }
 
         // Correct data
@@ -48,6 +162,61 @@ namespace Api.UnitTests.ServiceTests
             Assert.That(result, Is.EqualTo(String.Empty));
         }
 
+        // Correct Postal code
+        [Test]
+        public void Validation_NoUnderscoreInPostalCode_ShouldReturnEmptyString()
+        {
+            var userservice = new UserService(_dbContext);
+            var user = new User
+            {
+                UserName = "Joe",
+                Email = "Joe@example.exam",
+                RegistrationDate = DateTime.Now,
+                PasswordHash = "Pa55word",
+                IsVerifiedEmail = false,
+                FirstName = "Joe",
+                LastName = "Doe",
+                PostalCode = "00000",
+                City = "Unknown",
+                Street = "Unknown",
+                HouseNumber = "30A",
+                PhoneNumber = "485212352",
+                DateOfBirth = DateTime.Now.AddYears(-20)
+            };
+
+            var result = userservice.Validation(user);
+
+            Assert.That(result, Is.EqualTo(String.Empty));
+        }
+
+        // Correct German data
+        [Test]
+        public void Validation_CorrectGerData_ShouldReturnEmptyString()
+        {
+            var userservice = new UserService(_dbContext);
+            var user = new User
+            {
+                UserName = "Joe",
+                Email = "Joe@example.exam",
+                RegistrationDate = DateTime.Now,
+                PasswordHash = "Pa55word",
+                IsVerifiedEmail = false,
+                FirstName = "Jan-Michael",
+                LastName = "Weißmeister",
+                PostalCode = "01324",
+                City = "Dresden",
+                Street = "Wießiger Weg",
+                HouseNumber = "30A",
+                PhoneNumber = "485212352",
+                DateOfBirth = DateTime.Now.AddYears(-20)
+            };
+
+            var result = userservice.Validation(user);
+
+            Assert.That(result, Is.EqualTo(String.Empty));
+        }
+
+        // Correct Street
         [Test]
         public void Validation_EmptyStreet_ShouldReturnEmptyString()
         {
@@ -100,6 +269,7 @@ namespace Api.UnitTests.ServiceTests
             Assert.That(result, Is.EqualTo(String.Empty));
         }
 
+        // Correct city
         [Test]
         public void Validation_CityWithSpace_ShouldReturnEmptyString()
         {
@@ -126,8 +296,9 @@ namespace Api.UnitTests.ServiceTests
             Assert.That(result, Is.EqualTo(String.Empty));
         }
 
+        // Correct PhoneNumber
         [Test]
-        public void Validation_PhoneNumberWithAreaCode_ShouldReturnEmptyString()
+        public void Validation_PhoneNumberWithAreaCodeWithSpace_ShouldReturnEmptyString()
         {
             var userservice = new UserService(_dbContext);
             var user = new User
@@ -144,6 +315,32 @@ namespace Api.UnitTests.ServiceTests
                 Street = "Unknown",
                 HouseNumber = "30A",
                 PhoneNumber = "+48 485 212 352",
+                DateOfBirth = DateTime.Now.AddYears(-20)
+            };
+
+            var result = userservice.Validation(user);
+
+            Assert.That(result, Is.EqualTo(String.Empty));
+        }
+
+        [Test]
+        public void Validation_PhoneNumberWithAreaCodeWithoutSpace_ShouldReturnEmptyString()
+        {
+            var userservice = new UserService(_dbContext);
+            var user = new User
+            {
+                UserName = "Joe",
+                Email = "Joe@example.exam",
+                RegistrationDate = DateTime.Now,
+                PasswordHash = "Pa55word",
+                IsVerifiedEmail = false,
+                FirstName = "Joe",
+                LastName = "Doe",
+                PostalCode = "00-000",
+                City = "Unknown",
+                Street = "Unknown",
+                HouseNumber = "30A",
+                PhoneNumber = "+48348522352",
                 DateOfBirth = DateTime.Now.AddYears(-20)
             };
 
@@ -454,32 +651,6 @@ namespace Api.UnitTests.ServiceTests
                 FirstName = "Joe",
                 LastName = "Doe",
                 PostalCode = "00-0000",
-                City = "Unknown",
-                Street = "Unknown",
-                HouseNumber = "30A",
-                PhoneNumber = "485212352",
-                DateOfBirth = DateTime.Now.AddYears(-20)
-            };
-
-            var result = userservice.Validation(user);
-
-            Assert.That(result, Is.EqualTo("zipcode"));
-        }
-
-        [Test]
-        public void Validation_NoUnderscoreInPostalCode_ShouldReturnErrorString()
-        {
-            var userservice = new UserService(_dbContext);
-            var user = new User
-            {
-                UserName = "Joe",
-                Email = "Joe@example.exam",
-                RegistrationDate = DateTime.Now,
-                PasswordHash = "Pa55word",
-                IsVerifiedEmail = false,
-                FirstName = "Joe",
-                LastName = "Doe",
-                PostalCode = "00000",
                 City = "Unknown",
                 Street = "Unknown",
                 HouseNumber = "30A",

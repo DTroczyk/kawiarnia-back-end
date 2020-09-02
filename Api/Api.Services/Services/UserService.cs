@@ -43,7 +43,7 @@ namespace Api.Services.Services
             }
 
             // first name
-            regex = new Regex(@"^([A-Z]|[a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,}$");
+            regex = new Regex(@"^([A-ZÀÁÂÄĄÇĆČĎÈÉÊËĘĚÍÎÏŁŃŇÑÓÔÖŘßŚŠŤÙÚÛÜŮÝŸŹŻŽa-zàáâäąçćčďèéêëęěíîïłńňñóôöřßśšťùúûüůýÿźżž]|[A-ZÀÁÂÄĄÇĆČĎÈÉÊËĘĚÍÎÏŁŃŇÑÓÔÖŘßŚŠŤÙÚÛÜŮÝŸŹŻŽa-zàáâäąçćčďèéêëęěíîïłńňñóôöřßśšťùúûüůýÿźżž](-| )[A-ZÀÁÂÄĄÇĆČĎÈÉÊËĘĚÍÎÏŁŃŇÑÓÔÖŘßŚŠŤÙÚÛÜŮÝŸŹŻŽa-zàáâäąçćčďèéêëęěíîïłńňñóôöřßśšťùúûüůýÿźżž]){1,}$");
             if (!regex.IsMatch(user.FirstName))
             {
                 message += "first name, ";
@@ -55,22 +55,7 @@ namespace Api.Services.Services
                 message += "last name, ";
             }
 
-            // email
-            regex = new Regex(@"^\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b$");
-            if (!regex.IsMatch(user.Email))
-            {
-                message += "email, ";
-            }
-
-            // zipcode
-            regex = new Regex(@"^[0-9]{2}-[0-9]{3}$");
-            if (!regex.IsMatch(user.PostalCode))
-            {
-                message += "zipcode, ";
-            }
-
             // place
-            regex = new Regex(@"^(([A-Z]|[a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ])|([A-Z]|[a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]){1,} ([A-Z]|[a-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ])){1,}$");
             if (!regex.IsMatch(user.City))
             {
                 message += "place, ";
@@ -79,11 +64,24 @@ namespace Api.Services.Services
             // road
             if (user.Street != String.Empty || user.Street != "")
             {
-                regex = new Regex(@"^([A-z]|[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ]|[-. ,/'()]|[0-9]){1,}$");
                 if (!regex.IsMatch(user.Street))
                 {
                     message += "road, ";
                 }
+            }
+
+            // email
+            regex = new Regex(@"^\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b$");
+            if (!regex.IsMatch(user.Email))
+            {
+                message += "email, ";
+            }
+
+            // zipcode
+            regex = new Regex(@"^(([0-9]{2}-[0-9]{3})|[0-9]{5})$");
+            if (!regex.IsMatch(user.PostalCode))
+            {
+                message += "zipcode, ";
             }
 
             // house number
@@ -100,14 +98,46 @@ namespace Api.Services.Services
                 message += "telephone, ";
             }
 
-            // date of birth
-
             if (message != String.Empty)
             {
                 message = message.Remove(message.Length - 2);
             }
 
             return message;
+        }
+
+        public bool DateValidation(Date date)
+        {
+            bool isLeapYear = int.Parse(date.year) % 4 == 0 ? true : false;
+            if (int.Parse(date.day) < 1)
+            {
+                return false;
+            }
+            if (int.Parse(date.month) > 12 || int.Parse(date.month) < 1)
+            {
+                return false;
+            }
+            if (int.Parse(date.day) > 28)
+            {
+                switch (int.Parse(date.month))
+                {
+                    case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                        if (int.Parse(date.day) > 31)
+                            return false;
+                        break;
+                    case 4: case 6: case 9: case 11:
+                        if (int.Parse(date.day) > 30)
+                            return false;
+                        break;
+                    case 2:
+                        if (int.Parse(date.day) > 29 && isLeapYear)
+                            return false;
+                        if (int.Parse(date.day) > 28 && !isLeapYear)
+                            return false;
+                        break;
+                }
+            }
+            return true;
         }
 
         public void IsUserExist(User user)
@@ -138,6 +168,11 @@ namespace Api.Services.Services
 
         public UserVm AddOrUpdate(UserVm userVm, ClaimsIdentity identity = null)
         {
+            if (!DateValidation(userVm.dateOfBirth))
+            {
+                throw new Exception("date of birth");
+            }
+
             var user = Mapper.Map<User>(userVm);
 
             if (identity == null)
