@@ -25,7 +25,7 @@ namespace Api.Controllers
                 userVm = _userService.AddOrUpdate(userVm);
                 string text = @$"Cześć, {userVm.firstName}
 
-Cieszymy się że dołączyłeś/dołączyłaś do klientów naszej kawiarni. Mamy nadzieję, że posmakuje Ci nasza kawa.
+Cieszymy się że dołączyłeś/dołączyłaś do klientów naszej kawiarni. Mamy nadzieję, że zasmakuje Ci nasza kawa.
 
 Zapraszamy,
 Super Kawiarnia XYZ";

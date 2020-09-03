@@ -11,7 +11,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using MimeKit;
 using MailKit.Net.Smtp;
-using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 namespace Api.Services.Services

@@ -209,5 +209,174 @@ namespace Api.IntegrationTests.ServiceTests
             Assert.That(exception.Message, Is.EqualTo("User not found."));
             Assert.That(countUsers, Is.EqualTo(1));
         }
+
+        [Test, Isolated]
+        public void IsUserExist_CorrectData_ShouldReturnNothing()
+        {
+            var context = new ApplicationDbContext(_testcs);
+            var user = new User
+            {
+                UserName = "Joe",
+                Email = "Joe@example.exam",
+                RegistrationDate = DateTime.Now,
+                PasswordHash = "Pa55word",
+                IsVerifiedEmail = false,
+                FirstName = "Joe",
+                LastName = "Doe",
+                PostalCode = "00-000",
+                City = "Unknown",
+                Street = "Unknown",
+                HouseNumber = "30A",
+                PhoneNumber = "485212352",
+                DateOfBirth = DateTime.Now.AddYears(-20)
+            };
+            var userService = new UserService(context);
+            var userVm = Mapper.Map<UserVm>(user);
+            Exception exception = null;
+            var countUsers = 0;
+
+            userService.AddOrUpdate(userVm);
+            countUsers = context.Users.Count(u => u.UserName == "Joe");
+            Assert.That(countUsers, Is.EqualTo(1));
+
+            user.Email = "Joe@example.exa";
+            user.UserName = "Joel";
+            try
+            {
+                userService.IsUserExist(user);
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
+
+            Assert.IsNull(exception);
+        }
+
+        [Test, Isolated]
+        public void IsUserExist_ExistingUserWithEmailAddress_ShouldThrowException()
+        {
+            var context = new ApplicationDbContext(_testcs);
+            var user = new User
+            {
+                UserName = "Joe",
+                Email = "Joe@example.exam",
+                RegistrationDate = DateTime.Now,
+                PasswordHash = "Pa55word",
+                IsVerifiedEmail = false,
+                FirstName = "Joe",
+                LastName = "Doe",
+                PostalCode = "00-000",
+                City = "Unknown",
+                Street = "Unknown",
+                HouseNumber = "30A",
+                PhoneNumber = "485212352",
+                DateOfBirth = DateTime.Now.AddYears(-20)
+            };
+            var userService = new UserService(context);
+            var userVm = Mapper.Map<UserVm>(user);
+            Exception exception = null;
+            var countUsers = 0;
+
+            userService.AddOrUpdate(userVm);
+            countUsers = context.Users.Count(u => u.UserName == "Joe");
+            Assert.That(countUsers, Is.EqualTo(1));
+
+            user.UserName = "Joel";
+            try
+            {
+                userService.IsUserExist(user);
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
+
+            Assert.That(exception.Message, Is.EqualTo("Email address already exist."));
+        }
+
+        [Test, Isolated]
+        public void IsUserExist_ExistingUserWithUsername_ShouldThrowException()
+        {
+            var context = new ApplicationDbContext(_testcs);
+            var user = new User
+            {
+                UserName = "Joe",
+                Email = "Joe@example.exam",
+                RegistrationDate = DateTime.Now,
+                PasswordHash = "Pa55word",
+                IsVerifiedEmail = false,
+                FirstName = "Joe",
+                LastName = "Doe",
+                PostalCode = "00-000",
+                City = "Unknown",
+                Street = "Unknown",
+                HouseNumber = "30A",
+                PhoneNumber = "485212352",
+                DateOfBirth = DateTime.Now.AddYears(-20)
+            };
+            var userService = new UserService(context);
+            var userVm = Mapper.Map<UserVm>(user);
+            Exception exception = null;
+            var countUsers = 0;
+
+            userService.AddOrUpdate(userVm);
+            countUsers = context.Users.Count(u => u.UserName == "Joe");
+            Assert.That(countUsers, Is.EqualTo(1));
+
+            user.Email = "Joe@example.exa";
+            try
+            {
+                userService.IsUserExist(user);
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
+
+            Assert.That(exception.Message, Is.EqualTo("Username already exist."));
+        }
+
+        [Test, Isolated]
+        public void IsUserExist_ExistingUserWithUsernameAndEmailAddress_ShouldThrowException()
+        {
+            var context = new ApplicationDbContext(_testcs);
+            var user = new User
+            {
+                UserName = "Joe",
+                Email = "Joe@example.exam",
+                RegistrationDate = DateTime.Now,
+                PasswordHash = "Pa55word",
+                IsVerifiedEmail = false,
+                FirstName = "Joe",
+                LastName = "Doe",
+                PostalCode = "00-000",
+                City = "Unknown",
+                Street = "Unknown",
+                HouseNumber = "30A",
+                PhoneNumber = "485212352",
+                DateOfBirth = DateTime.Now.AddYears(-20)
+            };
+            var userService = new UserService(context);
+            var userVm = Mapper.Map<UserVm>(user);
+            Exception exception = null;
+            var countUsers = 0;
+
+            userService.AddOrUpdate(userVm);
+            countUsers = context.Users.Count(u => u.UserName == "Joe");
+            Assert.That(countUsers, Is.EqualTo(1));
+
+            
+            try
+            {
+                userService.IsUserExist(user);
+            }
+            catch (Exception e)
+            {
+                exception = e;
+            }
+
+            Assert.That(exception.Message, Is.EqualTo("Username and Email address already exist."));
+        }
     }
 }
