@@ -28,7 +28,7 @@ namespace Api.Services.Services
 
             if (bucketEntity == null || bucketEntity.Items.Count == 0)
             {
-                throw new Exception("Bucket is empty");
+                return new List<OrderVm>();
             }
 
             IList<OrderItem> orderItems = new List<OrderItem>();

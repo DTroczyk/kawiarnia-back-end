@@ -31,7 +31,7 @@ namespace Api.Controllers
 
             var userVm = await _userService.GetCurrentUser(identity);
 
-            return Ok(userVm);
+            return Ok(new { user = userVm, status = 200 });
         }
 
 

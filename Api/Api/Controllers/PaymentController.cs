@@ -35,7 +35,7 @@ namespace Api.Controllers
                 if (await _paymentService.Payment(itemsVm,username))
                 {
                     await _paymentService.Success(username);
-                    return Ok(new { status = 200, message = "Payment complete." });
+                    return Ok(new { status = 200, message = "Payment complete" });
                 }
                 await _paymentService.Cancel(username);
                 return StatusCode(406, new { status = 406, message = "Something went wrong." });
@@ -43,7 +43,7 @@ namespace Api.Controllers
             catch (Exception e)
             {
                 await _paymentService.Cancel(username);
-                return StatusCode(406, new { status = 406, message = e.Message });
+                return StatusCode(406, new { status = 406, message = "Something went wrong." });
             }
         }
 
@@ -58,7 +58,7 @@ namespace Api.Controllers
                 if (await _paymentService.PaymentOnDelivery(itemsVm, username))
                 {
                     await _paymentService.Success(username);
-                    return Ok(new { status = 200, message = "Order complete." });
+                    return Ok(new { status = 200, message = "Order complete" });
                 }
                 await _paymentService.Cancel(username);
                 return StatusCode(406, new { status = 406, message = "Something went wrong." });

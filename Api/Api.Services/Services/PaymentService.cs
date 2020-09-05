@@ -81,7 +81,7 @@ namespace Api.Services.Services
 
                 if (item.Id != order.id)
                 {
-                    throw new Exception("The order's id is invalid.");
+                    throw new Exception("The order's id is invalid");
                 }
 
                 item.PaymentStatus = (PaymentStatus)2;
@@ -127,7 +127,7 @@ namespace Api.Services.Services
 
             if (orderVms.Count == 0 || orderVms == null)
             {
-                throw new Exception("The order is null or empty.");
+                throw new Exception("The order is null or empty");
             }
 
             var bucketEntity = await _dbContext.Orders
@@ -150,7 +150,7 @@ namespace Api.Services.Services
 
                 if (item.Id != order.id)
                 {
-                    throw new Exception("The order's id is invalid.");
+                    throw new Exception("The order's id is invalid");
                 }
 
                 item.PaymentStatus = (PaymentStatus)2;
@@ -189,7 +189,7 @@ namespace Api.Services.Services
             var items = bucketEntity.Items.Where(i => i.PaymentStatus == (PaymentStatus)2);
             if (items.Count() == 0 || items == null)
             {
-                throw new Exception("Bucket is empty.");
+                throw new Exception("Bucket is empty");
             }
 
             foreach (BLL.Entity.OrderItem item in items)
