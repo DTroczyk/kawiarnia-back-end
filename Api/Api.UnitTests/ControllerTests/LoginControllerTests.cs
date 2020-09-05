@@ -2,6 +2,7 @@
 using Api.Configuration;
 using Api.Controllers;
 using Api.Services.Interfaces;
+using Api.ViewModels.DTOs;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -22,11 +23,12 @@ namespace Api.UnitTests.ControllerTests
         [Test]
         public void Login_WhenIncorrectData_ShouldReturnUnautorizeStatus()
         {
+            LoginDto login = new LoginDto() { username = "user", password = "password" };
             var mockLoginService = new Mock<ILoginService>();
-            mockLoginService.Setup(x => x.Login("user", "password")).Returns((User)null);
+            mockLoginService.Setup(x => x.Login(login.username, login.password)).Returns((User)null);
             var loginController = new LoginController(mockLoginService.Object);
 
-            var result = loginController.Login("user", "password");
+            var result = loginController.Login(login);
             var unauthorizedResult = result as UnauthorizedObjectResult;
 
             Assert.IsNotNull(unauthorizedResult);
@@ -35,12 +37,13 @@ namespace Api.UnitTests.ControllerTests
         [Test]
         public void Login_WhenCorrectData_ShouldReturnOkStatus()
         {
+            LoginDto login = new LoginDto() { username = "user", password = "password" };
             var mockLoginService = new Mock<ILoginService>();
             var user = new User { UserName = "user", PasswordHash = "password" };
             mockLoginService.Setup(x => x.Login("user", "password")).Returns(user);
             var loginController = new LoginController(mockLoginService.Object);
 
-            var result = loginController.Login("user", "password");
+            var result = loginController.Login(login);
             var okResult = result as OkObjectResult;
 
             Assert.IsNotNull(okResult);
