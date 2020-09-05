@@ -22,13 +22,13 @@ namespace Api.Services.Services
             DotNetEnv.Env.Load();
         }
 
-        public string Validation(User user)
+        public string Validation(UserVm user)
         {
             string message = String.Empty;
 
             // username
             Regex regex = new Regex(@"^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{2,29}$");
-            if (!regex.IsMatch(user.UserName))
+            if (!regex.IsMatch(user.username))
             {
                 message += "username, ";
             }
@@ -36,34 +36,34 @@ namespace Api.Services.Services
 
             // password
             regex = new Regex(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
-            if (!regex.IsMatch(user.PasswordHash))
+            if (!regex.IsMatch(user.password))
             {
                 message += "password, ";
             }
 
             // first name
             regex = new Regex(@"^([A-ZÀÁÂÄĄÇĆČĎÈÉÊËĘĚÍÎÏŁŃŇÑÓÔÖŘßŚŠŤÙÚÛÜŮÝŸŹŻŽa-zàáâäąçćčďèéêëęěíîïłńňñóôöřßśšťùúûüůýÿźżž]|[A-ZÀÁÂÄĄÇĆČĎÈÉÊËĘĚÍÎÏŁŃŇÑÓÔÖŘßŚŠŤÙÚÛÜŮÝŸŹŻŽa-zàáâäąçćčďèéêëęěíîïłńňñóôöřßśšťùúûüůýÿźżž](-| )[A-ZÀÁÂÄĄÇĆČĎÈÉÊËĘĚÍÎÏŁŃŇÑÓÔÖŘßŚŠŤÙÚÛÜŮÝŸŹŻŽa-zàáâäąçćčďèéêëęěíîïłńňñóôöřßśšťùúûüůýÿźżž]){1,}$");
-            if (!regex.IsMatch(user.FirstName))
+            if (!regex.IsMatch(user.firstName))
             {
                 message += "first name, ";
             }
 
             // last name
-            if (!regex.IsMatch(user.LastName))
+            if (!regex.IsMatch(user.lastName))
             {
                 message += "last name, ";
             }
 
             // place
-            if (!regex.IsMatch(user.City))
+            if (!regex.IsMatch(user.place))
             {
                 message += "place, ";
             }
 
             // road
-            if (user.Street != String.Empty || user.Street != "")
+            if (user.road != String.Empty || user.road != "")
             {
-                if (!regex.IsMatch(user.Street))
+                if (!regex.IsMatch(user.road))
                 {
                     message += "road, ";
                 }
@@ -71,30 +71,36 @@ namespace Api.Services.Services
 
             // email
             regex = new Regex(@"^\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b$");
-            if (!regex.IsMatch(user.Email))
+            if (!regex.IsMatch(user.email))
             {
                 message += "email, ";
             }
 
             // zipcode
             regex = new Regex(@"^(([0-9]{2}-[0-9]{3})|[0-9]{5})$");
-            if (!regex.IsMatch(user.PostalCode))
+            if (!regex.IsMatch(user.zipcode))
             {
                 message += "zipcode, ";
             }
 
             // house number
             regex = new Regex(@"^[0-9]{1,}[A-Z]{1}$|^[0-9]{1,}|^[0-9]{1,}[a-z]{1}$");
-            if (!regex.IsMatch(user.HouseNumber))
+            if (!regex.IsMatch(user.houseNumber))
             {
                 message += "house number, ";
             }
 
             // telephone
             regex = new Regex(@"^(([0-9]{9})|(\+{1}[0-9]{2,})|(([0-9]{3} ){2}[0-9]{3})|(\+{1}[0-9]{2,} ([0-9]{3} ){2}[0-9]{3}))$");
-            if (!regex.IsMatch(user.PhoneNumber))
+            if (!regex.IsMatch(user.telephone))
             {
                 message += "telephone, ";
+            }
+
+            // date
+            if (!DateValidation(user.dateOfBirth))
+            {
+                message += "date of birth, ";
             }
 
             if (message != String.Empty)
@@ -167,9 +173,10 @@ namespace Api.Services.Services
 
         public UserVm AddOrUpdate(UserVm userVm, ClaimsIdentity identity = null)
         {
-            if (!DateValidation(userVm.dateOfBirth))
+            var message = Validation(userVm);
+            if (message != String.Empty)
             {
-                throw new Exception("date of birth");
+                throw new Exception(message);
             }
 
             var user = Mapper.Map<User>(userVm);
@@ -183,26 +190,17 @@ namespace Api.Services.Services
 
                 var userHash = PasswordHashService.HashPassword(userVm.password);
 
-                var message = Validation(user);
-
                 user.PasswordHash = userHash.PasswordHash;
                 user.Salt = userHash.Salt;
 
-                if (message == String.Empty)
-                {
-                    _dbContext.Add(user);
-                }
-                else
-                {
-                    throw new Exception(message);
-                }
+                _dbContext.Add(user);
+
+                
             }
             else if (GetUserName(identity) == user.UserName)
             {
                 User userDb = _dbContext.Users.FirstOrDefault(u => u.UserName == userVm.username);
                 user.RegistrationDate = userDb.RegistrationDate;
-
-                var message = Validation(user);
 
                 if (PasswordHashService.ValidatePassword(userVm.password, userDb) || userVm.password == userDb.PasswordHash)
                 {
@@ -217,15 +215,8 @@ namespace Api.Services.Services
                     user.Salt = userHash.Salt;
                 }
 
-                if (message == String.Empty)
-                {
-                    _dbContext.Entry(userDb).State = EntityState.Detached;
-                    _dbContext.Update(user);
-                }
-                else
-                {
-                    throw new Exception(message);
-                }
+                _dbContext.Entry(userDb).State = EntityState.Detached;
+                _dbContext.Update(user);
             }
             else if (GetUserName(identity) != user.UserName)
             {
