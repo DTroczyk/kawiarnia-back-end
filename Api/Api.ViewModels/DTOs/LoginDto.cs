@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Api.ViewModels.DTOs
+﻿namespace Api.ViewModels.DTOs
 {
     public class LoginDto
     {

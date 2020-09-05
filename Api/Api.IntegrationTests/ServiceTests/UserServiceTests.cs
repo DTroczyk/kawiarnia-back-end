@@ -216,27 +216,25 @@ namespace Api.IntegrationTests.ServiceTests
             var context = new ApplicationDbContext(_testcs);
             var user = new User
             {
-                UserName = "Joe",
-                Email = "Joe@example.exam",
+                UserName = "Test",
+                Email = "Test@gmail.com",
                 RegistrationDate = DateTime.Now,
                 PasswordHash = "Pa55word",
                 IsVerifiedEmail = false,
-                FirstName = "Joe",
-                LastName = "Doe",
-                PostalCode = "00-000",
-                City = "Unknown",
-                Street = "Unknown",
+                FirstName = "Test",
+                LastName = "Test",
+                PostalCode = "21-186",
+                City = "Test",
+                Street = "Test",
                 HouseNumber = "30A",
                 PhoneNumber = "485212352",
                 DateOfBirth = DateTime.Now.AddYears(-20)
             };
             var userService = new UserService(context);
-            var userVm = Mapper.Map<UserVm>(user);
             Exception exception = null;
             var countUsers = 0;
 
-            userService.AddOrUpdate(userVm);
-            countUsers = context.Users.Count(u => u.UserName == "Joe");
+            countUsers = context.Users.Count(u => u.UserName == "Test");
             Assert.That(countUsers, Is.EqualTo(1));
 
             user.Email = "Joe@example.exa";
@@ -259,27 +257,25 @@ namespace Api.IntegrationTests.ServiceTests
             var context = new ApplicationDbContext(_testcs);
             var user = new User
             {
-                UserName = "Joe",
-                Email = "Joe@example.exam",
+                UserName = "Test",
+                Email = "Test@gmail.com",
                 RegistrationDate = DateTime.Now,
                 PasswordHash = "Pa55word",
                 IsVerifiedEmail = false,
-                FirstName = "Joe",
-                LastName = "Doe",
-                PostalCode = "00-000",
-                City = "Unknown",
-                Street = "Unknown",
+                FirstName = "Test",
+                LastName = "Test",
+                PostalCode = "21-186",
+                City = "Test",
+                Street = "Test",
                 HouseNumber = "30A",
                 PhoneNumber = "485212352",
                 DateOfBirth = DateTime.Now.AddYears(-20)
             };
             var userService = new UserService(context);
-            var userVm = Mapper.Map<UserVm>(user);
             Exception exception = null;
             var countUsers = 0;
 
-            userService.AddOrUpdate(userVm);
-            countUsers = context.Users.Count(u => u.UserName == "Joe");
+            countUsers = context.Users.Count(u => u.UserName == "Test");
             Assert.That(countUsers, Is.EqualTo(1));
 
             user.UserName = "Joel";
@@ -301,27 +297,25 @@ namespace Api.IntegrationTests.ServiceTests
             var context = new ApplicationDbContext(_testcs);
             var user = new User
             {
-                UserName = "Joe",
-                Email = "Joe@example.exam",
+                UserName = "Test",
+                Email = "Test@gmail.com",
                 RegistrationDate = DateTime.Now,
                 PasswordHash = "Pa55word",
                 IsVerifiedEmail = false,
-                FirstName = "Joe",
-                LastName = "Doe",
-                PostalCode = "00-000",
-                City = "Unknown",
-                Street = "Unknown",
+                FirstName = "Test",
+                LastName = "Test",
+                PostalCode = "21-186",
+                City = "Test",
+                Street = "Test",
                 HouseNumber = "30A",
                 PhoneNumber = "485212352",
                 DateOfBirth = DateTime.Now.AddYears(-20)
             };
             var userService = new UserService(context);
-            var userVm = Mapper.Map<UserVm>(user);
             Exception exception = null;
             var countUsers = 0;
 
-            userService.AddOrUpdate(userVm);
-            countUsers = context.Users.Count(u => u.UserName == "Joe");
+            countUsers = context.Users.Count(u => u.UserName == "Test");
             Assert.That(countUsers, Is.EqualTo(1));
 
             user.Email = "Joe@example.exa";
@@ -343,29 +337,26 @@ namespace Api.IntegrationTests.ServiceTests
             var context = new ApplicationDbContext(_testcs);
             var user = new User
             {
-                UserName = "Joe",
-                Email = "Joe@example.exam",
+                UserName = "Test",
+                Email = "Test@gmail.com",
                 RegistrationDate = DateTime.Now,
                 PasswordHash = "Pa55word",
                 IsVerifiedEmail = false,
-                FirstName = "Joe",
-                LastName = "Doe",
-                PostalCode = "00-000",
-                City = "Unknown",
-                Street = "Unknown",
+                FirstName = "Test",
+                LastName = "Test",
+                PostalCode = "21-186",
+                City = "Test",
+                Street = "Test",
                 HouseNumber = "30A",
                 PhoneNumber = "485212352",
                 DateOfBirth = DateTime.Now.AddYears(-20)
             };
             var userService = new UserService(context);
-            var userVm = Mapper.Map<UserVm>(user);
             Exception exception = null;
             var countUsers = 0;
 
-            userService.AddOrUpdate(userVm);
-            countUsers = context.Users.Count(u => u.UserName == "Joe");
+            countUsers = context.Users.Count(u => u.UserName == "Test");
             Assert.That(countUsers, Is.EqualTo(1));
-
             
             try
             {
