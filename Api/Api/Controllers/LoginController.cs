@@ -18,6 +18,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
+        [Route("Body")]
         public IActionResult Login([FromBody]LoginDto login)
         {
             var user = _loginService.Login(login.username, login.password);
@@ -35,7 +36,7 @@ namespace Api.Controllers
 
         // Temporary GET
         [HttpGet]
-        public IActionResult Login(string username, string pass)
+        public IActionResult LoginWith(string username, string pass)
         {
             var user = _loginService.Login(username, pass);
 
