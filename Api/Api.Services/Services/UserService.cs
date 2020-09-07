@@ -26,14 +26,15 @@ namespace Api.Services.Services
         {
             string message = String.Empty;
 
+            user.username = user.username.Trim();
             // username
             Regex regex = new Regex(@"^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{2,29}$");
             if (!regex.IsMatch(user.username))
             {
                 message += "username, ";
             }
-            
 
+            user.password = user.password.Trim();
             // password
             regex = new Regex(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
             if (!regex.IsMatch(user.password))
@@ -41,6 +42,7 @@ namespace Api.Services.Services
                 message += "password, ";
             }
 
+            user.firstName = user.firstName.Trim();
             // first name
             regex = new Regex(@"^([A-ZÀÁÂÄĄÇĆČĎÈÉÊËĘĚÍÎÏŁŃŇÑÓÔÖŘßŚŠŤÙÚÛÜŮÝŸŹŻŽa-zàáâäąçćčďèéêëęěíîïłńňñóôöřßśšťùúûüůýÿźżž]|[A-ZÀÁÂÄĄÇĆČĎÈÉÊËĘĚÍÎÏŁŃŇÑÓÔÖŘßŚŠŤÙÚÛÜŮÝŸŹŻŽa-zàáâäąçćčďèéêëęěíîïłńňñóôöřßśšťùúûüůýÿźżž](-| )[A-ZÀÁÂÄĄÇĆČĎÈÉÊËĘĚÍÎÏŁŃŇÑÓÔÖŘßŚŠŤÙÚÛÜŮÝŸŹŻŽa-zàáâäąçćčďèéêëęěíîïłńňñóôöřßśšťùúûüůýÿźżž]){1,}$");
             if (!regex.IsMatch(user.firstName))
@@ -48,18 +50,21 @@ namespace Api.Services.Services
                 message += "first name, ";
             }
 
+            user.lastName = user.lastName.Trim();
             // last name
             if (!regex.IsMatch(user.lastName))
             {
                 message += "last name, ";
             }
 
+            user.place = user.place.Trim();
             // place
             if (!regex.IsMatch(user.place))
             {
                 message += "place, ";
             }
 
+            user.road = user.road.Trim();
             // road
             if (user.road != String.Empty || user.road != "")
             {
@@ -69,6 +74,7 @@ namespace Api.Services.Services
                 }
             }
 
+            user.email = user.email.Trim();
             // email
             regex = new Regex(@"^\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b$");
             if (!regex.IsMatch(user.email))
@@ -76,6 +82,7 @@ namespace Api.Services.Services
                 message += "email, ";
             }
 
+            user.zipcode = user.zipcode.Trim();
             // zipcode
             regex = new Regex(@"^(([0-9]{2}-[0-9]{3})|[0-9]{5})$");
             if (!regex.IsMatch(user.zipcode))
@@ -83,6 +90,7 @@ namespace Api.Services.Services
                 message += "zipcode, ";
             }
 
+            user.houseNumber = user.houseNumber.Trim();
             // house number
             regex = new Regex(@"^[0-9]{1,}[A-Z]{1}$|^[0-9]{1,}|^[0-9]{1,}[a-z]{1}$");
             if (!regex.IsMatch(user.houseNumber))
@@ -90,6 +98,7 @@ namespace Api.Services.Services
                 message += "house number, ";
             }
 
+            user.telephone = user.telephone.Trim();
             // telephone
             regex = new Regex(@"^(([0-9]{9})|(\+{1}[0-9]{2,})|(([0-9]{3} ){2}[0-9]{3})|(\+{1}[0-9]{2,} ([0-9]{3} ){2}[0-9]{3}))$");
             if (!regex.IsMatch(user.telephone))

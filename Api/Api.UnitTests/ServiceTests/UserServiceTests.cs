@@ -165,6 +165,38 @@ namespace Api.UnitTests.ServiceTests
             Assert.That(result, Is.EqualTo(String.Empty));
         }
 
+        // Correct data with space on the end
+
+        [Test]
+        public void Validation_CorrectDataWithSpaceOnTheEnd_ShouldReturnEmptyString()
+        {
+            var userservice = new UserService(_dbContext);
+            var user = new UserVm
+            {
+                username = "Joe  ",
+                email = "Joe@example.exam   ",
+                password = "Pa55word ",
+                firstName = "Joe   ",
+                lastName = "Doe ",
+                zipcode = "00-000  ",
+                place = "New York   ",
+                road = "Unknown ",
+                houseNumber = "30A   ",
+                telephone = "485212352  ",
+                dateOfBirth = new Date()
+                {
+                    day = DateTime.Now.Day.ToString(),
+                    month = DateTime.Now.Month.ToString(),
+                    year = (DateTime.Now.Year - 20).ToString()
+                }
+            };
+
+            var result = userservice.Validation(user);
+
+            Assert.That(result, Is.EqualTo(String.Empty));
+            Assert.That(user.place, Is.EqualTo("New York"));
+        }
+
         // Correct Postal code
         [Test]
         public void Validation_NoUnderscoreInPostalCode_ShouldReturnEmptyString()
