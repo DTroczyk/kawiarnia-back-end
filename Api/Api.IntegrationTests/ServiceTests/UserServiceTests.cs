@@ -15,10 +15,7 @@ namespace Api.IntegrationTests.ServiceTests
     {
         public UserServiceTests() : base ()
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.AddProfile<AutoMapperProfile>();
-            });
+            
         }
 
         [Test, Isolated]

@@ -12,10 +12,7 @@ namespace Api.IntegrationTests.ServiceTests
     {
         public BucketServiceTests() : base()
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.AddProfile<AutoMapperProfile>();
-            });
+            
         }
 
         [Test, Isolated]
