@@ -7,6 +7,6 @@ namespace Api.Services.Interfaces
     {
         public Task<OrderVm> GetOrderItem(int orderId);
         public OrderVm AddOrderItem(OrderVm orderVm, string username);
-        public Task<OrderVm> DeleteOrderItem(int id, string username);
+        public OrderVm DeleteOrderItem(int id, string username);
     }
 }

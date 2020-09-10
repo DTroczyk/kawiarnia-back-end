@@ -21,7 +21,7 @@ namespace Api.Services.Services
         {
             if (orderVm == null)
             {
-                throw new Exception("Order item is null.");
+                throw new Exception("Order item is null");
             }
 
             var bucketEntity = _dbContext.Orders
@@ -68,11 +68,11 @@ namespace Api.Services.Services
             return orderVm;
         }
 
-        public async Task<OrderVm> DeleteOrderItem(int id, string username)
+        public OrderVm DeleteOrderItem(int id, string username)
         {
-            var orderItem = await _dbContext.OrderItems
+            var orderItem = _dbContext.OrderItems
                 .Include(oi => oi.Order)
-                .FirstOrDefaultAsync(oi => oi.Id == id);
+                .FirstOrDefault(oi => oi.Id == id);
             if (orderItem == null)
             {
                 throw new Exception("Order item is null");
@@ -83,7 +83,7 @@ namespace Api.Services.Services
             }
 
             _dbContext.OrderItems.Remove(orderItem);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
 
             var orderVm = Mapper.Map<OrderVm>(orderItem);
             return orderVm;

@@ -61,7 +61,7 @@ namespace Api.Controllers
 
             try
             {
-                var orderVm = await _orderService.DeleteOrderItem(id, username);
+                var orderVm = _orderService.DeleteOrderItem(id, username);
                 return Ok(new { status = 200, order = orderVm });
             }
             catch (Exception e)
