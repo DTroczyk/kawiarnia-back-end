@@ -1,4 +1,5 @@
 ﻿using Api.BLL.Entity;
+using Api.Configuration;
 using Api.DAL.EF;
 using Api.IntegrationTests.TestAttributes;
 using Api.Services.Services;
@@ -14,7 +15,10 @@ namespace Api.IntegrationTests.ServiceTests
     {
         public UserServiceTests() : base ()
         {
-            
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<AutoMapperProfile>();
+            });
         }
 
         [Test, Isolated]

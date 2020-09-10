@@ -1,6 +1,8 @@
-﻿using Api.DAL.EF;
+﻿using Api.Configuration;
+using Api.DAL.EF;
 using Api.IntegrationTests.TestAttributes;
 using Api.Services.Services;
+using AutoMapper;
 using NUnit.Framework;
 using System.Linq;
 
@@ -10,6 +12,10 @@ namespace Api.IntegrationTests.ServiceTests
     {
         public BucketServiceTests() : base()
         {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<AutoMapperProfile>();
+            });
         }
 
         [Test, Isolated]
