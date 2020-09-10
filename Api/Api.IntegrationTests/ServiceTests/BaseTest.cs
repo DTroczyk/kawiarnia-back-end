@@ -1,4 +1,6 @@
-﻿using Api.DAL.EF;
+﻿using Api.Configuration;
+using Api.DAL.EF;
+using AutoMapper;
 
 namespace Api.IntegrationTests.ServiceTests
 {
@@ -10,6 +12,10 @@ namespace Api.IntegrationTests.ServiceTests
         {
             _testcs = new ConnectionStringDto();
             _testcs.ConnectionString = "Server=BASTION-1603\\UCZELNIA;Initial Catalog=Kawiarnia;User ID=Coffe;Password=coffe;Connection Timeout=30;";
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<AutoMapperProfile>();
+            });
         }
     }
 }
