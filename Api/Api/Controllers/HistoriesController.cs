@@ -25,25 +25,25 @@ namespace Api.Controllers
 
         // GET: Histories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HistoryVm>>> GetHistoryItems()
+        public async Task<ActionResult<IEnumerable<HistoryVm>>> GetHistories()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var username = _userService.GetUserName(identity);
 
             int counter = await _historyService.CountHistoryItems(username);
-            var historyVms = await _historyService.GetHistoryItems(username);
+            var historyVms = await _historyService.GetHistories(username);
 
             return Ok(new { status = 200, counter = counter, historyVms });
         }
 
         //GET: Histories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<HistoryVm>> GetHistoryItem(int id)
+        public async Task<ActionResult<HistoryVm>> GetHistory(int id)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var username = _userService.GetUserName(identity);
 
-            var historyVm = await _historyService.GetHistoryItem(id, username);
+            var historyVm = await _historyService.GetHistory(id, username);
 
             return Ok(new { status = 200, historyVm });
         }

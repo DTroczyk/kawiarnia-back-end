@@ -34,22 +34,26 @@ namespace Api.Services.Services
             return counter;
         }
 
-        public async Task<HistoryVm> GetHistoryItem(int id, string username)
+        public async Task<HistoryVm> GetHistory(int id, string username)
         {
             var historyEntities = await _dbContext.Orders
                 .Include(o => o.Items)
                     .ThenInclude(c => c.Coffee)
                 .Where(o => o.IsPaymentCompleted == true)
                 .Where(o => o.ClientId == username)
-                .FirstAsync(o => o.Id == id);
-                
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (historyEntities == null)
+            {
+                return null;
+            }
 
             HistoryVm historyVm = Mapper.Map<HistoryVm>(historyEntities);
 
             return historyVm;
         }
 
-        public async Task<IEnumerable<HistoryVm>> GetHistoryItems(string username)
+        public async Task<IEnumerable<HistoryVm>> GetHistories(string username)
         {
             var historyEntities = await _dbContext.Orders
                 .Include(o => o.Items)
