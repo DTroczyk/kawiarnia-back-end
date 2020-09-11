@@ -1,25 +1,14 @@
-﻿using Api.BLL.Entity;
-using Api.DAL.EF;
+﻿using Api.DAL.EF;
 using Api.Services.Services;
 using Api.ViewModels.ViewModel;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Api.UnitTests.ServiceTests
 {
     public class UserServiceTests
     {
         private readonly ApplicationDbContext _dbContext;
-
-        public UserServiceTests()
-        {
-            ConnectionStringDto testcs = new ConnectionStringDto { 
-                ConnectionString = "Server=BASTION-1603\\UCZELNIA;Initial Catalog=Kawiarnia;User ID=Coffe;Password=coffe;Connection Timeout=30;"
-            };
-            _dbContext = new ApplicationDbContext(testcs);
-        }
 
         // Date validation
         [Test]

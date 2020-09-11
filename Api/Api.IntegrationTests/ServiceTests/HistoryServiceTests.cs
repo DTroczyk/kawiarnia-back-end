@@ -1,16 +1,11 @@
 ﻿using Api.BLL.Entity;
-using Api.Configuration;
 using Api.DAL.EF;
 using Api.IntegrationTests.TestAttributes;
 using Api.Services.Services;
 using Api.ViewModels.ViewModel;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Api.IntegrationTests.ServiceTests
 {
