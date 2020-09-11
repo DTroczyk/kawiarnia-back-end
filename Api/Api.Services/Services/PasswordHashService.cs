@@ -1,20 +1,15 @@
 ﻿using Api.BLL.Entity;
-using Api.DAL.EF;
 using System;
 using System.Security.Cryptography;
 
 namespace Api.Services.Services
 {
     // Password hashing: PBKDF2
-    public class PasswordHashService : BaseService
+    public class PasswordHashService
     {
         public const int SaltByteSize = 16;
         public const int HashByteSize = 20;
         public const int Pbkdf2Iterations = 1000;
-
-        public PasswordHashService(ApplicationDbContext dbContext) : base(dbContext)
-        {
-        }
 
         public static User HashPassword(string password)
         {
